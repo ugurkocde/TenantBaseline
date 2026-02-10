@@ -28,18 +28,21 @@ function Start-TBInteractive {
         }
 
         if ($existingContext -and $existingContext.TenantId) {
-            # Adopt the existing session -- update the API base URI to match the environment
-            $script:TBApiBaseUri = "$(Get-TBGraphBaseUri)/beta/admin/configurationManagement"
-            $existingEnv = if ($existingContext.Environment) { $existingContext.Environment } else { 'Global' }
-            $script:TBConnection = [PSCustomObject]@{
-                TenantId                 = $existingContext.TenantId
-                Account                  = $existingContext.Account
-                Scopes                   = $existingContext.Scopes
-                ConnectedAt              = Get-Date
-                DirectoryMetadataEnabled = $false
-                TenantDisplayName        = $null
-                PrimaryDomain            = $null
-                Environment              = $existingEnv
+            # Only adopt the external session when Connect-TBTenant has not already
+            # populated TBConnection (which would contain richer metadata).
+            if (-not $script:TBConnection) {
+                $script:TBApiBaseUri = "$(Get-TBGraphBaseUri)/beta/admin/configurationManagement"
+                $existingEnv = if ($existingContext.Environment) { $existingContext.Environment } else { 'Global' }
+                $script:TBConnection = [PSCustomObject]@{
+                    TenantId                 = $existingContext.TenantId
+                    Account                  = $existingContext.Account
+                    Scopes                   = $existingContext.Scopes
+                    ConnectedAt              = Get-Date
+                    DirectoryMetadataEnabled = $false
+                    TenantDisplayName        = $null
+                    PrimaryDomain            = $null
+                    Environment              = $existingEnv
+                }
             }
             break
         }

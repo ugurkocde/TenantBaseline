@@ -1,6 +1,6 @@
 @{
     RootModule        = 'TenantBaseline.psm1'
-    ModuleVersion     = '0.1.6'
+    ModuleVersion     = '0.1.7'
     GUID              = 'edee0e7b-afeb-4cc1-b30c-ef8486d7c9a6'
     Author            = 'TenantBaseline Contributors'
     CompanyName       = 'Community'
@@ -67,7 +67,7 @@
             Tags         = @('Microsoft365', 'Graph', 'UTCM', 'Baseline', 'Drift', 'Security', 'Compliance', 'Intune', 'ConditionalAccess', 'EntraID')
             LicenseUri   = 'https://github.com/ugurkocde/TenantBaseline/blob/main/LICENSE'
             ProjectUri   = 'https://github.com/ugurkocde/TenantBaseline'
-            ReleaseNotes = 'Add GCC High and national cloud support (USGov, USGovDoD, China) via Connect-TBTenant -Environment parameter.'
+            ReleaseNotes = 'Fix interactive session adoption overwriting Connect-TBTenant connection state.'
         }
     }
 }
