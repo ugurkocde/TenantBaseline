@@ -1,11 +1,18 @@
-# TenantBaseline
-
-A PowerShell module for Microsoft 365 tenant configuration monitoring, drift detection, and compliance reporting -- powered by the Microsoft Graph UTCM beta API.
+<div align="center">
+<h1>TenantBaseline</h1>
+<p>A PowerShell module for Microsoft 365 tenant configuration monitoring, drift detection, and compliance reporting. Powered by the Microsoft Graph UTCM beta API.</p>
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/TenantBaseline?label=PSGallery&color=blue)](https://www.powershellgallery.com/packages/TenantBaseline)
+[![Downloads](https://img.shields.io/powershellgallery/dt/TenantBaseline?label=Downloads&color=blue)](https://www.powershellgallery.com/packages/TenantBaseline)
 [![PowerShell 7.2+](https://img.shields.io/badge/PowerShell-7.2%2B-blue)](https://github.com/PowerShell/PowerShell)
+[![Tests](https://img.shields.io/badge/tests-255%20passing-brightgreen)](tests/)
 [![CI](https://github.com/ugurkocde/TenantBaseline/actions/workflows/ci.yml/badge.svg)](https://github.com/ugurkocde/TenantBaseline/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+</div>
+
+```powershell
+Install-Module -Name TenantBaseline -Scope CurrentUser
+```
 
 ---
 
@@ -37,14 +44,14 @@ The module covers 268 resource types across M365 workloads including Entra ID, E
 
 ## Features
 
-- **Connection Management** -- Connect to Microsoft Graph with scenario-based scoping that requests only the permissions you need.
-- **Automated Setup** -- Provision and configure the UTCM service principal with guided permission granting, including manual remediation steps for provider-specific permissions.
-- **Monitor Management** -- Create, update, and remove configuration monitors that track resources against a known-good baseline.
-- **Drift Detection** -- Detect configuration drift with filtering by monitor or resource type, and get aggregated summaries grouped by status and workload.
-- **Baseline Export/Import** -- Export baselines to JSON for version control or migration, and import them to seed new monitors.
-- **Configuration Snapshots** -- Capture point-in-time tenant configuration snapshots, wait for completion, and export data before the 7-day expiry.
-- **Compliance Reporting** -- Generate HTML drift reports, interactive dashboards with embedded timelines, and formatted documentation for compliance review.
-- **Interactive Console** -- A menu-driven TUI (`Start-TBInteractive`) with guided workflows, input validation, and resource type pickers for all module operations.
+- **Connection Management** - Connect to Microsoft Graph with scenario-based scoping that requests only the permissions you need.
+- **Automated Setup** - Provision and configure the UTCM service principal with guided permission granting, including manual remediation steps for provider-specific permissions.
+- **Monitor Management** - Create, update, and remove configuration monitors that track resources against a known-good baseline.
+- **Drift Detection** - Detect configuration drift with filtering by monitor or resource type, and get aggregated summaries grouped by status and workload.
+- **Baseline Export/Import** - Export baselines to JSON for version control or migration, and import them to seed new monitors.
+- **Configuration Snapshots** - Capture point-in-time tenant configuration snapshots, wait for completion, and export data before the 7-day expiry.
+- **Compliance Reporting** - Generate HTML drift reports, interactive dashboards with embedded timelines, and formatted documentation for compliance review.
+- **Interactive Console** - A menu-driven TUI (`Start-TBInteractive`) with guided workflows, input validation, and resource type pickers for all module operations.
 
 ---
 
