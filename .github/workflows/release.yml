@@ -1,0 +1,155 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g. 0.1.0)'
+        required: true
+
+env:
+  MODULE_NAME: TenantBaseline
+  MODULE_PATH: ./src/TenantBaseline
+  EXPECTED_COMMAND_COUNT: 26
+
+permissions:
+  contents: write
+
+jobs:
+  quality-gates:
+    name: Quality Gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module -Name Pester -MinimumVersion 5.0.0 -Force -Scope CurrentUser
+          Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+          Install-Module -Name Microsoft.Graph.Authentication -MinimumVersion 2.0.0 -Force -Scope CurrentUser
+
+      - name: Run PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path $env:MODULE_PATH -Recurse -ExcludeRule PSUseShouldProcessForStateChangingFunctions
+          $results | Format-Table -AutoSize
+          if ($results | Where-Object Severity -eq 'Error') {
+              throw 'PSScriptAnalyzer found errors.'
+          }
+
+      - name: Run Pester tests
+        shell: pwsh
+        run: |
+          $config = New-PesterConfiguration
+          $config.Run.Path = './tests/Unit'
+          $config.TestResult.Enabled = $true
+          $config.TestResult.OutputPath = 'testResults.xml'
+          $config.TestResult.OutputFormat = 'NUnitXml'
+          $config.Output.Verbosity = 'Detailed'
+          Invoke-Pester -Configuration $config
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-release
+          path: testResults.xml
+
+      - name: Verify module import
+        shell: pwsh
+        run: |
+          Import-Module $env:MODULE_PATH/$env:MODULE_NAME.psd1 -Force
+          $commands = Get-Command -Module $env:MODULE_NAME
+          Write-Host "Exported commands: $($commands.Count)"
+          $commands | Format-Table Name, CommandType -AutoSize
+          if ($commands.Count -ne $env:EXPECTED_COMMAND_COUNT) {
+              throw "Expected $env:EXPECTED_COMMAND_COUNT exported commands, got $($commands.Count)"
+          }
+
+  publish:
+    name: Publish to PSGallery
+    runs-on: ubuntu-latest
+    needs: quality-gates
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_VERSION: ${{ github.event.inputs.version }}
+          GIT_REF: ${{ github.ref }}
+        run: |
+          if ($env:EVENT_NAME -eq 'workflow_dispatch') {
+              $version = $env:DISPATCH_VERSION
+          } else {
+              $version = $env:GIT_REF -replace '^refs/tags/v', ''
+          }
+
+          if ($version -notmatch '^\d+\.\d+\.\d+$') {
+              throw "Invalid semver format: '$version'. Expected format: X.Y.Z"
+          }
+
+          Write-Host "Resolved version: $version"
+          "VERSION=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Check PSGallery for duplicate
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          $existing = Find-Module -Name $env:MODULE_NAME -RequiredVersion $env:RELEASE_VERSION -Repository PSGallery -ErrorAction SilentlyContinue
+          if ($existing) {
+              throw "Version $($env:RELEASE_VERSION) is already published to PSGallery."
+          }
+          Write-Host "Version $($env:RELEASE_VERSION) is not yet published. Proceeding."
+
+      - name: Inject version into manifest
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          $manifestPath = "$env:MODULE_PATH/$env:MODULE_NAME.psd1"
+          Update-ModuleManifest -Path $manifestPath -ModuleVersion $env:RELEASE_VERSION
+          Write-Host "Updated manifest to version $($env:RELEASE_VERSION)"
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module -Name Microsoft.Graph.Authentication -MinimumVersion 2.0.0 -Force -Scope CurrentUser
+
+      - name: Publish to PSGallery
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
+        run: |
+          Publish-Module -Path $env:MODULE_PATH -NuGetApiKey $env:NUGET_API_KEY -Verbose
+
+      - name: Extract changelog
+        id: changelog
+        shell: pwsh
+        run: |
+          $content = Get-Content ./CHANGELOG.md -Raw
+          # Match the first version section (from ## [x.y.z] to the next ## [ or end of file)
+          if ($content -match '(?s)## \[\d+\.\d+\.\d+\][^\n]*\n(.*?)(?=\n## \[|$)') {
+              $notes = $Matches[1].Trim()
+          } else {
+              $notes = 'No release notes found.'
+          }
+          # Write to file to avoid multiline output issues
+          $notes | Out-File -FilePath release-notes.txt -NoNewline
+          Write-Host "Extracted release notes:"
+          Write-Host $notes
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes.txt
+          generate_release_notes: false

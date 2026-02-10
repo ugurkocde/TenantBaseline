@@ -1,0 +1,67 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#admin/configurationManagement/configurationDrifts",
+    "value": [
+        {
+            "id": "4e808e99-7f60-4194-8294-02ede71effd8",
+            "monitorId": "b166c9cb-db29-438b-95fb-247da1dc72c3",
+            "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+            "resourceType": "microsoft.exchange.accepteddomain",
+            "baselineResourceDisplayName": "Accepted Domain",
+            "firstReportedDateTime": "2024-12-12T09:00:57.4830642Z",
+            "status": "active",
+            "resourceInstanceIdentifier": {
+                "Identity": "contoso.onmicrosoft.com"
+            },
+            "driftedProperties": [
+                {
+                    "propertyName": "Ensure",
+                    "currentValue": "Absent",
+                    "desiredValue": "Present"
+                }
+            ]
+        },
+        {
+            "id": "a3c17d62-e4b8-4f09-b6a1-8d2e5f7c9012",
+            "monitorId": "bf77ee1e-7750-40cb-8bcd-524dc4cdab02",
+            "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+            "resourceType": "microsoft.entra.conditionalaccesspolicy",
+            "baselineResourceDisplayName": "Require MFA for All Users",
+            "firstReportedDateTime": "2025-01-15T14:22:31.6543210Z",
+            "status": "active",
+            "resourceInstanceIdentifier": {
+                "Identity": "CA-Policy-MFA-AllUsers"
+            },
+            "driftedProperties": [
+                {
+                    "propertyName": "State",
+                    "currentValue": "disabled",
+                    "desiredValue": "enabled"
+                },
+                {
+                    "propertyName": "GrantControls.BuiltInControls",
+                    "currentValue": "[\"mfa\"]",
+                    "desiredValue": "[\"mfa\",\"compliantDevice\"]"
+                }
+            ]
+        },
+        {
+            "id": "c8f94b21-3a6e-4d70-9e85-1b4c7f0a2d63",
+            "monitorId": "b166c9cb-db29-438b-95fb-247da1dc72c3",
+            "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+            "resourceType": "microsoft.exchange.transportrule",
+            "baselineResourceDisplayName": "Block External Auto-Forwarding",
+            "firstReportedDateTime": "2025-01-10T08:15:22.9876543Z",
+            "status": "fixed",
+            "resourceInstanceIdentifier": {
+                "Identity": "Block-External-AutoForward"
+            },
+            "driftedProperties": [
+                {
+                    "propertyName": "State",
+                    "currentValue": "Disabled",
+                    "desiredValue": "Enabled"
+                }
+            ]
+        }
+    ]
+}

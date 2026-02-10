@@ -1,0 +1,104 @@
+TOPIC
+    about_TenantBaseline
+
+SHORT DESCRIPTION
+    PowerShell module for Microsoft 365 tenant configuration monitoring
+    using the Microsoft Graph UTCM beta API.
+
+LONG DESCRIPTION
+    TenantBaseline wraps the Unified Tenant Configuration Management (UTCM)
+    beta APIs in Microsoft Graph to provide simplified cmdlets for:
+
+    - Baseline management: Define expected configurations for your tenant
+    - Drift detection: Detect when configurations deviate from baselines
+    - Snapshots: Capture point-in-time configuration snapshots
+    - Reporting: Generate HTML/JSON drift reports
+
+    The module focuses on high-impact security configurations:
+    - Conditional Access policies
+    - MFA and authentication methods
+    - Intune compliance policies
+    - Authorization policies
+    - Cross-tenant access settings
+
+PREREQUISITES
+    - PowerShell 7.2+
+    - Microsoft.Graph.Authentication module (v2.0.0+)
+    - Entra ID tenant with Global Administrator or appropriate admin roles
+
+GETTING STARTED
+    1. Connect to your tenant for setup:
+       Connect-TBTenant -Scenario Setup
+
+    2. Provision the UTCM service principal (one-time):
+       Install-TBServicePrincipal
+
+    3. Reconnect with day-to-day management scopes:
+       Connect-TBTenant -Scenario Manage
+
+    4. Create a monitor with resources to track:
+       New-TBMonitor -DisplayName 'MFA Monitor' -Resources @(
+           @{ resourceType = 'microsoft.entra.conditionalaccesspolicy'; displayName = 'MFA Policy' }
+       )
+
+    5. Check for drift:
+       Get-TBDrift
+
+AUTHENTICATION
+    TenantBaseline uses interactive/delegated authentication via
+    Connect-MgGraph. No custom app registration is required.
+
+    Scenario-based scopes:
+    - ReadOnly: ConfigurationMonitoring.Read.All
+    - Manage: ConfigurationMonitoring.ReadWrite.All
+    - Setup: ConfigurationMonitoring.ReadWrite.All, Application.ReadWrite.All
+
+    The UTCM service principal (AppId: 03b07b79-c5bc-4b5e-9bfa-13acf4a99998)
+    must be provisioned once per tenant using Install-TBServicePrincipal.
+
+API LIMITS
+    - Maximum 30 monitors per tenant
+    - 800 daily monitored resources
+    - 6-hour monitoring cycle
+    - Snapshots expire after 7 days
+
+CMDLETS
+    Connection:
+        Connect-TBTenant           - Connect to Microsoft Graph
+        Disconnect-TBTenant        - Disconnect from Graph
+        Get-TBConnectionStatus     - Check connection state
+
+    Setup:
+        Install-TBServicePrincipal          - Provision UTCM SP
+        Test-TBServicePrincipal             - Check if SP exists
+        Grant-TBServicePrincipalPermission  - Grant workload permissions
+        Get-TBPermissionPlan                - Preview auto/manual permission plan
+
+    Monitor:
+        New-TBMonitor              - Create a monitor
+        Get-TBMonitor              - Get monitors
+        Set-TBMonitor              - Update a monitor
+        Remove-TBMonitor           - Delete a monitor
+        Get-TBMonitorResult        - View run results
+
+    Drift:
+        Get-TBDrift                - List detected drifts
+        Get-TBDriftSummary         - Aggregated drift overview
+
+    Baseline:
+        Get-TBBaseline             - Get monitor baseline
+        Export-TBBaseline          - Export to JSON
+        Import-TBBaseline          - Import from JSON
+
+    Snapshot:
+        New-TBSnapshot             - Create a snapshot
+        Get-TBSnapshot             - Get snapshots
+        Remove-TBSnapshot          - Delete a snapshot
+        Wait-TBSnapshot            - Poll until complete
+        Export-TBSnapshot          - Download snapshot data
+
+    Report:
+        New-TBDriftReport          - Generate drift report
+
+SEE ALSO
+    https://learn.microsoft.com/graph/api/resources/admin-configurationmanagement-overview

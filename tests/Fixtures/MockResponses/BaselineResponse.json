@@ -1,0 +1,28 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#admin/configurationManagement/configurationBaseline",
+    "id": "d2e3f4a5-6789-0bcd-ef12-345678901abc",
+    "displayName": "Contoso Tenant Baseline",
+    "description": "Standard security baseline for Contoso tenant",
+    "parameters": [],
+    "resources": [
+        {
+            "displayName": "Require MFA for All Users",
+            "resourceType": "microsoft.entra.conditionalaccesspolicy",
+            "properties": {
+                "State": "enabled",
+                "GrantControls.BuiltInControls": "[\"mfa\",\"compliantDevice\"]",
+                "Conditions.Users.IncludeUsers": "[\"All\"]",
+                "Conditions.ClientAppTypes": "[\"browser\",\"mobileAppsAndDesktopClients\"]"
+            }
+        },
+        {
+            "displayName": "Accepted Domain",
+            "resourceType": "microsoft.exchange.accepteddomain",
+            "properties": {
+                "Ensure": "Present",
+                "Identity": "contoso.onmicrosoft.com",
+                "DomainType": "Authoritative"
+            }
+        }
+    ]
+}

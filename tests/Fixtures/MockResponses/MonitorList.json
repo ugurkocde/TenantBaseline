@@ -1,0 +1,41 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#admin/configurationManagement/configurationMonitors",
+    "value": [
+        {
+            "id": "bf77ee1e-7750-40cb-8bcd-524dc4cdab02",
+            "displayName": "MFA Required Monitor",
+            "description": "Monitors MFA enforcement across all users",
+            "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+            "status": "active",
+            "monitorRunFrequencyInHours": 6,
+            "mode": "monitorOnly",
+            "createdDateTime": "2024-12-12T09:52:18.7982733Z",
+            "lastModifiedDateTime": "2024-12-12T09:52:18.8274415Z",
+            "createdBy": {
+                "user": {
+                    "id": "823da47e-fc25-48d8-8b5a-6186c760f0df",
+                    "displayName": "Admin User"
+                }
+            },
+            "parameters": {}
+        },
+        {
+            "id": "b166c9cb-db29-438b-95fb-247da1dc72c3",
+            "displayName": "Exchange Accepted Domain Monitor",
+            "description": "Monitors Exchange accepted domain configuration for drift",
+            "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+            "status": "active",
+            "monitorRunFrequencyInHours": 6,
+            "mode": "monitorOnly",
+            "createdDateTime": "2024-12-14T15:30:45.1234567Z",
+            "lastModifiedDateTime": "2025-01-10T08:15:22.9876543Z",
+            "createdBy": {
+                "user": {
+                    "id": "823da47e-fc25-48d8-8b5a-6186c760f0df",
+                    "displayName": "Admin User"
+                }
+            },
+            "parameters": {}
+        }
+    ]
+}

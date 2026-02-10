@@ -1,0 +1,2249 @@
+{
+  "GeneratedOn": "2026-02-08",
+  "Source": "https://json.schemastore.org/utcm-monitor.json",
+  "SchemaVersion": "snapshot-2026-02-08",
+  "ResourceCount": 268,
+  "Resources": [
+    {
+      "Name": "microsoft.entra.administrativeunit",
+      "ShortName": "administrativeunit",
+      "DisplayName": "Administrativeunit",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.application",
+      "ShortName": "application",
+      "DisplayName": "Application",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.attributeset",
+      "ShortName": "attributeset",
+      "DisplayName": "Attributeset",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationcontextclassreference",
+      "ShortName": "authenticationcontextclassreference",
+      "DisplayName": "Authenticationcontextclassreference",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicy",
+      "ShortName": "authenticationmethodpolicy",
+      "DisplayName": "AuthenticationmethodPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicyauthenticator",
+      "ShortName": "authenticationmethodpolicyauthenticator",
+      "DisplayName": "AuthenticationmethodPolicyauthenticator",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicyemail",
+      "ShortName": "authenticationmethodpolicyemail",
+      "DisplayName": "AuthenticationmethodPolicyemail",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicyfido2",
+      "ShortName": "authenticationmethodpolicyfido2",
+      "DisplayName": "AuthenticationmethodPolicy FIDO 2",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicysms",
+      "ShortName": "authenticationmethodpolicysms",
+      "DisplayName": "AuthenticationmethodPolicysms",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicysoftware",
+      "ShortName": "authenticationmethodpolicysoftware",
+      "DisplayName": "AuthenticationmethodPolicysoftware",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicytemporary",
+      "ShortName": "authenticationmethodpolicytemporary",
+      "DisplayName": "AuthenticationmethodPolicytemporary",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicyvoice",
+      "ShortName": "authenticationmethodpolicyvoice",
+      "DisplayName": "AuthenticationmethodPolicyvoice",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationmethodpolicyx509",
+      "ShortName": "authenticationmethodpolicyx509",
+      "DisplayName": "AuthenticationmethodPolicy X.509",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authenticationstrengthpolicy",
+      "ShortName": "authenticationstrengthpolicy",
+      "DisplayName": "AuthenticationstrengthPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.authorizationpolicy",
+      "ShortName": "authorizationpolicy",
+      "DisplayName": "AuthorizationPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.conditionalaccesspolicy",
+      "ShortName": "conditionalaccesspolicy",
+      "DisplayName": "ConditionalaccessPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.crosstenantaccesspolicy",
+      "ShortName": "crosstenantaccesspolicy",
+      "DisplayName": "CrosstenantaccessPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.crosstenantaccesspolicyconfigurationdefault",
+      "ShortName": "crosstenantaccesspolicyconfigurationdefault",
+      "DisplayName": "CrosstenantaccessPolicyconfigurationdefault",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.crosstenantaccesspolicyconfigurationpartner",
+      "ShortName": "crosstenantaccesspolicyconfigurationpartner",
+      "DisplayName": "CrosstenantaccessPolicyconfigurationpartner",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.entitlementmanagementaccesspackage",
+      "ShortName": "entitlementmanagementaccesspackage",
+      "DisplayName": "Entitlementmanagementaccesspackage",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.entitlementmanagementaccesspackageassignmentpolicy",
+      "ShortName": "entitlementmanagementaccesspackageassignmentpolicy",
+      "DisplayName": "EntitlementmanagementaccesspackageassignmentPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.entitlementmanagementaccesspackagecatalog",
+      "ShortName": "entitlementmanagementaccesspackagecatalog",
+      "DisplayName": "Entitlementmanagementaccesspackagecatalog",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.entitlementmanagementaccesspackagecatalogresource",
+      "ShortName": "entitlementmanagementaccesspackagecatalogresource",
+      "DisplayName": "Entitlementmanagementaccesspackagecatalogresource",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.entitlementmanagementconnectedorganization",
+      "ShortName": "entitlementmanagementconnectedorganization",
+      "DisplayName": "Entitlementmanagementconnectedorganization",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.externalidentitypolicy",
+      "ShortName": "externalidentitypolicy",
+      "DisplayName": "ExternalidentityPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.group",
+      "ShortName": "group",
+      "DisplayName": "Group",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.grouplifecyclepolicy",
+      "ShortName": "grouplifecyclepolicy",
+      "DisplayName": "GrouplifecyclePolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.groupsnamingpolicy",
+      "ShortName": "groupsnamingpolicy",
+      "DisplayName": "GroupsnamingPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.groupssettings",
+      "ShortName": "groupssettings",
+      "DisplayName": "Groupssettings",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.namedlocationpolicy",
+      "ShortName": "namedlocationpolicy",
+      "DisplayName": "NamedlocationPolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.roledefinition",
+      "ShortName": "roledefinition",
+      "DisplayName": "Roledefinition",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.roleeligibilityschedulerequest",
+      "ShortName": "roleeligibilityschedulerequest",
+      "DisplayName": "Roleeligibilityschedulerequest",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.rolesetting",
+      "ShortName": "rolesetting",
+      "DisplayName": "Rolesetting",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.securitydefaults",
+      "ShortName": "securitydefaults",
+      "DisplayName": "Securitydefaults",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.serviceprincipal",
+      "ShortName": "serviceprincipal",
+      "DisplayName": "Serviceprincipal",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.socialidentityprovider",
+      "ShortName": "socialidentityprovider",
+      "DisplayName": "Socialidentityprovider",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.tenantdetails",
+      "ShortName": "tenantdetails",
+      "DisplayName": "Tenantdetails",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.tokenlifetimepolicy",
+      "ShortName": "tokenlifetimepolicy",
+      "DisplayName": "TokenlifetimePolicy",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.entra.user",
+      "ShortName": "user",
+      "DisplayName": "User",
+      "WorkloadId": "EntraID",
+      "WorkloadDisplayName": "Entra ID",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.exchange.accepteddomain",
+      "ShortName": "accepteddomain",
+      "DisplayName": "Accepteddomain",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.activesyncdeviceaccessrule",
+      "ShortName": "activesyncdeviceaccessrule",
+      "DisplayName": "Activesyncdeviceaccessrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.addressbookpolicy",
+      "ShortName": "addressbookpolicy",
+      "DisplayName": "AddressbookPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.addresslist",
+      "ShortName": "addresslist",
+      "DisplayName": "Addresslist",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.antiphishpolicy",
+      "ShortName": "antiphishpolicy",
+      "DisplayName": "AntiphishPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.antiphishrule",
+      "ShortName": "antiphishrule",
+      "DisplayName": "Antiphishrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.applicationaccesspolicy",
+      "ShortName": "applicationaccesspolicy",
+      "DisplayName": "ApplicationaccessPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.atppolicyforo365",
+      "ShortName": "atppolicyforo365",
+      "DisplayName": "AtpPolicyforo 365",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.authenticationpolicy",
+      "ShortName": "authenticationpolicy",
+      "DisplayName": "AuthenticationPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.authenticationpolicyassignment",
+      "ShortName": "authenticationpolicyassignment",
+      "DisplayName": "AuthenticationPolicyassignment",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.availabilityaddressspace",
+      "ShortName": "availabilityaddressspace",
+      "DisplayName": "Availabilityaddressspace",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.availabilityconfig",
+      "ShortName": "availabilityconfig",
+      "DisplayName": "Availabilityconfig",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.calendarprocessing",
+      "ShortName": "calendarprocessing",
+      "DisplayName": "Calendarprocessing",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.casmailboxplan",
+      "ShortName": "casmailboxplan",
+      "DisplayName": "Casmailboxplan",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.casmailboxsettings",
+      "ShortName": "casmailboxsettings",
+      "DisplayName": "Casmailboxsettings",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.clientaccessrule",
+      "ShortName": "clientaccessrule",
+      "DisplayName": "Clientaccessrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.dataclassification",
+      "ShortName": "dataclassification",
+      "DisplayName": "Dataclassification",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.dataencryptionpolicy",
+      "ShortName": "dataencryptionpolicy",
+      "DisplayName": "DataencryptionPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.distributiongroup",
+      "ShortName": "distributiongroup",
+      "DisplayName": "Distributiongroup",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.dkimsigningconfig",
+      "ShortName": "dkimsigningconfig",
+      "DisplayName": "DKIMsigningconfig",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.emailaddresspolicy",
+      "ShortName": "emailaddresspolicy",
+      "DisplayName": "EmailaddressPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.eopprotectionpolicyrule",
+      "ShortName": "eopprotectionpolicyrule",
+      "DisplayName": "EopprotectionPolicyrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.externalinoutlook",
+      "ShortName": "externalinoutlook",
+      "DisplayName": "Externalinoutlook",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.globaladdresslist",
+      "ShortName": "globaladdresslist",
+      "DisplayName": "Globaladdresslist",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.groupsettings",
+      "ShortName": "groupsettings",
+      "DisplayName": "Groupsettings",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.hostedconnectionfilterpolicy",
+      "ShortName": "hostedconnectionfilterpolicy",
+      "DisplayName": "HostedconnectionfilterPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.hostedcontentfilterpolicy",
+      "ShortName": "hostedcontentfilterpolicy",
+      "DisplayName": "HostedcontentfilterPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.hostedcontentfilterrule",
+      "ShortName": "hostedcontentfilterrule",
+      "DisplayName": "Hostedcontentfilterrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.hostedoutboundspamfilterpolicy",
+      "ShortName": "hostedoutboundspamfilterpolicy",
+      "DisplayName": "HostedoutboundspamfilterPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.hostedoutboundspamfilterrule",
+      "ShortName": "hostedoutboundspamfilterrule",
+      "DisplayName": "Hostedoutboundspamfilterrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.inboundconnector",
+      "ShortName": "inboundconnector",
+      "DisplayName": "Inboundconnector",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.intraorganizationconnector",
+      "ShortName": "intraorganizationconnector",
+      "DisplayName": "Intraorganizationconnector",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.irmconfiguration",
+      "ShortName": "irmconfiguration",
+      "DisplayName": "Irmconfiguration",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.journalrule",
+      "ShortName": "journalrule",
+      "DisplayName": "Journalrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.mailboxautoreplyconfiguration",
+      "ShortName": "mailboxautoreplyconfiguration",
+      "DisplayName": "Mailboxautoreplyconfiguration",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.mailboxcalendarfolder",
+      "ShortName": "mailboxcalendarfolder",
+      "DisplayName": "Mailboxcalendarfolder",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.mailboxpermission",
+      "ShortName": "mailboxpermission",
+      "DisplayName": "Mailboxpermission",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.mailboxplan",
+      "ShortName": "mailboxplan",
+      "DisplayName": "Mailboxplan",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.mailboxsettings",
+      "ShortName": "mailboxsettings",
+      "DisplayName": "Mailboxsettings",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.mailcontact",
+      "ShortName": "mailcontact",
+      "DisplayName": "Mailcontact",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.mailtips",
+      "ShortName": "mailtips",
+      "DisplayName": "Mailtips",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.malwarefilterpolicy",
+      "ShortName": "malwarefilterpolicy",
+      "DisplayName": "MalwarefilterPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.malwarefilterrule",
+      "ShortName": "malwarefilterrule",
+      "DisplayName": "Malwarefilterrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.managementrole",
+      "ShortName": "managementrole",
+      "DisplayName": "Managementrole",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.managementroleassignment",
+      "ShortName": "managementroleassignment",
+      "DisplayName": "Managementroleassignment",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.managementroleentry",
+      "ShortName": "managementroleentry",
+      "DisplayName": "Managementroleentry",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.messageclassification",
+      "ShortName": "messageclassification",
+      "DisplayName": "Messageclassification",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.mobiledevicemailboxpolicy",
+      "ShortName": "mobiledevicemailboxpolicy",
+      "DisplayName": "MobiledevicemailboxPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.offlineaddressbook",
+      "ShortName": "offlineaddressbook",
+      "DisplayName": "Offlineaddressbook",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.omeconfiguration",
+      "ShortName": "omeconfiguration",
+      "DisplayName": "Omeconfiguration",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.onpremisesorganization",
+      "ShortName": "onpremisesorganization",
+      "DisplayName": "Onpremisesorganization",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.organizationconfig",
+      "ShortName": "organizationconfig",
+      "DisplayName": "Organizationconfig",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.organizationrelationship",
+      "ShortName": "organizationrelationship",
+      "DisplayName": "Organizationrelationship",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.outboundconnector",
+      "ShortName": "outboundconnector",
+      "DisplayName": "Outboundconnector",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.owamailboxpolicy",
+      "ShortName": "owamailboxpolicy",
+      "DisplayName": "OwamailboxPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.partnerapplication",
+      "ShortName": "partnerapplication",
+      "DisplayName": "Partnerapplication",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.perimeterconfiguration",
+      "ShortName": "perimeterconfiguration",
+      "DisplayName": "Perimeterconfiguration",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.place",
+      "ShortName": "place",
+      "DisplayName": "Place",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.policytipconfig",
+      "ShortName": "policytipconfig",
+      "DisplayName": "Policytipconfig",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.quarantinepolicy",
+      "ShortName": "quarantinepolicy",
+      "DisplayName": "QuarantinePolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.recipientpermission",
+      "ShortName": "recipientpermission",
+      "DisplayName": "Recipientpermission",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.remotedomain",
+      "ShortName": "remotedomain",
+      "DisplayName": "Remotedomain",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.reportsubmissionpolicy",
+      "ShortName": "reportsubmissionpolicy",
+      "DisplayName": "ReportsubmissionPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.reportsubmissionrule",
+      "ShortName": "reportsubmissionrule",
+      "DisplayName": "Reportsubmissionrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.resourceconfiguration",
+      "ShortName": "resourceconfiguration",
+      "DisplayName": "Resourceconfiguration",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.roleassignmentpolicy",
+      "ShortName": "roleassignmentpolicy",
+      "DisplayName": "RoleassignmentPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.rolegroup",
+      "ShortName": "rolegroup",
+      "DisplayName": "Rolegroup",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.safeattachmentpolicy",
+      "ShortName": "safeattachmentpolicy",
+      "DisplayName": "SafeattachmentPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.safeattachmentrule",
+      "ShortName": "safeattachmentrule",
+      "DisplayName": "Safeattachmentrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.safelinkspolicy",
+      "ShortName": "safelinkspolicy",
+      "DisplayName": "SafelinksPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.safelinksrule",
+      "ShortName": "safelinksrule",
+      "DisplayName": "Safelinksrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.sharedmailbox",
+      "ShortName": "sharedmailbox",
+      "DisplayName": "Sharedmailbox",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.sharingpolicy",
+      "ShortName": "sharingpolicy",
+      "DisplayName": "SharingPolicy",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.sweeprule",
+      "ShortName": "sweeprule",
+      "DisplayName": "Sweeprule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.transportconfig",
+      "ShortName": "transportconfig",
+      "DisplayName": "Transportconfig",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.exchange.transportrule",
+      "ShortName": "transportrule",
+      "DisplayName": "Transportrule",
+      "WorkloadId": "ExchangeOnline",
+      "WorkloadDisplayName": "Exchange Online",
+      "Provider": "ExchangeOnline"
+    },
+    {
+      "Name": "microsoft.intune.accountprotectionlocalusergroupmembershippolicy",
+      "ShortName": "accountprotectionlocalusergroupmembershippolicy",
+      "DisplayName": "AccountprotectionlocalusergroupmembershipPolicy",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.accountprotectionpolicy",
+      "ShortName": "accountprotectionpolicy",
+      "DisplayName": "AccountprotectionPolicy",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.antiviruspolicywindows10settingcatalog",
+      "ShortName": "antiviruspolicywindows10settingcatalog",
+      "DisplayName": "AntivirusPolicywindows 10settingcatalog",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.appconfigurationpolicy",
+      "ShortName": "appconfigurationpolicy",
+      "DisplayName": "AppconfigurationPolicy",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.applicationcontrolpolicywindows10",
+      "ShortName": "applicationcontrolpolicywindows10",
+      "DisplayName": "ApplicationcontrolPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.appprotectionpolicyandroid",
+      "ShortName": "appprotectionpolicyandroid",
+      "DisplayName": "AppprotectionPolicyandroid",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.appprotectionpolicyios",
+      "ShortName": "appprotectionpolicyios",
+      "DisplayName": "AppprotectionPolicyi OS",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.attacksurfacereductionrulespolicywindows10configmanager",
+      "ShortName": "attacksurfacereductionrulespolicywindows10configmanager",
+      "DisplayName": "AttacksurfacereductionrulesPolicywindows 10configmanager",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceandappmanagementassignmentfilter",
+      "ShortName": "deviceandappmanagementassignmentfilter",
+      "DisplayName": "Deviceandappmanagementassignmentfilter",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.devicecategory",
+      "ShortName": "devicecategory",
+      "DisplayName": "Devicecategory",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.devicecompliancepolicyandroid",
+      "ShortName": "devicecompliancepolicyandroid",
+      "DisplayName": "DevicecompliancePolicyandroid",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.devicecompliancepolicyandroiddeviceowner",
+      "ShortName": "devicecompliancepolicyandroiddeviceowner",
+      "DisplayName": "DevicecompliancePolicyandroiddeviceowner",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.devicecompliancepolicyandroidworkprofile",
+      "ShortName": "devicecompliancepolicyandroidworkprofile",
+      "DisplayName": "DevicecompliancePolicyandroidworkprofile",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.devicecompliancepolicyios",
+      "ShortName": "devicecompliancepolicyios",
+      "DisplayName": "DevicecompliancePolicyi OS",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.devicecompliancepolicymacos",
+      "ShortName": "devicecompliancepolicymacos",
+      "DisplayName": "DevicecompliancePolicymac OS",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.devicecompliancepolicywindows10",
+      "ShortName": "devicecompliancepolicywindows10",
+      "DisplayName": "DevicecompliancePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationadministrativetemplatepolicywindows10",
+      "ShortName": "deviceconfigurationadministrativetemplatepolicywindows10",
+      "DisplayName": "DeviceconfigurationadministrativetemplatePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationcustompolicywindows10",
+      "ShortName": "deviceconfigurationcustompolicywindows10",
+      "DisplayName": "DeviceconfigurationcustomPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationdefenderforendpointonboardingpolicywindows10",
+      "ShortName": "deviceconfigurationdefenderforendpointonboardingpolicywindows10",
+      "DisplayName": "DeviceconfigurationdefenderforendpointonboardingPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationdeliveryoptimizationpolicywindows10",
+      "ShortName": "deviceconfigurationdeliveryoptimizationpolicywindows10",
+      "DisplayName": "DeviceconfigurationdeliveryoptimizationPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationdomainjoinpolicywindows10",
+      "ShortName": "deviceconfigurationdomainjoinpolicywindows10",
+      "DisplayName": "DeviceconfigurationdomainjoinPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationemailprofilepolicywindows10",
+      "ShortName": "deviceconfigurationemailprofilepolicywindows10",
+      "DisplayName": "DeviceconfigurationemailprofilePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationendpointprotectionpolicywindows10",
+      "ShortName": "deviceconfigurationendpointprotectionpolicywindows10",
+      "DisplayName": "DeviceconfigurationendpointprotectionPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationfirmwareinterfacepolicywindows10",
+      "ShortName": "deviceconfigurationfirmwareinterfacepolicywindows10",
+      "DisplayName": "DeviceconfigurationfirmwareinterfacePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationhealthmonitoringconfigurationpolicywindows10",
+      "ShortName": "deviceconfigurationhealthmonitoringconfigurationpolicywindows10",
+      "DisplayName": "DeviceconfigurationhealthmonitoringconfigurationPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationidentityprotectionpolicywindows10",
+      "ShortName": "deviceconfigurationidentityprotectionpolicywindows10",
+      "DisplayName": "DeviceconfigurationidentityprotectionPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationimportedpfxcertificatepolicywindows10",
+      "ShortName": "deviceconfigurationimportedpfxcertificatepolicywindows10",
+      "DisplayName": "DeviceconfigurationimportedpfxcertificatePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationkioskpolicywindows10",
+      "ShortName": "deviceconfigurationkioskpolicywindows10",
+      "DisplayName": "Deviceconfigurationki OSkPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationnetworkboundarypolicywindows10",
+      "ShortName": "deviceconfigurationnetworkboundarypolicywindows10",
+      "DisplayName": "DeviceconfigurationnetworkboundaryPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationpkcscertificatepolicywindows10",
+      "ShortName": "deviceconfigurationpkcscertificatepolicywindows10",
+      "DisplayName": "DeviceconfigurationpkcscertificatePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationpolicyandroiddeviceadministrator",
+      "ShortName": "deviceconfigurationpolicyandroiddeviceadministrator",
+      "DisplayName": "DeviceconfigurationPolicyandroiddeviceadministrator",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationpolicyandroiddeviceowner",
+      "ShortName": "deviceconfigurationpolicyandroiddeviceowner",
+      "DisplayName": "DeviceconfigurationPolicyandroiddeviceowner",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationpolicyandroidopensourceproject",
+      "ShortName": "deviceconfigurationpolicyandroidopensourceproject",
+      "DisplayName": "DeviceconfigurationPolicyandroidopensourceproject",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationpolicyandroidworkprofile",
+      "ShortName": "deviceconfigurationpolicyandroidworkprofile",
+      "DisplayName": "DeviceconfigurationPolicyandroidworkprofile",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationpolicyios",
+      "ShortName": "deviceconfigurationpolicyios",
+      "DisplayName": "DeviceconfigurationPolicyi OS",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationpolicymacos",
+      "ShortName": "deviceconfigurationpolicymacos",
+      "DisplayName": "DeviceconfigurationPolicymac OS",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationpolicywindows10",
+      "ShortName": "deviceconfigurationpolicywindows10",
+      "DisplayName": "DeviceconfigurationPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationscepcertificatepolicywindows10",
+      "ShortName": "deviceconfigurationscepcertificatepolicywindows10",
+      "DisplayName": "DeviceconfigurationscepcertificatePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationsecureassessmentpolicywindows10",
+      "ShortName": "deviceconfigurationsecureassessmentpolicywindows10",
+      "DisplayName": "DeviceconfigurationsecureassessmentPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationsharedmultidevicepolicywindows10",
+      "ShortName": "deviceconfigurationsharedmultidevicepolicywindows10",
+      "DisplayName": "DeviceconfigurationsharedmultidevicePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationtrustedcertificatepolicywindows10",
+      "ShortName": "deviceconfigurationtrustedcertificatepolicywindows10",
+      "DisplayName": "DeviceconfigurationtrustedcertificatePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationvpnpolicywindows10",
+      "ShortName": "deviceconfigurationvpnpolicywindows10",
+      "DisplayName": "DeviceconfigurationvpnPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationwindowsteampolicywindows10",
+      "ShortName": "deviceconfigurationwindowsteampolicywindows10",
+      "DisplayName": "DeviceconfigurationwindowsteamPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceconfigurationwirednetworkpolicywindows10",
+      "ShortName": "deviceconfigurationwirednetworkpolicywindows10",
+      "DisplayName": "DeviceconfigurationwirednetworkPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceenrollmentlimitrestriction",
+      "ShortName": "deviceenrollmentlimitrestriction",
+      "DisplayName": "Deviceenrollmentlimitrestriction",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceenrollmentplatformrestriction",
+      "ShortName": "deviceenrollmentplatformrestriction",
+      "DisplayName": "Deviceenrollmentplatformrestriction",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.deviceenrollmentstatuspagewindows10",
+      "ShortName": "deviceenrollmentstatuspagewindows10",
+      "DisplayName": "Deviceenrollmentstatuspagewindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.endpointdetectionandresponsepolicywindows10",
+      "ShortName": "endpointdetectionandresponsepolicywindows10",
+      "DisplayName": "EndpointdetectionandresponsePolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.exploitprotectionpolicywindows10settingcatalog",
+      "ShortName": "exploitprotectionpolicywindows10settingcatalog",
+      "DisplayName": "ExploitprotectionPolicywindows 10settingcatalog",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.policysets",
+      "ShortName": "policysets",
+      "DisplayName": "Policysets",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.roleassignment",
+      "ShortName": "roleassignment",
+      "DisplayName": "Roleassignment",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.roledefinition",
+      "ShortName": "roledefinition",
+      "DisplayName": "Roledefinition",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.settingcatalogasrrulespolicywindows10",
+      "ShortName": "settingcatalogasrrulespolicywindows10",
+      "DisplayName": "SettingcatalogasrrulesPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.settingcatalogcustompolicywindows10",
+      "ShortName": "settingcatalogcustompolicywindows10",
+      "DisplayName": "SettingcatalogcustomPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.wificonfigurationpolicyandroiddeviceadministrator",
+      "ShortName": "wificonfigurationpolicyandroiddeviceadministrator",
+      "DisplayName": "WificonfigurationPolicyandroiddeviceadministrator",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.wificonfigurationpolicyandroidenterprisedeviceowner",
+      "ShortName": "wificonfigurationpolicyandroidenterprisedeviceowner",
+      "DisplayName": "WificonfigurationPolicyandroidenterprisedeviceowner",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.wificonfigurationpolicyandroidenterpriseworkprofile",
+      "ShortName": "wificonfigurationpolicyandroidenterpriseworkprofile",
+      "DisplayName": "WificonfigurationPolicyandroidenterpriseworkprofile",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.wificonfigurationpolicyandroidforwork",
+      "ShortName": "wificonfigurationpolicyandroidforwork",
+      "DisplayName": "WificonfigurationPolicyandroidforwork",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.wificonfigurationpolicyandroidopensourceproject",
+      "ShortName": "wificonfigurationpolicyandroidopensourceproject",
+      "DisplayName": "WificonfigurationPolicyandroidopensourceproject",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.wificonfigurationpolicyios",
+      "ShortName": "wificonfigurationpolicyios",
+      "DisplayName": "WificonfigurationPolicyi OS",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.wificonfigurationpolicymacos",
+      "ShortName": "wificonfigurationpolicymacos",
+      "DisplayName": "WificonfigurationPolicymac OS",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.wificonfigurationpolicywindows10",
+      "ShortName": "wificonfigurationpolicywindows10",
+      "DisplayName": "WificonfigurationPolicywindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.windowsautopilotdeploymentprofileazureadhybridjoined",
+      "ShortName": "windowsautopilotdeploymentprofileazureadhybridjoined",
+      "DisplayName": "Windowsautopilotdeploymentprofileazureadhybridjoined",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.windowsautopilotdeploymentprofileazureadjoined",
+      "ShortName": "windowsautopilotdeploymentprofileazureadjoined",
+      "DisplayName": "Windowsautopilotdeploymentprofileazureadjoined",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.windowsinformationprotectionpolicywindows10mdmenrolled",
+      "ShortName": "windowsinformationprotectionpolicywindows10mdmenrolled",
+      "DisplayName": "WindowsinformationprotectionPolicywindows 10mdmenrolled",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.windowsupdateforbusinessfeatureupdateprofilewindows10",
+      "ShortName": "windowsupdateforbusinessfeatureupdateprofilewindows10",
+      "DisplayName": "Windowsupdateforbusinessfeatureupdateprofilewindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.intune.windowsupdateforbusinessringupdateprofilewindows10",
+      "ShortName": "windowsupdateforbusinessringupdateprofilewindows10",
+      "DisplayName": "Windowsupdateforbusinessringupdateprofilewindows 10",
+      "WorkloadId": "Intune",
+      "WorkloadDisplayName": "Intune",
+      "Provider": "Graph"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.auditconfigurationpolicy",
+      "ShortName": "auditconfigurationpolicy",
+      "DisplayName": "AuditconfigurationPolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.autosensitivitylabelpolicy",
+      "ShortName": "autosensitivitylabelpolicy",
+      "DisplayName": "AutosensitivitylabelPolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.autosensitivitylabelrule",
+      "ShortName": "autosensitivitylabelrule",
+      "DisplayName": "Autosensitivitylabelrule",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.caseholdpolicy",
+      "ShortName": "caseholdpolicy",
+      "DisplayName": "CaseholdPolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.caseholdrule",
+      "ShortName": "caseholdrule",
+      "DisplayName": "Caseholdrule",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.compliancecase",
+      "ShortName": "compliancecase",
+      "DisplayName": "Compliancecase",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.compliancesearch",
+      "ShortName": "compliancesearch",
+      "DisplayName": "Compliancesearch",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.compliancesearchaction",
+      "ShortName": "compliancesearchaction",
+      "DisplayName": "Compliancesearchaction",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.compliancetag",
+      "ShortName": "compliancetag",
+      "DisplayName": "Compliancetag",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.deviceconditionalaccesspolicy",
+      "ShortName": "deviceconditionalaccesspolicy",
+      "DisplayName": "DeviceconditionalaccessPolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.deviceconfigurationpolicy",
+      "ShortName": "deviceconfigurationpolicy",
+      "DisplayName": "DeviceconfigurationPolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.dlpcompliancepolicy",
+      "ShortName": "dlpcompliancepolicy",
+      "DisplayName": "DlpcompliancePolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.dlpcompliancerule",
+      "ShortName": "dlpcompliancerule",
+      "DisplayName": "Dlpcompliancerule",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.fileplanpropertyauthority",
+      "ShortName": "fileplanpropertyauthority",
+      "DisplayName": "Fileplanpropertyauthority",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.fileplanpropertycategory",
+      "ShortName": "fileplanpropertycategory",
+      "DisplayName": "Fileplanpropertycategory",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.fileplanpropertycitation",
+      "ShortName": "fileplanpropertycitation",
+      "DisplayName": "Fileplanpropertycitation",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.fileplanpropertydepartment",
+      "ShortName": "fileplanpropertydepartment",
+      "DisplayName": "Fileplanpropertydepartment",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.fileplanpropertyreferenceid",
+      "ShortName": "fileplanpropertyreferenceid",
+      "DisplayName": "Fileplanpropertyreferenceid",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.fileplanpropertysubcategory",
+      "ShortName": "fileplanpropertysubcategory",
+      "DisplayName": "Fileplanpropertysubcategory",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.labelpolicy",
+      "ShortName": "labelpolicy",
+      "DisplayName": "LabelPolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.protectionalert",
+      "ShortName": "protectionalert",
+      "DisplayName": "Protectionalert",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.retentioncompliancepolicy",
+      "ShortName": "retentioncompliancepolicy",
+      "DisplayName": "RetentioncompliancePolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.retentioncompliancerule",
+      "ShortName": "retentioncompliancerule",
+      "DisplayName": "Retentioncompliancerule",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.retentioneventtype",
+      "ShortName": "retentioneventtype",
+      "DisplayName": "Retentioneventtype",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.securityfilter",
+      "ShortName": "securityfilter",
+      "DisplayName": "Securityfilter",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.sensitivitylabel",
+      "ShortName": "sensitivitylabel",
+      "DisplayName": "Sensitivitylabel",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.supervisoryreviewpolicy",
+      "ShortName": "supervisoryreviewpolicy",
+      "DisplayName": "SupervisoryreviewPolicy",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.securityandcompliance.supervisoryreviewrule",
+      "ShortName": "supervisoryreviewrule",
+      "DisplayName": "Supervisoryreviewrule",
+      "WorkloadId": "SecurityAndCompliance",
+      "WorkloadDisplayName": "Security and Compliance",
+      "Provider": "SecurityAndCompliance"
+    },
+    {
+      "Name": "microsoft.teams.apppermissionpolicy",
+      "ShortName": "apppermissionpolicy",
+      "DisplayName": "ApppermissionPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.appsetuppolicy",
+      "ShortName": "appsetuppolicy",
+      "DisplayName": "AppsetupPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.audioconferencingpolicy",
+      "ShortName": "audioconferencingpolicy",
+      "DisplayName": "AudioconferencingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.callholdpolicy",
+      "ShortName": "callholdpolicy",
+      "DisplayName": "CallholdPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.callingpolicy",
+      "ShortName": "callingpolicy",
+      "DisplayName": "CallingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.callparkpolicy",
+      "ShortName": "callparkpolicy",
+      "DisplayName": "CallparkPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.callqueue",
+      "ShortName": "callqueue",
+      "DisplayName": "Callqueue",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.channel",
+      "ShortName": "channel",
+      "DisplayName": "Channel",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.channelspolicy",
+      "ShortName": "channelspolicy",
+      "DisplayName": "ChannelsPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.channeltab",
+      "ShortName": "channeltab",
+      "DisplayName": "Channeltab",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.clientconfiguration",
+      "ShortName": "clientconfiguration",
+      "DisplayName": "Clientconfiguration",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.compliancerecordingpolicy",
+      "ShortName": "compliancerecordingpolicy",
+      "DisplayName": "CompliancerecordingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.cortanapolicy",
+      "ShortName": "cortanapolicy",
+      "DisplayName": "CortanaPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.dialinconferencingtenantsettings",
+      "ShortName": "dialinconferencingtenantsettings",
+      "DisplayName": "Dialinconferencingtenantsettings",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.emergencycallingpolicy",
+      "ShortName": "emergencycallingpolicy",
+      "DisplayName": "EmergencycallingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.emergencycallroutingpolicy",
+      "ShortName": "emergencycallroutingpolicy",
+      "DisplayName": "EmergencycallroutingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.enhancedencryptionpolicy",
+      "ShortName": "enhancedencryptionpolicy",
+      "DisplayName": "EnhancedencryptionPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.eventspolicy",
+      "ShortName": "eventspolicy",
+      "DisplayName": "EventsPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.federationconfiguration",
+      "ShortName": "federationconfiguration",
+      "DisplayName": "Federationconfiguration",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.feedbackpolicy",
+      "ShortName": "feedbackpolicy",
+      "DisplayName": "FeedbackPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.filespolicy",
+      "ShortName": "filespolicy",
+      "DisplayName": "FilesPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.grouppolicyassignment",
+      "ShortName": "grouppolicyassignment",
+      "DisplayName": "GroupPolicyassignment",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.guestcallingconfiguration",
+      "ShortName": "guestcallingconfiguration",
+      "DisplayName": "Guestcallingconfiguration",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.guestmeetingconfiguration",
+      "ShortName": "guestmeetingconfiguration",
+      "DisplayName": "Guestmeetingconfiguration",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.guestmessagingconfiguration",
+      "ShortName": "guestmessagingconfiguration",
+      "DisplayName": "Guestmessagingconfiguration",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.ipphonepolicy",
+      "ShortName": "ipphonepolicy",
+      "DisplayName": "IpphonePolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.meetingbroadcastconfiguration",
+      "ShortName": "meetingbroadcastconfiguration",
+      "DisplayName": "Meetingbroadcastconfiguration",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.meetingbroadcastpolicy",
+      "ShortName": "meetingbroadcastpolicy",
+      "DisplayName": "MeetingbroadcastPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.meetingconfiguration",
+      "ShortName": "meetingconfiguration",
+      "DisplayName": "Meetingconfiguration",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.meetingpolicy",
+      "ShortName": "meetingpolicy",
+      "DisplayName": "MeetingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.messagingpolicy",
+      "ShortName": "messagingpolicy",
+      "DisplayName": "MessagingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.mobilitypolicy",
+      "ShortName": "mobilitypolicy",
+      "DisplayName": "MobilityPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.networkroamingpolicy",
+      "ShortName": "networkroamingpolicy",
+      "DisplayName": "NetworkroamingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.onlinevoicemailpolicy",
+      "ShortName": "onlinevoicemailpolicy",
+      "DisplayName": "OnlinevoicemailPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.onlinevoicemailusersettings",
+      "ShortName": "onlinevoicemailusersettings",
+      "DisplayName": "Onlinevoicemailusersettings",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.onlinevoiceuser",
+      "ShortName": "onlinevoiceuser",
+      "DisplayName": "Onlinevoiceuser",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.orgwideappsettings",
+      "ShortName": "orgwideappsettings",
+      "DisplayName": "Orgwideappsettings",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.pstnusage",
+      "ShortName": "pstnusage",
+      "DisplayName": "Pstnusage",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.shiftspolicy",
+      "ShortName": "shiftspolicy",
+      "DisplayName": "ShiftsPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.team",
+      "ShortName": "team",
+      "DisplayName": "Team",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.templatespolicy",
+      "ShortName": "templatespolicy",
+      "DisplayName": "TemplatesPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.tenantdialplan",
+      "ShortName": "tenantdialplan",
+      "DisplayName": "Tenantdialplan",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.tenantnetworkregion",
+      "ShortName": "tenantnetworkregion",
+      "DisplayName": "Tenantnetworkregion",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.tenantnetworksite",
+      "ShortName": "tenantnetworksite",
+      "DisplayName": "Tenantnetworksite",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.tenantnetworksubnet",
+      "ShortName": "tenantnetworksubnet",
+      "DisplayName": "Tenantnetworksubnet",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.tenanttrustedipaddress",
+      "ShortName": "tenanttrustedipaddress",
+      "DisplayName": "Tenanttrustedipaddress",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.translationrule",
+      "ShortName": "translationrule",
+      "DisplayName": "Translationrule",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.unassignednumbertreatment",
+      "ShortName": "unassignednumbertreatment",
+      "DisplayName": "Unassignednumbertreatment",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.updatemanagementpolicy",
+      "ShortName": "updatemanagementpolicy",
+      "DisplayName": "UpdatemanagementPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.upgradeconfiguration",
+      "ShortName": "upgradeconfiguration",
+      "DisplayName": "Upgradeconfiguration",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.upgradepolicy",
+      "ShortName": "upgradepolicy",
+      "DisplayName": "UpgradePolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.user",
+      "ShortName": "user",
+      "DisplayName": "User",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.usercallingsettings",
+      "ShortName": "usercallingsettings",
+      "DisplayName": "Usercallingsettings",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.userpolicyassignment",
+      "ShortName": "userpolicyassignment",
+      "DisplayName": "UserPolicyassignment",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.vdipolicy",
+      "ShortName": "vdipolicy",
+      "DisplayName": "VdiPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.voiceroute",
+      "ShortName": "voiceroute",
+      "DisplayName": "Voiceroute",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.voiceroutingpolicy",
+      "ShortName": "voiceroutingpolicy",
+      "DisplayName": "VoiceroutingPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    },
+    {
+      "Name": "microsoft.teams.workloadpolicy",
+      "ShortName": "workloadpolicy",
+      "DisplayName": "WorkloadPolicy",
+      "WorkloadId": "Teams",
+      "WorkloadDisplayName": "Teams",
+      "Provider": "Teams"
+    }
+  ],
+  "AliasMap": {
+    "microsoft.graph.conditionalAccessPolicy": "microsoft.entra.conditionalaccesspolicy",
+    "microsoft.graph.authenticationMethodsPolicy": "microsoft.entra.authenticationmethodpolicy",
+    "microsoft.graph.fido2AuthenticationMethodConfiguration": "microsoft.entra.authenticationmethodpolicyfido2",
+    "microsoft.graph.microsoftAuthenticatorAuthenticationMethodConfiguration": "microsoft.entra.authenticationmethodpolicyauthenticator",
+    "microsoft.graph.smsAuthenticationMethodConfiguration": "microsoft.entra.authenticationmethodpolicysms",
+    "microsoft.graph.voiceAuthenticationMethodConfiguration": "microsoft.entra.authenticationmethodpolicyvoice",
+    "microsoft.graph.authorizationPolicy": "microsoft.entra.authorizationpolicy",
+    "microsoft.graph.crossTenantAccessPolicyConfigurationDefault": "microsoft.entra.crosstenantaccesspolicyconfigurationdefault",
+    "microsoft.graph.security.antiPhishPolicy": "microsoft.exchange.antiphishpolicy",
+    "microsoft.graph.security.dkimSigningConfig": "microsoft.exchange.dkimsigningconfig",
+    "microsoft.graph.deviceCompliancePolicy": "microsoft.intune.devicecompliancepolicywindows10",
+    "microsoft.entra.authenticationmethodspolicy": "microsoft.entra.authenticationmethodpolicy",
+    "microsoft.entra.authenticationmethodspolicyauthenticator": "microsoft.entra.authenticationmethodpolicyauthenticator",
+    "microsoft.entra.authenticationmethodspolicyemail": "microsoft.entra.authenticationmethodpolicyemail",
+    "microsoft.entra.authenticationmethodspolicyfido2": "microsoft.entra.authenticationmethodpolicyfido2",
+    "microsoft.entra.authenticationmethodspolicysms": "microsoft.entra.authenticationmethodpolicysms",
+    "microsoft.entra.authenticationmethodspolicysoftware": "microsoft.entra.authenticationmethodpolicysoftware",
+    "microsoft.entra.authenticationmethodspolicytemporary": "microsoft.entra.authenticationmethodpolicytemporary",
+    "microsoft.entra.authenticationmethodspolicyvoice": "microsoft.entra.authenticationmethodpolicyvoice",
+    "microsoft.entra.authenticationmethodspolicyx509": "microsoft.entra.authenticationmethodpolicyx509",
+    "microsoft.entra.namedlocation": "microsoft.entra.namedlocationpolicy",
+    "microsoft.entra.permissiongrantpolicy": "microsoft.entra.authorizationpolicy",
+    "microsoft.entra.rolemanagementpolicy": "microsoft.entra.rolesetting",
+    "microsoft.exchange.owaMailboxPolicy": "microsoft.exchange.owamailboxpolicy",
+    "microsoft.exchange.mobilemailboxpolicy": "microsoft.exchange.mobiledevicemailboxpolicy",
+    "microsoft.exchange.messagetracedetail": "microsoft.exchange.messageclassification",
+    "microsoft.teams.mobilityPolicy": "microsoft.teams.mobilitypolicy",
+    "microsoft.teams.onlinevoiceroutingpolicy": "microsoft.teams.voiceroutingpolicy",
+    "microsoft.teams.teamsupgradepolicy": "microsoft.teams.upgradepolicy"
+  },
+  "PermissionProfiles": {
+    "ConditionalAccess": {
+      "WorkloadId": "EntraID",
+      "AutoGrantGraphPermissions": [
+        "Policy.Read.All",
+        "Policy.ReadWrite.ConditionalAccess",
+        "Agreement.Read.All",
+        "Application.Read.All",
+        "Group.Read.All",
+        "RoleManagement.Read.Directory",
+        "User.Read.All",
+        "CustomSecAttributeDefinition.Read.All"
+      ],
+      "ManualSteps": []
+    },
+    "EntraID": {
+      "WorkloadId": "EntraID",
+      "AutoGrantGraphPermissions": [
+        "Policy.Read.All",
+        "Policy.ReadWrite.Authorization",
+        "Policy.Read.AuthenticationMethod",
+        "Policy.ReadWrite.AuthenticationMethod",
+        "Policy.ReadWrite.CrossTenantAccess",
+        "Group.Read.All"
+      ],
+      "ManualSteps": []
+    },
+    "Intune": {
+      "WorkloadId": "Intune",
+      "AutoGrantGraphPermissions": [
+        "Group.Read.All",
+        "DeviceManagementConfiguration.Read.All",
+        "DeviceManagementConfiguration.ReadWrite.All",
+        "DeviceManagementScripts.Read.All"
+      ],
+      "ManualSteps": []
+    },
+    "Teams": {
+      "WorkloadId": "Teams",
+      "AutoGrantGraphPermissions": [],
+      "ManualSteps": [
+        "Assign UTCM service principal the required Teams administrative roles per Microsoft UTCM Teams resource documentation."
+      ]
+    },
+    "ExchangeOnline": {
+      "WorkloadId": "ExchangeOnline",
+      "AutoGrantGraphPermissions": [],
+      "ManualSteps": [
+        "Grant Exchange Online application permissions (for example Exchange.ManageAsApp where required) and required Exchange role groups as documented for each UTCM resource type."
+      ]
+    },
+    "SecurityAndCompliance": {
+      "WorkloadId": "SecurityAndCompliance",
+      "AutoGrantGraphPermissions": [],
+      "ManualSteps": [
+        "Grant Microsoft Purview / Security & Compliance permissions and roles required by the selected UTCM resource types."
+      ]
+    }
+  },
+  "WorkloadDisplayOrder": [
+    "Entra ID",
+    "Exchange Online",
+    "Intune",
+    "Teams",
+    "Security and Compliance"
+  ]
+}

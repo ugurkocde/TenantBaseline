@@ -1,0 +1,19 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#admin/configurationManagement/configurationMonitors/$entity",
+    "id": "bf77ee1e-7750-40cb-8bcd-524dc4cdab02",
+    "displayName": "MFA Required Monitor",
+    "description": "Monitors MFA enforcement across all users",
+    "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+    "status": "active",
+    "monitorRunFrequencyInHours": 6,
+    "mode": "monitorOnly",
+    "createdDateTime": "2024-12-12T09:52:18.7982733Z",
+    "lastModifiedDateTime": "2024-12-12T09:52:18.8274415Z",
+    "createdBy": {
+        "user": {
+            "id": "823da47e-fc25-48d8-8b5a-6186c760f0df",
+            "displayName": "Admin User"
+        }
+    },
+    "parameters": {}
+}

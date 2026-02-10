@@ -1,0 +1,30 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#admin/configurationManagement/configurationMonitoringResults",
+    "value": [
+        {
+            "id": "7a8b9c0d-1234-5678-9abc-def012345678",
+            "monitorId": "bf77ee1e-7750-40cb-8bcd-524dc4cdab02",
+            "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+            "runStatus": "successful",
+            "runInitiationDateTime": "2025-01-20T02:00:00.0000000Z",
+            "runCompletionDateTime": "2025-01-20T02:05:31.4567890Z",
+            "driftsCount": 2,
+            "errorDetails": []
+        },
+        {
+            "id": "8b9c0d1e-2345-6789-abcd-ef0123456789",
+            "monitorId": "b166c9cb-db29-438b-95fb-247da1dc72c3",
+            "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+            "runStatus": "failed",
+            "runInitiationDateTime": "2025-01-20T02:00:00.0000000Z",
+            "runCompletionDateTime": "2025-01-20T02:02:15.1234567Z",
+            "driftsCount": 0,
+            "errorDetails": [
+                {
+                    "errorCode": "Authorization_RequestDenied",
+                    "message": "Insufficient privileges to complete the operation. The calling application must have the required Exchange permissions."
+                }
+            ]
+        }
+    ]
+}

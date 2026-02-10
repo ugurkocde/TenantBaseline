@@ -1,0 +1,23 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#admin/configurationManagement/configurationSnapshots/$entity",
+    "id": "e7a2c4d6-8f10-4b3e-9d5a-1c7f2e8b0a34",
+    "displayName": "Weekly Baseline Snapshot",
+    "description": "Scheduled weekly snapshot of tenant configuration",
+    "tenantId": "96bf81b4-2694-42bb-9204-70081135ca61",
+    "status": "succeeded",
+    "createdDateTime": "2025-01-20T02:00:00.0000000Z",
+    "completedDateTime": "2025-01-20T02:15:43.7654321Z",
+    "createdBy": {
+        "user": {
+            "id": "823da47e-fc25-48d8-8b5a-6186c760f0df",
+            "displayName": "Admin User"
+        }
+    },
+    "resources": [
+        "microsoft.exchange.accepteddomain",
+        "microsoft.entra.conditionalaccesspolicy",
+        "microsoft.exchange.transportrule"
+    ],
+    "resourceLocation": "https://graph.microsoft.com/beta/admin/configurationManagement/configurationSnapshots/e7a2c4d6-8f10-4b3e-9d5a-1c7f2e8b0a34/content",
+    "errorDetails": []
+}

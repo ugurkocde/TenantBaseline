@@ -1,0 +1,4 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#tenantRelationships/managedTenants/managedDeviceComplianceTrends",
+    "value": []
+}

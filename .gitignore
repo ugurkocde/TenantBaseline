@@ -1,0 +1,26 @@
+# PowerShell module output
+*.nupkg
+output/
+
+# IDE
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+build/output/
+publish/
+
+# Test results
+testResults.xml
+coverage.xml
+
+# Playwright MCP
+.playwright-mcp/
+
+# Secrets / environment
+*.env
+local.settings.json

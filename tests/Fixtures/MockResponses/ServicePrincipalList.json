@@ -1,0 +1,42 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#servicePrincipals",
+    "value": [
+        {
+            "id": "9c0d1e2f-3456-7890-abcd-ef0123456789",
+            "appId": "03b07b79-c5bc-4b5e-9bfa-13acf4a99998",
+            "displayName": "Microsoft UTCM",
+            "appRoles": [
+                {
+                    "allowedMemberTypes": [
+                        "Application"
+                    ],
+                    "description": "Allows the app to read and write tenant baseline configurations.",
+                    "displayName": "TenantBaseline.ReadWrite.All",
+                    "id": "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+                    "isEnabled": true,
+                    "value": "TenantBaseline.ReadWrite.All"
+                },
+                {
+                    "allowedMemberTypes": [
+                        "Application"
+                    ],
+                    "description": "Allows the app to read tenant baseline configurations.",
+                    "displayName": "TenantBaseline.Read.All",
+                    "id": "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+                    "isEnabled": true,
+                    "value": "TenantBaseline.Read.All"
+                },
+                {
+                    "allowedMemberTypes": [
+                        "Application"
+                    ],
+                    "description": "Allows the app to manage tenant baseline monitors.",
+                    "displayName": "TenantBaseline.Monitor.Manage",
+                    "id": "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
+                    "isEnabled": true,
+                    "value": "TenantBaseline.Monitor.Manage"
+                }
+            ]
+        }
+    ]
+}
