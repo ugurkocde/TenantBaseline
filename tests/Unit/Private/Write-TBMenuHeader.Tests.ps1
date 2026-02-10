@@ -51,6 +51,7 @@ Describe 'Write-TBMenuHeader' {
         It 'Runs without throwing and omits rich details by default' {
             Mock -ModuleName TenantBaseline Write-Host {}
             Mock -ModuleName TenantBaseline Test-TBArrowKeySupport { return $false }
+            Mock -ModuleName TenantBaseline Get-TBConsoleInnerWidth { return 80 }
             Mock -ModuleName TenantBaseline Get-TBConnectionStatus { return [PSCustomObject]@{ Connected = $false; TenantId = $null } }
 
             {
