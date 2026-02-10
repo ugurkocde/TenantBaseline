@@ -13,7 +13,7 @@ on:
 env:
   MODULE_NAME: TenantBaseline
   MODULE_PATH: ./src/TenantBaseline
-  EXPECTED_COMMAND_COUNT: 27
+  EXPECTED_COMMAND_COUNT: 26
 
 permissions:
   contents: write
@@ -64,12 +64,17 @@ jobs:
         shell: pwsh
         run: |
           Import-Module $env:MODULE_PATH/$env:MODULE_NAME.psd1 -Force
-          $commands = Get-Command -Module $env:MODULE_NAME
-          Write-Host "Exported commands: $($commands.Count)"
+          $commands = Get-Command -Module $env:MODULE_NAME -CommandType Function
+          Write-Host "Exported functions: $($commands.Count)"
           $commands | Format-Table Name, CommandType -AutoSize
           if ($commands.Count -ne $env:EXPECTED_COMMAND_COUNT) {
-              throw "Expected $env:EXPECTED_COMMAND_COUNT exported commands, got $($commands.Count)"
+              throw "Expected $env:EXPECTED_COMMAND_COUNT exported functions, got $($commands.Count)"
           }
+          $alias = Get-Alias -Name TenantBaseline -ErrorAction SilentlyContinue
+          if (-not $alias) {
+              throw "Expected 'TenantBaseline' alias to be exported"
+          }
+          Write-Host "Alias 'TenantBaseline' -> $($alias.ReferencedCommand.Name)"
 
   publish:
     name: Publish to PSGallery

@@ -80,9 +80,33 @@ git clone https://github.com/ugurkocde/TenantBaseline.git
 Import-Module ./tenantbaseline/src/TenantBaseline/TenantBaseline.psd1
 ```
 
+**Updating to a newer version:**
+
+```powershell
+Update-Module -Name TenantBaseline
+```
+
+`Update-Module` installs the new version side-by-side and does not remove older versions. To clean up previous versions after updating:
+
+```powershell
+# Remove all older versions, keeping only the latest
+Get-InstalledModule -Name TenantBaseline -AllVersions |
+    Sort-Object Version -Descending |
+    Select-Object -Skip 1 |
+    Uninstall-Module -Force
+```
+
 ---
 
 ## Quick Start
+
+After installing, launch the interactive management console:
+
+```powershell
+TenantBaseline
+```
+
+Or use individual commands:
 
 ```powershell
 # Connect with setup permissions (first time only)
