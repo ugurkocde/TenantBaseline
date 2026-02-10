@@ -69,6 +69,7 @@ Describe 'Write-TBMenuHeader' {
         It 'Renders version, author, link, use-cases, and features' {
             Mock -ModuleName TenantBaseline Write-Host {}
             Mock -ModuleName TenantBaseline Test-TBArrowKeySupport { return $false }
+            Mock -ModuleName TenantBaseline Get-TBConsoleInnerWidth { return 80 }
             Mock -ModuleName TenantBaseline Get-TBConnectionStatus { return [PSCustomObject]@{ Connected = $false; TenantId = $null } }
 
             InModuleScope TenantBaseline {
@@ -88,6 +89,7 @@ Describe 'Write-TBMenuHeader' {
         It 'Shows connected status and friendly tenant label' {
             Mock -ModuleName TenantBaseline Write-Host {}
             Mock -ModuleName TenantBaseline Test-TBArrowKeySupport { return $false }
+            Mock -ModuleName TenantBaseline Get-TBConsoleInnerWidth { return 80 }
             Mock -ModuleName TenantBaseline Get-TBConnectionStatus {
                 return [PSCustomObject]@{
                     Connected                = $true
@@ -111,6 +113,7 @@ Describe 'Write-TBMenuHeader' {
         It 'Runs without throwing and includes rich detail lines' {
             Mock -ModuleName TenantBaseline Write-Host {}
             Mock -ModuleName TenantBaseline Test-TBArrowKeySupport { return $true }
+            Mock -ModuleName TenantBaseline Get-TBConsoleInnerWidth { return 80 }
             Mock -ModuleName TenantBaseline Get-TBColorPalette {
                 return @{
                     Text = ''; Subtext = ''; Dim = ''; Blue = ''; Green = ''; Red = ''
@@ -141,6 +144,7 @@ Describe 'Write-TBMenuHeader' {
         It 'Uses friendly identity label in premium status line' {
             Mock -ModuleName TenantBaseline Write-Host {}
             Mock -ModuleName TenantBaseline Test-TBArrowKeySupport { return $true }
+            Mock -ModuleName TenantBaseline Get-TBConsoleInnerWidth { return 80 }
             Mock -ModuleName TenantBaseline Get-TBColorPalette {
                 return @{
                     Text = ''; Subtext = ''; Dim = ''; Blue = ''; Green = ''; Red = ''
