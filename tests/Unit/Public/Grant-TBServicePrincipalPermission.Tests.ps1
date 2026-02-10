@@ -14,6 +14,7 @@ Describe 'Grant-TBServicePrincipalPermission' {
         Mock -ModuleName TenantBaseline Test-TBGraphConnection { return $true }
         Mock -ModuleName TenantBaseline Write-TBLog {}
         Mock -ModuleName TenantBaseline Get-MgContext { return $null }
+        Mock -ModuleName TenantBaseline Get-TBGraphBaseUri { return 'https://graph.microsoft.com' }
         Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { throw 'Should not be called in this test path.' }
         Mock -ModuleName TenantBaseline Get-TBPermissionPlan {
             [PSCustomObject]@{

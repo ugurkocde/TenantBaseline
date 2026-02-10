@@ -13,6 +13,7 @@ Describe 'Install-TBServicePrincipal' {
     BeforeEach {
         Mock -ModuleName TenantBaseline Test-TBGraphConnection { return $true }
         Mock -ModuleName TenantBaseline Write-TBLog {}
+        Mock -ModuleName TenantBaseline Get-TBGraphBaseUri { return 'https://graph.microsoft.com' }
         Mock -ModuleName TenantBaseline Grant-TBServicePrincipalPermission {
             [PSCustomObject]@{
                 ManualSteps              = @()

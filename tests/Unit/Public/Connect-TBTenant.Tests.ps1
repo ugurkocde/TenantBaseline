@@ -18,11 +18,13 @@ Describe 'Connect-TBTenant' {
                 PrimaryDomain     = 'contoso.onmicrosoft.com'
             }
         }
+        Mock -ModuleName TenantBaseline Get-TBGraphBaseUri { return 'https://graph.microsoft.com' }
         Mock -ModuleName TenantBaseline Get-MgContext {
             return [PSCustomObject]@{
-                TenantId = '96bf81b4-2694-42bb-9204-70081135ca61'
-                Account  = 'admin@contoso.onmicrosoft.com'
-                Scopes   = @('ConfigurationMonitoring.ReadWrite.All')
+                TenantId    = '96bf81b4-2694-42bb-9204-70081135ca61'
+                Account     = 'admin@contoso.onmicrosoft.com'
+                Scopes      = @('ConfigurationMonitoring.ReadWrite.All')
+                Environment = 'Global'
             }
         }
     }
@@ -145,6 +147,41 @@ Describe 'Connect-TBTenant' {
             Mock -ModuleName TenantBaseline Connect-MgGraph { throw 'Auth failed' }
 
             { Connect-TBTenant } | Should -Throw
+        }
+    }
+
+    Context 'Environment parameter' {
+
+        It 'Passes Environment to Connect-MgGraph' {
+            Connect-TBTenant -Environment USGov
+
+            Should -Invoke -CommandName Connect-MgGraph -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $Environment -eq 'USGov'
+            }
+        }
+
+        It 'Defaults to Global environment' {
+            Connect-TBTenant
+
+            Should -Invoke -CommandName Connect-MgGraph -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $Environment -eq 'Global'
+            }
+        }
+
+        It 'Stores Environment in TBConnection' {
+            Connect-TBTenant -Environment USGov
+
+            $conn = InModuleScope TenantBaseline { $script:TBConnection }
+            $conn.Environment | Should -Be 'USGov'
+        }
+
+        It 'Updates TBApiBaseUri after connection' {
+            Mock -ModuleName TenantBaseline Get-TBGraphBaseUri { return 'https://graph.microsoft.us' }
+
+            Connect-TBTenant -Environment USGov
+
+            $uri = InModuleScope TenantBaseline { $script:TBApiBaseUri }
+            $uri | Should -Be 'https://graph.microsoft.us/beta/admin/configurationManagement'
         }
     }
 }

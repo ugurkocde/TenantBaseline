@@ -30,6 +30,7 @@ function Get-TBConnectionStatus {
             PrimaryDomain             = $null
             IdentityLabel             = $null
             DirectoryMetadataEnabled  = $false
+            Environment               = $null
         }
     }
 
@@ -82,6 +83,11 @@ function Get-TBConnectionStatus {
         $identityLabel = 'Unknown Tenant'
     }
 
+    $environment = $null
+    if ($connectionState -and $connectionState.PSObject.Properties['Environment']) {
+        $environment = $connectionState.Environment
+    }
+
     return [PSCustomObject]@{
         Connected                = $true
         TenantId                 = $context.TenantId
@@ -92,5 +98,6 @@ function Get-TBConnectionStatus {
         PrimaryDomain            = $primaryDomain
         IdentityLabel            = $identityLabel
         DirectoryMetadataEnabled = $directoryMetadataEnabled
+        Environment              = $environment
     }
 }

@@ -19,6 +19,31 @@ function Start-TBInteractive {
     $lastError = $null
     $connectedDuringThisLaunch = $false
     while ($true) {
+        # Check for an existing Graph session first
+        try {
+            $existingContext = Get-MgContext
+        }
+        catch {
+            $existingContext = $null
+        }
+
+        if ($existingContext -and $existingContext.TenantId) {
+            # Adopt the existing session -- update the API base URI to match the environment
+            $script:TBApiBaseUri = "$(Get-TBGraphBaseUri)/beta/admin/configurationManagement"
+            $existingEnv = if ($existingContext.Environment) { $existingContext.Environment } else { 'Global' }
+            $script:TBConnection = [PSCustomObject]@{
+                TenantId                 = $existingContext.TenantId
+                Account                  = $existingContext.Account
+                Scopes                   = $existingContext.Scopes
+                ConnectedAt              = Get-Date
+                DirectoryMetadataEnabled = $false
+                TenantDisplayName        = $null
+                PrimaryDomain            = $null
+                Environment              = $existingEnv
+            }
+            break
+        }
+
         $status = Get-TBConnectionStatus
         if ($status.Connected) {
             break
@@ -45,6 +70,41 @@ function Start-TBInteractive {
             catch {
                 $lastError = $_.Exception.Message
                 Write-Host ('  Connection failed: {0}' -f $lastError) -ForegroundColor Red
+                Write-Host ''
+                Write-Host '  Are you connecting to a government or national cloud?' -ForegroundColor Yellow
+                Write-Host '  [1] Yes - GCC High (USGov)' -ForegroundColor Cyan
+                Write-Host '  [2] Yes - DoD (USGovDoD)' -ForegroundColor Cyan
+                Write-Host '  [3] Yes - China (21Vianet)' -ForegroundColor Cyan
+                Write-Host '  [4] No - retry Global sign-in' -ForegroundColor Cyan
+                Write-Host '  [5] Exit' -ForegroundColor Cyan
+
+                $cloudChoice = Read-Host -Prompt '  Choose an option (1-5)'
+                $selectedEnv = $null
+                switch -Regex ($cloudChoice) {
+                    '^1' { $selectedEnv = 'USGov' }
+                    '^2' { $selectedEnv = 'USGovDoD' }
+                    '^3' { $selectedEnv = 'China' }
+                    '^4' { continue }
+                    '^5' {
+                        Write-Host ''
+                        Write-Host '  Exiting interactive mode.' -ForegroundColor DarkGray
+                        Write-Host ''
+                        return
+                    }
+                    default { continue }
+                }
+
+                if ($selectedEnv) {
+                    try {
+                        Connect-TBTenant -Environment $selectedEnv
+                        $lastError = $null
+                        $connectedDuringThisLaunch = $true
+                    }
+                    catch {
+                        $lastError = $_.Exception.Message
+                        Write-Host ('  Connection failed: {0}' -f $lastError) -ForegroundColor Red
+                    }
+                }
             }
             continue
         }

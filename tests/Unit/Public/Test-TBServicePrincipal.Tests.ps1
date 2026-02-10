@@ -13,6 +13,7 @@ Describe 'Test-TBServicePrincipal' {
     BeforeEach {
         Mock -ModuleName TenantBaseline Test-TBGraphConnection {}
         Mock -ModuleName TenantBaseline Write-TBLog {}
+        Mock -ModuleName TenantBaseline Get-TBGraphBaseUri { return 'https://graph.microsoft.com' }
     }
 
     Context 'Service principal exists' {

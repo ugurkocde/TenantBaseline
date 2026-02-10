@@ -5,6 +5,24 @@ All notable changes to the TenantBaseline module will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 2026-02-10
+
+### Added
+- GCC High and national cloud support: `Connect-TBTenant -Environment USGov|USGovDoD|China`
+- New private helper `Get-TBGraphBaseUri` maps the active Graph session environment to the correct API host
+- `Environment` field on `Get-TBConnectionStatus` output
+- Interactive console auto-detects existing `Get-MgContext` sessions and adopts their environment
+- GCC High recovery prompt in `Start-TBInteractive` when Global sign-in fails
+- Connection status panel shows cloud environment label for non-Global connections
+- Reconnect flows (sign-in and metadata consent) preserve the stored environment
+
+### Changed
+- All hardcoded `graph.microsoft.com` URIs in Setup and Connection functions replaced with dynamic `Get-TBGraphBaseUri` calls
+- `Connect-TBTenant` now passes `-Environment` to `Connect-MgGraph` and updates `$script:TBApiBaseUri` after connection
+
+### Fixed
+- Connections to GCC High, DoD, and China tenants now route API calls to the correct national cloud endpoint (fixes #1)
+
 ## [0.1.5] - 2026-02-10
 
 ### Removed

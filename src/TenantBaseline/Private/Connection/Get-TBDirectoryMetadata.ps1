@@ -19,7 +19,7 @@ function Get-TBDirectoryMetadata {
             $organization = Get-MgOrganization -Property DisplayName -ErrorAction Stop | Select-Object -First 1
         }
         else {
-            $orgResponse = Invoke-MgGraphRequest -Uri 'https://graph.microsoft.com/v1.0/organization?$select=displayName' -Method GET -ErrorAction Stop
+            $orgResponse = Invoke-MgGraphRequest -Uri "$(Get-TBGraphBaseUri)/v1.0/organization?`$select=displayName" -Method GET -ErrorAction Stop
             if ($orgResponse.value) {
                 $organization = @($orgResponse.value)[0]
             }
@@ -42,7 +42,7 @@ function Get-TBDirectoryMetadata {
             $domain = Get-MgDomain -Filter 'isDefault eq true' -Property Id,IsDefault -ErrorAction Stop | Select-Object -First 1
         }
         else {
-            $domainResponse = Invoke-MgGraphRequest -Uri "https://graph.microsoft.com/v1.0/domains?`$filter=isDefault eq true&`$select=id,isDefault" -Method GET -ErrorAction Stop
+            $domainResponse = Invoke-MgGraphRequest -Uri "$(Get-TBGraphBaseUri)/v1.0/domains?`$filter=isDefault eq true&`$select=id,isDefault" -Method GET -ErrorAction Stop
             if ($domainResponse.value) {
                 $domain = @($domainResponse.value)[0]
             }

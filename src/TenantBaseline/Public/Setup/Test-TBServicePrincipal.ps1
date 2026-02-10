@@ -20,7 +20,7 @@ function Test-TBServicePrincipal {
     $appId = $script:UTCMAppId
 
     try {
-        $filterUri = "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=appId eq '$appId'"
+        $filterUri = "$(Get-TBGraphBaseUri)/v1.0/servicePrincipals?`$filter=appId eq '$appId'"
         $response = Invoke-TBGraphRequest -Uri $filterUri -Method 'GET'
 
         $items = $null

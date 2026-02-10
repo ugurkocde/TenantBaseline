@@ -70,7 +70,7 @@ function Install-TBServicePrincipal {
     # Check if already exists
     $existing = $null
     try {
-        $filterUri = "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=appId eq '$appId'"
+        $filterUri = "$(Get-TBGraphBaseUri)/v1.0/servicePrincipals?`$filter=appId eq '$appId'"
         $response = Invoke-TBGraphRequest -Uri $filterUri -Method 'GET'
 
         $items = $null
@@ -143,7 +143,7 @@ function Install-TBServicePrincipal {
             appId = $appId
         }
 
-        $createUri = 'https://graph.microsoft.com/v1.0/servicePrincipals'
+        $createUri = "$(Get-TBGraphBaseUri)/v1.0/servicePrincipals"
         $result = Invoke-TBGraphRequest -Uri $createUri -Method 'POST' -Body $body
 
         $spId = if ($result -is [hashtable]) { $result['id'] } else { $result.id }

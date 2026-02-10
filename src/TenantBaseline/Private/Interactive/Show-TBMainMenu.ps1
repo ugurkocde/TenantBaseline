@@ -174,6 +174,15 @@ function Show-TBConnectionStatusPanel {
             Write-Host ('  Organization:      {0}' -f $identityLabel) -ForegroundColor White
             Write-Host ('  Account:           {0}' -f $status.Account) -ForegroundColor White
             Write-Host ('  Connected At:      {0}' -f $status.ConnectedAt) -ForegroundColor White
+            if ($status.Environment -and $status.Environment -ne 'Global') {
+                $envLabel = switch ($status.Environment) {
+                    'USGov'    { 'USGov (GCC High)' }
+                    'USGovDoD' { 'USGovDoD (DoD)' }
+                    'China'    { 'China (21Vianet)' }
+                    default    { $status.Environment }
+                }
+                Write-Host ('  Environment:       {0}' -f $envLabel) -ForegroundColor Yellow
+            }
 
             if ($showTechnicalDetails) {
                 Write-Host ''
@@ -230,8 +239,12 @@ function Show-TBConnectionStatusPanel {
         }
 
         if (($choice -match '^[Ss]') -and -not $status.Connected) {
+            $signInParams = @{}
+            if ($status.Environment) {
+                $signInParams['Environment'] = $status.Environment
+            }
             try {
-                Connect-TBTenant | Out-Null
+                Connect-TBTenant @signInParams | Out-Null
             }
             catch {
                 Write-Host ('  Sign-in failed: {0}' -f $_.Exception.Message) -ForegroundColor Red
@@ -248,6 +261,9 @@ function Show-TBConnectionStatusPanel {
             }
             if ($status.TenantId) {
                 $connectParams['TenantId'] = $status.TenantId
+            }
+            if ($status.Environment) {
+                $connectParams['Environment'] = $status.Environment
             }
 
             try {

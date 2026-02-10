@@ -62,7 +62,7 @@ function Grant-TBServicePrincipalPermission {
 
     # Find the UTCM service principal
     $appId = $script:UTCMAppId
-    $filterUri = "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=appId eq '$appId'"
+    $filterUri = "$(Get-TBGraphBaseUri)/v1.0/servicePrincipals?`$filter=appId eq '$appId'"
     $spResponse = Invoke-TBGraphRequest -Uri $filterUri -Method 'GET'
 
     $spItems = $null
@@ -82,7 +82,7 @@ function Grant-TBServicePrincipalPermission {
 
     # Find Microsoft Graph service principal to get role IDs
     $graphAppId = '00000003-0000-0000-c000-000000000000'
-    $graphFilterUri = "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=appId eq '$graphAppId'"
+    $graphFilterUri = "$(Get-TBGraphBaseUri)/v1.0/servicePrincipals?`$filter=appId eq '$graphAppId'"
     $graphSpResponse = Invoke-TBGraphRequest -Uri $graphFilterUri -Method 'GET'
 
     $graphItems = $null
@@ -105,7 +105,7 @@ function Grant-TBServicePrincipalPermission {
     # avoid duplicate POST attempts that often surface as generic BadRequest.
     $existingGraphRoleAssignments = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     try {
-        $assignmentUri = 'https://graph.microsoft.com/v1.0/servicePrincipals/{0}/appRoleAssignments' -f $spId
+        $assignmentUri = "$(Get-TBGraphBaseUri)/v1.0/servicePrincipals/{0}/appRoleAssignments" -f $spId
         $assignments = Invoke-TBGraphPagedRequest -Uri $assignmentUri
         foreach ($assignment in @($assignments)) {
             $assignmentResourceId = if ($assignment -is [hashtable]) { $assignment['resourceId'] } else { $assignment.resourceId }
@@ -159,7 +159,7 @@ function Grant-TBServicePrincipalPermission {
                     appRoleId   = $roleId
                 }
 
-                $grantUri = 'https://graph.microsoft.com/v1.0/servicePrincipals/{0}/appRoleAssignments' -f $spId
+                $grantUri = "$(Get-TBGraphBaseUri)/v1.0/servicePrincipals/{0}/appRoleAssignments" -f $spId
                 $null = Invoke-TBGraphRequest -Uri $grantUri -Method 'POST' -Body $body
                 Write-TBLog -Message ('Granted permission: {0}' -f $permission)
                 $grantedCount++

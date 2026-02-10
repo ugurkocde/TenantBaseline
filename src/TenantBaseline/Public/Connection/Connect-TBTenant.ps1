@@ -5,6 +5,9 @@ function Connect-TBTenant {
     .DESCRIPTION
         Wraps Connect-MgGraph to establish a delegated authentication session
         with the minimum scopes needed for tenant configuration management.
+        Supports national/government cloud environments via the -Environment
+        parameter. After a successful connection the module-scoped API base URI
+        is updated automatically based on the active Graph environment.
     .PARAMETER TenantId
         The tenant ID to connect to. If not specified, uses the default tenant.
     .PARAMETER Scenario
@@ -18,15 +21,24 @@ function Connect-TBTenant {
         Requests optional directory metadata scopes (Organization.Read.All and
         Domain.Read.All) and attempts to resolve tenant display name and
         primary domain for friendly identity labels.
+    .PARAMETER Environment
+        The Microsoft Graph cloud environment to connect to:
+        - Global (default): Commercial cloud
+        - USGov: GCC High (graph.microsoft.us)
+        - USGovDoD: DoD (dod-graph.microsoft.us)
+        - China: 21Vianet (microsoftgraph.chinacloudapi.cn)
     .EXAMPLE
         Connect-TBTenant
-        Connects with Manage scopes.
+        Connects with Manage scopes to the Global cloud.
     .EXAMPLE
         Connect-TBTenant -Scenario Setup
         Connects with setup scopes required for service principal provisioning.
     .EXAMPLE
         Connect-TBTenant -TenantId 'contoso.onmicrosoft.com'
         Connects to a specific tenant.
+    .EXAMPLE
+        Connect-TBTenant -Environment USGov
+        Connects to a GCC High tenant.
     #>
     [CmdletBinding()]
     param(
@@ -41,7 +53,11 @@ function Connect-TBTenant {
         [string[]]$Scopes,
 
         [Parameter()]
-        [switch]$IncludeDirectoryMetadata
+        [switch]$IncludeDirectoryMetadata,
+
+        [Parameter()]
+        [ValidateSet('Global', 'USGov', 'USGovDoD', 'China')]
+        [string]$Environment = 'Global'
     )
 
     $defaultScopes = switch ($Scenario) {
@@ -64,11 +80,12 @@ function Connect-TBTenant {
     }
     $allScopes = $allScopes | Select-Object -Unique
 
-    Write-TBLog -Message ('Connecting to Microsoft Graph with scopes: {0}' -f ($allScopes -join ', '))
+    Write-TBLog -Message ('Connecting to Microsoft Graph ({0}) with scopes: {1}' -f $Environment, ($allScopes -join ', '))
 
     $connectParams = @{
-        Scopes = $allScopes
-        NoWelcome = $true
+        Scopes      = $allScopes
+        NoWelcome   = $true
+        Environment = $Environment
     }
 
     if ($TenantId) {
@@ -78,6 +95,8 @@ function Connect-TBTenant {
     try {
         Connect-MgGraph @connectParams
         $context = Get-MgContext
+
+        $script:TBApiBaseUri = "$(Get-TBGraphBaseUri)/beta/admin/configurationManagement"
 
         $tenantDisplayName = $null
         $primaryDomain = $null
@@ -102,6 +121,7 @@ function Connect-TBTenant {
             DirectoryMetadataEnabled = [bool]$IncludeDirectoryMetadata
             TenantDisplayName        = $tenantDisplayName
             PrimaryDomain            = $primaryDomain
+            Environment              = $Environment
         }
 
         Write-TBLog -Message ('Connected to tenant {0} as {1}' -f $context.TenantId, $context.Account)
