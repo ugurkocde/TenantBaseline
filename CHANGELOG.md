@@ -5,6 +5,17 @@ All notable changes to the TenantBaseline module will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 2026-02-10
+
+### Removed
+- 3 undocumented Entra ID resource types: attributeset, groupsnamingpolicy, groupssettings
+- 9 undocumented Exchange Online resource types: addressbookpolicy, addresslist, clientaccessrule, eopprotectionpolicyrule, externalinoutlook, globaladdresslist, managementroleentry, offlineaddressbook, sweeprule
+- 4 undocumented Security and Compliance resource types: auditconfigurationpolicy, autosensitivitylabelrule, dlpcompliancerule, sensitivitylabel
+- 4 undocumented Teams resource types: channel, channeltab, orgwideappsettings, team
+
+### Changed
+- UTCM catalog now contains 249 resource types (was 269), verified against official Microsoft documentation for all workloads
+
 ## [0.1.4] - 2026-02-10
 
 ### Added

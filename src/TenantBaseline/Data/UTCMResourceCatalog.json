@@ -2,7 +2,7 @@
   "GeneratedOn": "2026-02-08",
   "Source": "https://json.schemastore.org/utcm-monitor.json",
   "SchemaVersion": "snapshot-2026-02-08",
-  "ResourceCount": 269,
+  "ResourceCount": 249,
   "Resources": [
     {
       "Name": "microsoft.entra.administrativeunit",
@@ -16,14 +16,6 @@
       "Name": "microsoft.entra.application",
       "ShortName": "application",
       "DisplayName": "Application",
-      "WorkloadId": "EntraID",
-      "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
-    },
-    {
-      "Name": "microsoft.entra.attributeset",
-      "ShortName": "attributeset",
-      "DisplayName": "Attributeset",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
       "Provider": "Graph"
@@ -221,22 +213,6 @@
       "Provider": "Graph"
     },
     {
-      "Name": "microsoft.entra.groupsnamingpolicy",
-      "ShortName": "groupsnamingpolicy",
-      "DisplayName": "GroupsnamingPolicy",
-      "WorkloadId": "EntraID",
-      "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
-    },
-    {
-      "Name": "microsoft.entra.groupssettings",
-      "ShortName": "groupssettings",
-      "DisplayName": "Groupssettings",
-      "WorkloadId": "EntraID",
-      "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
-    },
-    {
       "Name": "microsoft.entra.namedlocationpolicy",
       "ShortName": "namedlocationpolicy",
       "DisplayName": "NamedlocationPolicy",
@@ -333,22 +309,6 @@
       "Provider": "ExchangeOnline"
     },
     {
-      "Name": "microsoft.exchange.addressbookpolicy",
-      "ShortName": "addressbookpolicy",
-      "DisplayName": "AddressbookPolicy",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
-      "Name": "microsoft.exchange.addresslist",
-      "ShortName": "addresslist",
-      "DisplayName": "Addresslist",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
       "Name": "microsoft.exchange.antiphishpolicy",
       "ShortName": "antiphishpolicy",
       "DisplayName": "AntiphishPolicy",
@@ -437,14 +397,6 @@
       "Provider": "ExchangeOnline"
     },
     {
-      "Name": "microsoft.exchange.clientaccessrule",
-      "ShortName": "clientaccessrule",
-      "DisplayName": "Clientaccessrule",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
       "Name": "microsoft.exchange.dataclassification",
       "ShortName": "dataclassification",
       "DisplayName": "Dataclassification",
@@ -480,30 +432,6 @@
       "Name": "microsoft.exchange.emailaddresspolicy",
       "ShortName": "emailaddresspolicy",
       "DisplayName": "EmailaddressPolicy",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
-      "Name": "microsoft.exchange.eopprotectionpolicyrule",
-      "ShortName": "eopprotectionpolicyrule",
-      "DisplayName": "EopprotectionPolicyrule",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
-      "Name": "microsoft.exchange.externalinoutlook",
-      "ShortName": "externalinoutlook",
-      "DisplayName": "Externalinoutlook",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
-      "Name": "microsoft.exchange.globaladdresslist",
-      "ShortName": "globaladdresslist",
-      "DisplayName": "Globaladdresslist",
       "WorkloadId": "ExchangeOnline",
       "WorkloadDisplayName": "Exchange Online",
       "Provider": "ExchangeOnline"
@@ -677,14 +605,6 @@
       "Provider": "ExchangeOnline"
     },
     {
-      "Name": "microsoft.exchange.managementroleentry",
-      "ShortName": "managementroleentry",
-      "DisplayName": "Managementroleentry",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
       "Name": "microsoft.exchange.messageclassification",
       "ShortName": "messageclassification",
       "DisplayName": "Messageclassification",
@@ -696,14 +616,6 @@
       "Name": "microsoft.exchange.mobiledevicemailboxpolicy",
       "ShortName": "mobiledevicemailboxpolicy",
       "DisplayName": "MobiledevicemailboxPolicy",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
-      "Name": "microsoft.exchange.offlineaddressbook",
-      "ShortName": "offlineaddressbook",
-      "DisplayName": "Offlineaddressbook",
       "WorkloadId": "ExchangeOnline",
       "WorkloadDisplayName": "Exchange Online",
       "Provider": "ExchangeOnline"
@@ -896,14 +808,6 @@
       "Name": "microsoft.exchange.sharingpolicy",
       "ShortName": "sharingpolicy",
       "DisplayName": "SharingPolicy",
-      "WorkloadId": "ExchangeOnline",
-      "WorkloadDisplayName": "Exchange Online",
-      "Provider": "ExchangeOnline"
-    },
-    {
-      "Name": "microsoft.exchange.sweeprule",
-      "ShortName": "sweeprule",
-      "DisplayName": "Sweeprule",
       "WorkloadId": "ExchangeOnline",
       "WorkloadDisplayName": "Exchange Online",
       "Provider": "ExchangeOnline"
@@ -1469,25 +1373,9 @@
       "Provider": "Graph"
     },
     {
-      "Name": "microsoft.securityandcompliance.auditconfigurationpolicy",
-      "ShortName": "auditconfigurationpolicy",
-      "DisplayName": "AuditconfigurationPolicy",
-      "WorkloadId": "SecurityAndCompliance",
-      "WorkloadDisplayName": "Security and Compliance",
-      "Provider": "SecurityAndCompliance"
-    },
-    {
       "Name": "microsoft.securityandcompliance.autosensitivitylabelpolicy",
       "ShortName": "autosensitivitylabelpolicy",
       "DisplayName": "AutosensitivitylabelPolicy",
-      "WorkloadId": "SecurityAndCompliance",
-      "WorkloadDisplayName": "Security and Compliance",
-      "Provider": "SecurityAndCompliance"
-    },
-    {
-      "Name": "microsoft.securityandcompliance.autosensitivitylabelrule",
-      "ShortName": "autosensitivitylabelrule",
-      "DisplayName": "Autosensitivitylabelrule",
       "WorkloadId": "SecurityAndCompliance",
       "WorkloadDisplayName": "Security and Compliance",
       "Provider": "SecurityAndCompliance"
@@ -1560,14 +1448,6 @@
       "Name": "microsoft.securityandcompliance.dlpcompliancepolicy",
       "ShortName": "dlpcompliancepolicy",
       "DisplayName": "DlpcompliancePolicy",
-      "WorkloadId": "SecurityAndCompliance",
-      "WorkloadDisplayName": "Security and Compliance",
-      "Provider": "SecurityAndCompliance"
-    },
-    {
-      "Name": "microsoft.securityandcompliance.dlpcompliancerule",
-      "ShortName": "dlpcompliancerule",
-      "DisplayName": "Dlpcompliancerule",
       "WorkloadId": "SecurityAndCompliance",
       "WorkloadDisplayName": "Security and Compliance",
       "Provider": "SecurityAndCompliance"
@@ -1669,14 +1549,6 @@
       "Provider": "SecurityAndCompliance"
     },
     {
-      "Name": "microsoft.securityandcompliance.sensitivitylabel",
-      "ShortName": "sensitivitylabel",
-      "DisplayName": "Sensitivitylabel",
-      "WorkloadId": "SecurityAndCompliance",
-      "WorkloadDisplayName": "Security and Compliance",
-      "Provider": "SecurityAndCompliance"
-    },
-    {
       "Name": "microsoft.securityandcompliance.supervisoryreviewpolicy",
       "ShortName": "supervisoryreviewpolicy",
       "DisplayName": "SupervisoryreviewPolicy",
@@ -1749,25 +1621,9 @@
       "Provider": "Teams"
     },
     {
-      "Name": "microsoft.teams.channel",
-      "ShortName": "channel",
-      "DisplayName": "Channel",
-      "WorkloadId": "Teams",
-      "WorkloadDisplayName": "Teams",
-      "Provider": "Teams"
-    },
-    {
       "Name": "microsoft.teams.channelspolicy",
       "ShortName": "channelspolicy",
       "DisplayName": "ChannelsPolicy",
-      "WorkloadId": "Teams",
-      "WorkloadDisplayName": "Teams",
-      "Provider": "Teams"
-    },
-    {
-      "Name": "microsoft.teams.channeltab",
-      "ShortName": "channeltab",
-      "DisplayName": "Channeltab",
       "WorkloadId": "Teams",
       "WorkloadDisplayName": "Teams",
       "Provider": "Teams"
@@ -1981,14 +1837,6 @@
       "Provider": "Teams"
     },
     {
-      "Name": "microsoft.teams.orgwideappsettings",
-      "ShortName": "orgwideappsettings",
-      "DisplayName": "Orgwideappsettings",
-      "WorkloadId": "Teams",
-      "WorkloadDisplayName": "Teams",
-      "Provider": "Teams"
-    },
-    {
       "Name": "microsoft.teams.pstnusage",
       "ShortName": "pstnusage",
       "DisplayName": "Pstnusage",
@@ -2000,14 +1848,6 @@
       "Name": "microsoft.teams.shiftspolicy",
       "ShortName": "shiftspolicy",
       "DisplayName": "ShiftsPolicy",
-      "WorkloadId": "Teams",
-      "WorkloadDisplayName": "Teams",
-      "Provider": "Teams"
-    },
-    {
-      "Name": "microsoft.teams.team",
-      "ShortName": "team",
-      "DisplayName": "Team",
       "WorkloadId": "Teams",
       "WorkloadDisplayName": "Teams",
       "Provider": "Teams"

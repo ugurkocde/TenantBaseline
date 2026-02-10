@@ -1,6 +1,6 @@
 @{
     RootModule        = 'TenantBaseline.psm1'
-    ModuleVersion     = '0.1.4'
+    ModuleVersion     = '0.1.5'
     GUID              = 'edee0e7b-afeb-4cc1-b30c-ef8486d7c9a6'
     Author            = 'TenantBaseline Contributors'
     CompanyName       = 'Community'
