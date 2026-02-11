@@ -1,0 +1,1083 @@
+{
+  "GeneratedOn": "2026-02-11",
+  "SchemaVersion": "1.2",
+  "Source": "Maester (https://github.com/maester365/maester)",
+  "Categories": [
+    {
+      "Id": "entra-authorization",
+      "Name": "Authorization Policy",
+      "Description": "Tenant-wide authorization settings: user permissions, guest access, app registration, consent policies, tenant creation, and self-service capabilities.",
+      "Framework": "EIDSCA",
+      "Workload": "Entra ID",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.entra.authorizationpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "allowedToUseSSPR": false,
+            "allowInvitesFrom": "adminsAndGuestInviters",
+            "allowedToSignUpEmailBasedSubscriptions": false,
+            "allowEmailVerifiedUsersToJoinOrganization": false,
+            "permissionGrantPolicyIdsAssignedToDefaultUserRole": ["ManagePermissionGrantsForSelf.microsoft-user-default-low"],
+            "allowedToCreateTenants": false,
+            "defaultUserRolePermissions.allowedToCreateSecurityGroups": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "EIDSCA.AP01",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "allowedToUseSSPR",
+          "RecommendedValue": "false",
+          "Description": "Default Authorization Settings - Enabled Self service password reset for administrators"
+        },
+        {
+          "TestId": "EIDSCA.AP04",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "allowInvitesFrom",
+          "RecommendedValue": "adminsAndGuestInviters",
+          "Description": "Default Authorization Settings - Guest invite restrictions"
+        },
+        {
+          "TestId": "EIDSCA.AP05",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "allowedToSignUpEmailBasedSubscriptions",
+          "RecommendedValue": "false",
+          "Description": "Default Authorization Settings - Sign-up for email based subscription"
+        },
+        {
+          "TestId": "EIDSCA.AP06",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "allowEmailVerifiedUsersToJoinOrganization",
+          "RecommendedValue": "false",
+          "Description": "Default Authorization Settings - User can join the tenant by email validation"
+        },
+        {
+          "TestId": "EIDSCA.AP07",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "guestUserRoleId",
+          "RecommendedValue": "2af84b1e-32c8-42b7-82bc-daa82404023b",
+          "Description": "Default Authorization Settings - Guest user access restrictions"
+        },
+        {
+          "TestId": "EIDSCA.AP08",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "permissionGrantPolicyIdsAssignedToDefaultUserRole",
+          "RecommendedValue": "ManagePermissionGrantsForSelf.microsoft-user-default-low",
+          "Description": "Default Authorization Settings - Default User Role Permissions - Allowed to create Apps (user consent policy)"
+        },
+        {
+          "TestId": "EIDSCA.AP09",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "allowUserConsentForRiskyApps",
+          "RecommendedValue": "false",
+          "Description": "Default Authorization Settings - Risk-based step-up consent"
+        },
+        {
+          "TestId": "EIDSCA.AP10",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "defaultUserRolePermissions.allowedToCreateApps",
+          "RecommendedValue": "false",
+          "Description": "Default Authorization Settings - Default User Role Permissions - Allowed to create Apps"
+        },
+        {
+          "TestId": "EIDSCA.AP14",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "defaultUserRolePermissions.allowedToReadOtherUsers",
+          "RecommendedValue": "true",
+          "Description": "Default Authorization Settings - Default User Role Permissions - Allowed to read other users"
+        },
+        {
+          "TestId": "CISA.AuthZ.SecurityGroups",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "defaultUserRolePermissions.allowedToCreateSecurityGroups",
+          "RecommendedValue": "false",
+          "Description": "Default Authorization Settings - Default User Role Permissions - Allowed to create security groups"
+        },
+        {
+          "TestId": "MT.1065",
+          "ResourceType": "microsoft.entra.authorizationpolicy",
+          "Property": "allowedToCreateTenants",
+          "RecommendedValue": "false",
+          "Description": "Default Authorization Settings - Users are allowed to create tenants"
+        }
+      ]
+    },
+    {
+      "Id": "entra-authenticator",
+      "Name": "Microsoft Authenticator",
+      "Description": "Microsoft Authenticator app configuration: number matching, application context, geographic location display, and software OTP settings.",
+      "Framework": "EIDSCA",
+      "Workload": "Entra ID",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.entra.authenticationmethodpolicyauthenticator"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "state": "enabled",
+            "isSoftwareOathEnabled": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "EIDSCA.AM01",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Property": "state",
+          "RecommendedValue": "enabled",
+          "Description": "Authentication Method - Microsoft Authenticator - State"
+        },
+        {
+          "TestId": "EIDSCA.AM02",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Property": "isSoftwareOathEnabled",
+          "RecommendedValue": "false",
+          "Description": "Authentication Method - Microsoft Authenticator - Software OTP enabled"
+        },
+        {
+          "TestId": "EIDSCA.AM03",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Property": "featureSettings.numberMatchingRequiredState.state",
+          "RecommendedValue": "enabled",
+          "Description": "Authentication Method - Microsoft Authenticator - Require number matching for push notifications"
+        },
+        {
+          "TestId": "EIDSCA.AM04",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Property": "featureSettings.numberMatchingRequiredState.includeTarget.id",
+          "RecommendedValue": "all_users",
+          "Description": "Authentication Method - Microsoft Authenticator - Included users/groups of number matching"
+        },
+        {
+          "TestId": "EIDSCA.AM06",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Property": "featureSettings.displayAppInformationRequiredState.state",
+          "RecommendedValue": "enabled",
+          "Description": "Authentication Method - Microsoft Authenticator - Show application name in push and passwordless notifications"
+        },
+        {
+          "TestId": "EIDSCA.AM07",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Property": "featureSettings.displayAppInformationRequiredState.includeTarget.id",
+          "RecommendedValue": "all_users",
+          "Description": "Authentication Method - Microsoft Authenticator - Included users/groups to show application name"
+        },
+        {
+          "TestId": "EIDSCA.AM09",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Property": "featureSettings.displayLocationInformationRequiredState.state",
+          "RecommendedValue": "enabled",
+          "Description": "Authentication Method - Microsoft Authenticator - Show geographic location in push and passwordless notifications"
+        },
+        {
+          "TestId": "EIDSCA.AM10",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyauthenticator",
+          "Property": "featureSettings.displayLocationInformationRequiredState.includeTarget.id",
+          "RecommendedValue": "all_users",
+          "Description": "Authentication Method - Microsoft Authenticator - Included users/groups to show geographic location"
+        }
+      ]
+    },
+    {
+      "Id": "entra-fido2",
+      "Name": "FIDO2 Security Keys",
+      "Description": "FIDO2 security key authentication: enablement, self-service registration, attestation enforcement, and key restrictions.",
+      "Framework": "EIDSCA",
+      "Workload": "Entra ID",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.entra.authenticationmethodpolicyfido2"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyfido2",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "state": "enabled",
+            "isSelfServiceRegistrationAllowed": true,
+            "isAttestationEnforced": true
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "EIDSCA.AF01",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyfido2",
+          "Property": "state",
+          "RecommendedValue": "enabled",
+          "Description": "Authentication Method - FIDO2 security key - State"
+        },
+        {
+          "TestId": "EIDSCA.AF02",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyfido2",
+          "Property": "isSelfServiceRegistrationAllowed",
+          "RecommendedValue": "true",
+          "Description": "Authentication Method - FIDO2 security key - Allow self-service set up"
+        },
+        {
+          "TestId": "EIDSCA.AF03",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyfido2",
+          "Property": "isAttestationEnforced",
+          "RecommendedValue": "true",
+          "Description": "Authentication Method - FIDO2 security key - Enforce attestation"
+        },
+        {
+          "TestId": "EIDSCA.AF04",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyfido2",
+          "Property": "keyRestrictions.isEnforced",
+          "RecommendedValue": "true",
+          "Description": "Authentication Method - FIDO2 security key - Enforce key restrictions"
+        },
+        {
+          "TestId": "EIDSCA.AF05",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyfido2",
+          "Property": "keyRestrictions.aaGuids",
+          "RecommendedValue": "non-empty",
+          "Description": "Authentication Method - FIDO2 security key - Restricted key list configured"
+        },
+        {
+          "TestId": "EIDSCA.AF06",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyfido2",
+          "Property": "keyRestrictions.enforcementType",
+          "RecommendedValue": "allow",
+          "Description": "Authentication Method - FIDO2 security key - Restrict specific keys enforcement type"
+        }
+      ]
+    },
+    {
+      "Id": "entra-authmethod-general",
+      "Name": "Authentication Methods General",
+      "Description": "Tenant-wide authentication methods policy: migration state, suspicious activity reporting, and system credential management.",
+      "Framework": "EIDSCA",
+      "Workload": "Entra ID",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.entra.authenticationmethodpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.entra.authenticationmethodpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "policyMigrationState": "migrationComplete"
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "EIDSCA.AG01",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicy",
+          "Property": "policyMigrationState",
+          "RecommendedValue": "migrationComplete",
+          "Description": "Authentication Method - General Settings - Manage migration"
+        },
+        {
+          "TestId": "EIDSCA.AG02",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicy",
+          "Property": "reportSuspiciousActivitySettings.state",
+          "RecommendedValue": "enabled",
+          "Description": "Authentication Method - General Settings - Report suspicious activity - State"
+        },
+        {
+          "TestId": "EIDSCA.AG03",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicy",
+          "Property": "reportSuspiciousActivitySettings.includeTarget.id",
+          "RecommendedValue": "all_users",
+          "Description": "Authentication Method - General Settings - Report suspicious activity - Included users/groups"
+        }
+      ]
+    },
+    {
+      "Id": "entra-temporary-access",
+      "Name": "Temporary Access Pass",
+      "Description": "Temporary Access Pass configuration: enablement and one-time use enforcement for secure passwordless onboarding.",
+      "Framework": "EIDSCA",
+      "Workload": "Entra ID",
+      "Severity": "Medium",
+      "ResourceTypes": [
+        "microsoft.entra.authenticationmethodpolicytemporary"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.entra.authenticationmethodpolicytemporary",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "state": "enabled",
+            "isUsableOnce": true
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "EIDSCA.AT01",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicytemporary",
+          "Property": "state",
+          "RecommendedValue": "enabled",
+          "Description": "Authentication Method - Temporary Access Pass - State"
+        },
+        {
+          "TestId": "EIDSCA.AT02",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicytemporary",
+          "Property": "isUsableOnce",
+          "RecommendedValue": "true",
+          "Description": "Authentication Method - Temporary Access Pass - One-time use"
+        }
+      ]
+    },
+    {
+      "Id": "entra-legacy-auth",
+      "Name": "Legacy Authentication Methods",
+      "Description": "Voice call authentication: state controls for weaker authentication factors.",
+      "Framework": "EIDSCA",
+      "Workload": "Entra ID",
+      "Severity": "Medium",
+      "ResourceTypes": [
+        "microsoft.entra.authenticationmethodpolicyvoice"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyvoice",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "state": "disabled"
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "EIDSCA.AV01",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicyvoice",
+          "Property": "state",
+          "RecommendedValue": "disabled",
+          "Description": "Authentication Method - Voice call - State"
+        }
+      ]
+    },
+    {
+      "Id": "entra-sms-auth",
+      "Name": "SMS Authentication",
+      "Description": "SMS authentication method policy: controls whether SMS can be used for sign-in, a weaker factor that should be restricted.",
+      "Framework": "EIDSCA",
+      "Workload": "Entra ID",
+      "Severity": "Medium",
+      "ResourceTypes": [
+        "microsoft.entra.authenticationmethodpolicysms"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.entra.authenticationmethodpolicysms",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "state": "disabled"
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "EIDSCA.AS04",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicysms",
+          "Property": "includeTargets.isUsableForSignIn",
+          "RecommendedValue": "false",
+          "Description": "Authentication Method - SMS - Allow use of SMS for sign-in"
+        },
+        {
+          "TestId": "CISA.AuthMethod.SMS",
+          "ResourceType": "microsoft.entra.authenticationmethodpolicysms",
+          "Property": "state",
+          "RecommendedValue": "disabled",
+          "Description": "Authentication Method - SMS - State should be disabled as a weak authentication factor"
+        }
+      ]
+    },
+    {
+      "Id": "entra-cross-tenant-default",
+      "Name": "Cross-Tenant Access Default",
+      "Description": "Default cross-tenant access policy: controls inbound B2B collaboration access for all external organizations not covered by specific partner policies.",
+      "Framework": "CISA",
+      "Workload": "Entra ID",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.entra.crosstenantaccesspolicyconfigurationdefault"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.entra.crosstenantaccesspolicyconfigurationdefault",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "b2bCollaborationInbound.applications.accessType": "blocked"
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "CISA.CrossTenant.InboundBlocked",
+          "ResourceType": "microsoft.entra.crosstenantaccesspolicyconfigurationdefault",
+          "Property": "b2bCollaborationInbound.applications.accessType",
+          "RecommendedValue": "blocked",
+          "Description": "Cross-Tenant Access Default - Inbound B2B collaboration application access should be blocked by default"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-organization-config",
+      "Name": "Exchange Organization Config",
+      "Description": "Tenant-wide Exchange Online settings: OAuth, Customer Lockbox, audit logging, external sender identification, and SMTP client authentication.",
+      "Framework": "ORCA",
+      "Workload": "Exchange Online",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.exchange.organizationconfig"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.organizationconfig",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "OAuth2ClientProfileEnabled": true,
+            "CustomerLockBoxEnabled": true,
+            "AuditDisabled": false,
+            "ExternalInOutlook": true,
+            "SmtpClientAuthenticationDisabled": true
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "MT.1038",
+          "ResourceType": "microsoft.exchange.organizationconfig",
+          "Property": "OAuth2ClientProfileEnabled",
+          "RecommendedValue": "true",
+          "Description": "Exchange Organization Config - Modern authentication for Exchange Online is enabled"
+        },
+        {
+          "TestId": "CIS.1.3.6",
+          "ResourceType": "microsoft.exchange.organizationconfig",
+          "Property": "CustomerLockBoxEnabled",
+          "RecommendedValue": "true",
+          "Description": "Exchange Organization Config - Customer Lockbox is enabled for Microsoft support access"
+        },
+        {
+          "TestId": "CIS.3.1.1",
+          "ResourceType": "microsoft.exchange.organizationconfig",
+          "Property": "AuditDisabled",
+          "RecommendedValue": "false",
+          "Description": "Exchange Organization Config - Microsoft 365 audit log search is enabled"
+        },
+        {
+          "TestId": "ORCA-240",
+          "ResourceType": "microsoft.exchange.organizationconfig",
+          "Property": "ExternalInOutlook",
+          "RecommendedValue": "true",
+          "Description": "Exchange Organization Config - External sender identification in Outlook is enabled"
+        },
+        {
+          "TestId": "CISA.EXO.SmtpAuth",
+          "ResourceType": "microsoft.exchange.organizationconfig",
+          "Property": "SmtpClientAuthenticationDisabled",
+          "RecommendedValue": "true",
+          "Description": "Exchange Organization Config - SMTP authenticated client submission is disabled globally"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-atp-policy",
+      "Name": "ATP Policy for Office 365",
+      "Description": "Advanced Threat Protection settings: Safe Attachments for SharePoint/OneDrive/Teams, Safe Documents enablement, and preview safety controls.",
+      "Framework": "ORCA",
+      "Workload": "Exchange Online",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.exchange.atppolicyforo365"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.atppolicyforo365",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "EnableATPForSPOTeamsODB": true,
+            "EnableSafeDocs": true,
+            "AllowSafeDocsOpen": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "ORCA-158",
+          "ResourceType": "microsoft.exchange.atppolicyforo365",
+          "Property": "EnableATPForSPOTeamsODB",
+          "RecommendedValue": "true",
+          "Description": "ATP Policy - Safe Attachments is enabled for SharePoint, OneDrive, and Microsoft Teams"
+        },
+        {
+          "TestId": "ORCA-225",
+          "ResourceType": "microsoft.exchange.atppolicyforo365",
+          "Property": "EnableSafeDocs",
+          "RecommendedValue": "true",
+          "Description": "ATP Policy - Safe Documents is enabled for Office clients"
+        },
+        {
+          "TestId": "ORCA-234",
+          "ResourceType": "microsoft.exchange.atppolicyforo365",
+          "Property": "AllowSafeDocsOpen",
+          "RecommendedValue": "false",
+          "Description": "ATP Policy - Users cannot click through Protected View even when Safe Documents identifies the file as malicious"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-antiphish-default",
+      "Name": "Default Anti-Phish Policy",
+      "Description": "Built-in anti-phishing policy: spoof intelligence, mailbox intelligence, impersonation protection, phish threshold, DMARC honoring, and safety tips.",
+      "Framework": "ORCA",
+      "Workload": "Exchange Online",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.exchange.antiphishpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "EnableSpoofIntelligence": true,
+            "EnableMailboxIntelligence": true,
+            "EnableMailboxIntelligenceProtection": true,
+            "MailboxIntelligenceProtectionAction": "MoveToJmf",
+            "EnableSimilarDomainsSafetyTips": true,
+            "EnableSimilarUsersSafetyTips": true,
+            "EnableFirstContactSafetyTips": true,
+            "EnableUnauthenticatedSender": true,
+            "AuthenticationFailAction": "MoveToJmf",
+            "PhishThresholdLevel": 2,
+            "HonorDmarcPolicy": true
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "ORCA-180",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "EnableSpoofIntelligence",
+          "RecommendedValue": "true",
+          "Description": "Anti-Phish Policy - Spoof intelligence is enabled"
+        },
+        {
+          "TestId": "ORCA-221",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "EnableMailboxIntelligence",
+          "RecommendedValue": "true",
+          "Description": "Anti-Phish Policy - Mailbox intelligence is enabled"
+        },
+        {
+          "TestId": "ORCA-115",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "EnableMailboxIntelligenceProtection",
+          "RecommendedValue": "true",
+          "Description": "Anti-Phish Policy - Mailbox intelligence based impersonation protection is enabled"
+        },
+        {
+          "TestId": "ORCA-116",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "MailboxIntelligenceProtectionAction",
+          "RecommendedValue": "MoveToJmf",
+          "Description": "Anti-Phish Policy - Mailbox intelligence impersonation protection action moves messages to junk mail folder"
+        },
+        {
+          "TestId": "ORCA-119",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "EnableSimilarDomainsSafetyTips",
+          "RecommendedValue": "true",
+          "Description": "Anti-Phish Policy - Similar domains safety tips are enabled"
+        },
+        {
+          "TestId": "ORCA-224",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "EnableSimilarUsersSafetyTips",
+          "RecommendedValue": "true",
+          "Description": "Anti-Phish Policy - Similar users safety tips are enabled"
+        },
+        {
+          "TestId": "ORCA-241",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "EnableFirstContactSafetyTips",
+          "RecommendedValue": "true",
+          "Description": "Anti-Phish Policy - First contact safety tips are enabled"
+        },
+        {
+          "TestId": "ORCA-111",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "EnableUnauthenticatedSender",
+          "RecommendedValue": "true",
+          "Description": "Anti-Phish Policy - Unauthenticated sender indicators in Outlook are enabled"
+        },
+        {
+          "TestId": "ORCA-112",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "AuthenticationFailAction",
+          "RecommendedValue": "MoveToJmf",
+          "Description": "Anti-Phish Policy - Authentication failure action moves messages to junk mail folder"
+        },
+        {
+          "TestId": "ORCA-220",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "PhishThresholdLevel",
+          "RecommendedValue": "2",
+          "Description": "Anti-Phish Policy - Advanced phishing threshold is set to at least Aggressive (2)"
+        },
+        {
+          "TestId": "ORCA-244",
+          "ResourceType": "microsoft.exchange.antiphishpolicy",
+          "Property": "HonorDmarcPolicy",
+          "RecommendedValue": "true",
+          "Description": "Anti-Phish Policy - Honor DMARC policy when the message is detected as spoof"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-malware-default",
+      "Name": "Default Malware Filter Policy",
+      "Description": "Built-in malware filter policy: ZAP for malware, common attachment type filtering, and internal sender notification controls.",
+      "Framework": "ORCA",
+      "Workload": "Exchange Online",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.exchange.malwarefilterpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.malwarefilterpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "ZapEnabled": true,
+            "EnableFileFilter": true,
+            "EnableInternalSenderAdminNotifications": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "ORCA-120.Malware",
+          "ResourceType": "microsoft.exchange.malwarefilterpolicy",
+          "Property": "ZapEnabled",
+          "RecommendedValue": "true",
+          "Description": "Malware Filter Policy - Zero-hour auto purge for malware is enabled"
+        },
+        {
+          "TestId": "ORCA-205",
+          "ResourceType": "microsoft.exchange.malwarefilterpolicy",
+          "Property": "EnableFileFilter",
+          "RecommendedValue": "true",
+          "Description": "Malware Filter Policy - Common attachment types filter is enabled"
+        },
+        {
+          "TestId": "ORCA-110",
+          "ResourceType": "microsoft.exchange.malwarefilterpolicy",
+          "Property": "EnableInternalSenderAdminNotifications",
+          "RecommendedValue": "false",
+          "Description": "Malware Filter Policy - Internal sender admin notifications are disabled to prevent alert fatigue"
+        },
+        {
+          "TestId": "CISA.EXO.MalwareFileFilter",
+          "ResourceType": "microsoft.exchange.malwarefilterpolicy",
+          "Property": "FileTypeAction",
+          "RecommendedValue": "enabled",
+          "Description": "Malware Filter Policy - File type filtering enforcement is active"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-content-filter",
+      "Name": "Default Content Filter Policy",
+      "Description": "Built-in hosted content filter (anti-spam) policy: bulk thresholds, high-confidence phish/spam actions, ZAP, quarantine retention, and safety tips.",
+      "Framework": "ORCA",
+      "Workload": "Exchange Online",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.exchange.hostedcontentfilterpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "BulkThreshold": 6,
+            "MarkAsSpamBulkMail": "On",
+            "HighConfidencePhishAction": "Quarantine",
+            "HighConfidenceSpamAction": "Quarantine",
+            "SpamAction": "MoveToJmf",
+            "BulkSpamAction": "MoveToJmf",
+            "PhishSpamAction": "Quarantine",
+            "PhishZapEnabled": true,
+            "SpamZapEnabled": true,
+            "QuarantineRetentionPeriod": 30,
+            "InlineSafetyTipsEnabled": true
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "ORCA-100",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "BulkThreshold",
+          "RecommendedValue": "6",
+          "Description": "Content Filter Policy - Bulk complaint level threshold is 6 or lower"
+        },
+        {
+          "TestId": "ORCA-101",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "MarkAsSpamBulkMail",
+          "RecommendedValue": "On",
+          "Description": "Content Filter Policy - Bulk mail is marked as spam"
+        },
+        {
+          "TestId": "ORCA-104",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "HighConfidencePhishAction",
+          "RecommendedValue": "Quarantine",
+          "Description": "Content Filter Policy - High confidence phishing messages are quarantined"
+        },
+        {
+          "TestId": "ORCA-140",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "HighConfidenceSpamAction",
+          "RecommendedValue": "Quarantine",
+          "Description": "Content Filter Policy - High confidence spam messages are quarantined"
+        },
+        {
+          "TestId": "ORCA-139",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "SpamAction",
+          "RecommendedValue": "MoveToJmf",
+          "Description": "Content Filter Policy - Spam messages are moved to junk mail folder"
+        },
+        {
+          "TestId": "ORCA-141",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "BulkSpamAction",
+          "RecommendedValue": "MoveToJmf",
+          "Description": "Content Filter Policy - Bulk spam messages are moved to junk mail folder"
+        },
+        {
+          "TestId": "ORCA-142",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "PhishSpamAction",
+          "RecommendedValue": "Quarantine",
+          "Description": "Content Filter Policy - Phishing messages are quarantined"
+        },
+        {
+          "TestId": "ORCA-120.Phish",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "PhishZapEnabled",
+          "RecommendedValue": "true",
+          "Description": "Content Filter Policy - Zero-hour auto purge for phishing is enabled"
+        },
+        {
+          "TestId": "ORCA-120.Spam",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "SpamZapEnabled",
+          "RecommendedValue": "true",
+          "Description": "Content Filter Policy - Zero-hour auto purge for spam is enabled"
+        },
+        {
+          "TestId": "ORCA-106",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "QuarantineRetentionPeriod",
+          "RecommendedValue": "30",
+          "Description": "Content Filter Policy - Quarantine retention period is 30 days"
+        },
+        {
+          "TestId": "ORCA-143",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "InlineSafetyTipsEnabled",
+          "RecommendedValue": "true",
+          "Description": "Content Filter Policy - Inline safety tips are enabled in Outlook"
+        },
+        {
+          "TestId": "ORCA-109",
+          "ResourceType": "microsoft.exchange.hostedcontentfilterpolicy",
+          "Property": "AllowedSenders",
+          "RecommendedValue": "empty",
+          "Description": "Content Filter Policy - Allowed senders list should be empty to prevent bypass of spam filtering"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-connection-filter",
+      "Name": "Default Connection Filter Policy",
+      "Description": "Built-in connection filter policy: IP allow list controls and safe list processing to prevent spam filter bypass.",
+      "Framework": "ORCA",
+      "Workload": "Exchange Online",
+      "Severity": "Medium",
+      "ResourceTypes": [
+        "microsoft.exchange.hostedconnectionfilterpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.hostedconnectionfilterpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "SafeListEnabled": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "ORCA-114",
+          "ResourceType": "microsoft.exchange.hostedconnectionfilterpolicy",
+          "Property": "IPAllowList",
+          "RecommendedValue": "empty",
+          "Description": "Connection Filter Policy - IP allow list should be empty to prevent spam filter bypass"
+        },
+        {
+          "TestId": "CISA.EXO.SafeList",
+          "ResourceType": "microsoft.exchange.hostedconnectionfilterpolicy",
+          "Property": "SafeListEnabled",
+          "RecommendedValue": "false",
+          "Description": "Connection Filter Policy - Safe list processing is disabled to prevent automatic whitelisting"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-outbound-spam",
+      "Name": "Default Outbound Spam Filter",
+      "Description": "Built-in outbound spam filter policy: recipient rate limits for external, internal, and daily message volume.",
+      "Framework": "ORCA",
+      "Workload": "Exchange Online",
+      "Severity": "Medium",
+      "ResourceTypes": [
+        "microsoft.exchange.hostedoutboundspamfilterpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.hostedoutboundspamfilterpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "RecipientLimitExternalPerHour": 500,
+            "RecipientLimitInternalPerHour": 1000,
+            "RecipientLimitPerDay": 1000
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "ORCA-103.External",
+          "ResourceType": "microsoft.exchange.hostedoutboundspamfilterpolicy",
+          "Property": "RecipientLimitExternalPerHour",
+          "RecommendedValue": "500",
+          "Description": "Outbound Spam Filter - External recipient limit per hour is 500 or lower"
+        },
+        {
+          "TestId": "ORCA-103.Internal",
+          "ResourceType": "microsoft.exchange.hostedoutboundspamfilterpolicy",
+          "Property": "RecipientLimitInternalPerHour",
+          "RecommendedValue": "1000",
+          "Description": "Outbound Spam Filter - Internal recipient limit per hour is 1000 or lower"
+        },
+        {
+          "TestId": "ORCA-103.Daily",
+          "ResourceType": "microsoft.exchange.hostedoutboundspamfilterpolicy",
+          "Property": "RecipientLimitPerDay",
+          "RecommendedValue": "1000",
+          "Description": "Outbound Spam Filter - Daily recipient limit is 1000 or lower"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-remote-domain",
+      "Name": "Default Remote Domain",
+      "Description": "Default remote domain (*) settings: out-of-office reply type restrictions and auto-forwarding controls to prevent data exfiltration.",
+      "Framework": "CISA",
+      "Workload": "Exchange Online",
+      "Severity": "Medium",
+      "ResourceTypes": [
+        "microsoft.exchange.remotedomain"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.remotedomain",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "AllowedOOFType": "InternalLegacy",
+            "AutoForwardEnabled": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "CISA.EXO.RemoteDomain.OOF",
+          "ResourceType": "microsoft.exchange.remotedomain",
+          "Property": "AllowedOOFType",
+          "RecommendedValue": "InternalLegacy",
+          "Description": "Remote Domain - Out-of-office replies to external domains are restricted to internal legacy format"
+        },
+        {
+          "TestId": "CISA.EXO.RemoteDomain.AutoFwd",
+          "ResourceType": "microsoft.exchange.remotedomain",
+          "Property": "AutoForwardEnabled",
+          "RecommendedValue": "false",
+          "Description": "Remote Domain - Auto-forwarding to external domains is disabled to prevent data exfiltration"
+        }
+      ]
+    },
+    {
+      "Id": "exchange-sharing-policy",
+      "Name": "Exchange Sharing Policy",
+      "Description": "Default sharing policy: calendar sharing domain restrictions to prevent anonymous external access to free/busy information.",
+      "Framework": "CISA",
+      "Workload": "Exchange Online",
+      "Severity": "Medium",
+      "ResourceTypes": [
+        "microsoft.exchange.sharingpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.exchange.sharingpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes"
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "CISA.EXO.SharingPolicy",
+          "ResourceType": "microsoft.exchange.sharingpolicy",
+          "Property": "Domains",
+          "RecommendedValue": "restricted",
+          "Description": "Sharing Policy - Calendar sharing with external users should not allow anonymous access"
+        }
+      ]
+    },
+    {
+      "Id": "teams-meeting-policy",
+      "Name": "Teams Global Meeting Policy",
+      "Description": "Global meeting policy: lobby bypass controls, anonymous join/start restrictions, and external participant control sharing.",
+      "Framework": "Maester",
+      "Workload": "Teams",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.teams.meetingpolicy"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.teams.meetingpolicy",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "AllowPSTNUsersToBypassLobby": false,
+            "AutoAdmittedUsers": "InvitedUsers",
+            "AllowAnonymousUsersToJoinMeeting": false,
+            "AllowAnonymousUsersToStartMeeting": false,
+            "AllowExternalParticipantGiveRequestControl": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "MT.1042",
+          "ResourceType": "microsoft.teams.meetingpolicy",
+          "Property": "AllowPSTNUsersToBypassLobby",
+          "RecommendedValue": "false",
+          "Description": "Teams Meeting Policy - PSTN users should not bypass the lobby"
+        },
+        {
+          "TestId": "MT.1045",
+          "ResourceType": "microsoft.teams.meetingpolicy",
+          "Property": "AutoAdmittedUsers",
+          "RecommendedValue": "InvitedUsers",
+          "Description": "Teams Meeting Policy - Only invited users are auto-admitted to meetings"
+        },
+        {
+          "TestId": "MT.1046",
+          "ResourceType": "microsoft.teams.meetingpolicy",
+          "Property": "AllowAnonymousUsersToJoinMeeting",
+          "RecommendedValue": "false",
+          "Description": "Teams Meeting Policy - Anonymous users cannot join meetings"
+        },
+        {
+          "TestId": "MT.1047",
+          "ResourceType": "microsoft.teams.meetingpolicy",
+          "Property": "AllowAnonymousUsersToStartMeeting",
+          "RecommendedValue": "false",
+          "Description": "Teams Meeting Policy - Anonymous users cannot start meetings"
+        },
+        {
+          "TestId": "MT.1048",
+          "ResourceType": "microsoft.teams.meetingpolicy",
+          "Property": "AllowExternalParticipantGiveRequestControl",
+          "RecommendedValue": "false",
+          "Description": "Teams Meeting Policy - External participants cannot give or request control of shared content"
+        }
+      ]
+    },
+    {
+      "Id": "teams-federation",
+      "Name": "Teams Federation Config",
+      "Description": "Teams federation configuration: controls whether users can communicate with consumer Teams (personal accounts).",
+      "Framework": "CIS",
+      "Workload": "Teams",
+      "Severity": "High",
+      "ResourceTypes": [
+        "microsoft.teams.federationconfiguration"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.teams.federationconfiguration",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "AllowTeamsConsumer": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "CIS.M365.8.2.2",
+          "ResourceType": "microsoft.teams.federationconfiguration",
+          "Property": "AllowTeamsConsumer",
+          "RecommendedValue": "false",
+          "Description": "Teams Federation - Communication with consumer Teams users (personal accounts) is disabled"
+        }
+      ]
+    },
+    {
+      "Id": "teams-client-config",
+      "Name": "Teams Client Configuration",
+      "Description": "Teams client settings: third-party cloud storage provider access controls for DropBox, Box, Google Drive, and other services.",
+      "Framework": "CIS",
+      "Workload": "Teams",
+      "Severity": "Medium",
+      "ResourceTypes": [
+        "microsoft.teams.clientconfiguration"
+      ],
+      "BaselineResources": [
+        {
+          "ResourceType": "microsoft.teams.clientconfiguration",
+          "Properties": {
+            "IsSingleInstance": "Yes",
+            "AllowDropBox": false,
+            "AllowBox": false,
+            "AllowGoogleDrive": false,
+            "AllowShareFile": false,
+            "AllowEgnyte": false
+          }
+        }
+      ],
+      "Tests": [
+        {
+          "TestId": "CIS.M365.8.6.1",
+          "ResourceType": "microsoft.teams.clientconfiguration",
+          "Property": "AllowDropBox",
+          "RecommendedValue": "false",
+          "Description": "Teams Client Config - Third-party cloud storage (DropBox, Box, Google Drive, ShareFile, Egnyte) is disabled"
+        }
+      ]
+    }
+  ]
+}

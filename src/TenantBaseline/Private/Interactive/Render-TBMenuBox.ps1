@@ -6,6 +6,8 @@ function Render-TBMenuBox {
         Draws menu items with optional highlight indicator and checkboxes
         inside a Unicode box. Uses Console.SetCursorPosition for flicker-free
         in-place updates. Supports both single-select and multi-select modes.
+        When ViewportSize is set and the item list exceeds it, only a scrollable
+        window of items is rendered with scroll indicators.
     .PARAMETER Items
         Array of menu item display strings.
     .PARAMETER SelectedIndex
@@ -20,6 +22,10 @@ function Render-TBMenuBox {
         If set, shows 'Esc to quit' in the hint line.
     .PARAMETER MultiSelect
         If set, renders checkboxes and shows multi-select hints.
+    .PARAMETER ViewportOffset
+        First item index in the visible window. Defaults to 0.
+    .PARAMETER ViewportSize
+        Number of item slots in the viewport. 0 means show all items (no viewport).
     #>
     [CmdletBinding()]
     param(
@@ -42,7 +48,13 @@ function Render-TBMenuBox {
         [switch]$IncludeQuit,
 
         [Parameter()]
-        [switch]$MultiSelect
+        [switch]$MultiSelect,
+
+        [Parameter()]
+        [int]$ViewportOffset = 0,
+
+        [Parameter()]
+        [int]$ViewportSize = 0
     )
 
     $palette = Get-TBColorPalette
@@ -63,17 +75,60 @@ function Render-TBMenuBox {
         return $Text.Substring(0, $innerWidth - 3) + '...'
     }
 
+    $bufferHeight = [Console]::BufferHeight
+
+    # Determine viewport boundaries
+    $useViewport = ($ViewportSize -gt 0) -and ($ViewportSize -lt $Items.Count)
+    if ($useViewport) {
+        $showAbove = ($ViewportOffset -gt 0)
+        $showBelow = (($ViewportOffset + $ViewportSize) -lt $Items.Count)
+        $slotCount = $ViewportSize
+    }
+    else {
+        $showAbove = $false
+        $showBelow = $false
+        $slotCount = $Items.Count
+    }
+
     $row = $AnchorTop
 
     # Empty line inside box
     $emptyLine = '  {0}{1}{2}{3}{4}' -f $palette.Surface, $border, (' ' * $innerWidth), $border, $reset
-    [Console]::SetCursorPosition(0, $row)
-    [Console]::Write($emptyLine)
+    if ($row -lt $bufferHeight) {
+        [Console]::SetCursorPosition(0, $row)
+        [Console]::Write($emptyLine)
+    }
     $row++
 
-    # Menu items
-    for ($i = 0; $i -lt $Items.Count; $i++) {
+    # Render item slots
+    for ($slot = 0; $slot -lt $slotCount; $slot++) {
+        if ($row -ge $bufferHeight) { break }
         [Console]::SetCursorPosition(0, $row)
+
+        # Scroll-up indicator in the first slot
+        if ($useViewport -and $slot -eq 0 -and $showAbove) {
+            $aboveCount = $ViewportOffset
+            $indicatorText = ('     {0} {1} more above' -f ([char]0x25B4), $aboveCount)
+            $indicatorPadded = (& $fitText $indicatorText).PadRight($innerWidth)
+            $line = '  {0}{1}{2}{3}{4}{5}' -f $palette.Surface, $border, $palette.Dim, $indicatorPadded, $reset, ('{0}{1}{2}' -f $palette.Surface, $border, $reset)
+            [Console]::Write($line)
+            $row++
+            continue
+        }
+
+        # Scroll-down indicator in the last slot
+        if ($useViewport -and $slot -eq ($slotCount - 1) -and $showBelow) {
+            $belowCount = $Items.Count - ($ViewportOffset + $ViewportSize)
+            $indicatorText = ('     {0} {1} more below' -f ([char]0x25BE), $belowCount)
+            $indicatorPadded = (& $fitText $indicatorText).PadRight($innerWidth)
+            $line = '  {0}{1}{2}{3}{4}{5}' -f $palette.Surface, $border, $palette.Dim, $indicatorPadded, $reset, ('{0}{1}{2}' -f $palette.Surface, $border, $reset)
+            [Console]::Write($line)
+            $row++
+            continue
+        }
+
+        # Map slot to actual item index
+        $i = if ($useViewport) { $ViewportOffset + $slot } else { $slot }
 
         $num = $i + 1
         $isHighlighted = ($i -eq $SelectedIndex)
@@ -118,15 +173,19 @@ function Render-TBMenuBox {
     }
 
     # Empty line
-    [Console]::SetCursorPosition(0, $row)
-    [Console]::Write($emptyLine)
+    if ($row -lt $bufferHeight) {
+        [Console]::SetCursorPosition(0, $row)
+        [Console]::Write($emptyLine)
+    }
     $row++
 
     # Separator line
-    $sepGradient = Get-TBGradientLine -Character $hLine -Length $innerWidth -StartRGB $blueRGB -EndRGB $mauveRGB
-    $sepLine = '  {0}{1}{2}{3}{4}' -f $palette.Surface, ([char]0x251C), $sepGradient, ([char]0x2524), $reset
-    [Console]::SetCursorPosition(0, $row)
-    [Console]::Write($sepLine)
+    if ($row -lt $bufferHeight) {
+        $sepGradient = Get-TBGradientLine -Character $hLine -Length $innerWidth -StartRGB $blueRGB -EndRGB $mauveRGB
+        $sepLine = '  {0}{1}{2}{3}{4}' -f $palette.Surface, ([char]0x251C), $sepGradient, ([char]0x2524), $reset
+        [Console]::SetCursorPosition(0, $row)
+        [Console]::Write($sepLine)
+    }
     $row++
 
     # Hint line
@@ -144,19 +203,25 @@ function Render-TBMenuBox {
         $hintText += ', Esc to quit'
     }
 
-    $hintPadded = $hintText.PadRight($innerWidth)
-    $hintLine = '  {0}{1}{2}{3}{4}{5}' -f $palette.Surface, $border, $palette.Dim, $hintPadded, $reset, ('{0}{1}{2}' -f $palette.Surface, $border, $reset)
-    [Console]::SetCursorPosition(0, $row)
-    [Console]::Write($hintLine)
+    if ($row -lt $bufferHeight) {
+        $hintPadded = $hintText.PadRight($innerWidth)
+        $hintLine = '  {0}{1}{2}{3}{4}{5}' -f $palette.Surface, $border, $palette.Dim, $hintPadded, $reset, ('{0}{1}{2}' -f $palette.Surface, $border, $reset)
+        [Console]::SetCursorPosition(0, $row)
+        [Console]::Write($hintLine)
+    }
     $row++
 
     # Bottom border
-    $bottomGradient = Get-TBGradientLine -Character $hLine -Length $innerWidth -StartRGB $blueRGB -EndRGB $mauveRGB
-    $bottomLine = '  {0}{1}{2}{3}{4}' -f $palette.Surface, ([char]0x2570), $bottomGradient, ([char]0x256F), $reset
-    [Console]::SetCursorPosition(0, $row)
-    [Console]::Write($bottomLine)
+    if ($row -lt $bufferHeight) {
+        $bottomGradient = Get-TBGradientLine -Character $hLine -Length $innerWidth -StartRGB $blueRGB -EndRGB $mauveRGB
+        $bottomLine = '  {0}{1}{2}{3}{4}' -f $palette.Surface, ([char]0x2570), $bottomGradient, ([char]0x256F), $reset
+        [Console]::SetCursorPosition(0, $row)
+        [Console]::Write($bottomLine)
+    }
     $row++
 
     # Move cursor below the box
-    [Console]::SetCursorPosition(0, $row)
+    if ($row -lt $bufferHeight) {
+        [Console]::SetCursorPosition(0, $row)
+    }
 }

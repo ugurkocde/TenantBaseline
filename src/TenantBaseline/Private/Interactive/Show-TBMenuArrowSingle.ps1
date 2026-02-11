@@ -6,6 +6,8 @@ function Show-TBMenuArrowSingle {
         Renders a title area and menu items inside a box, then enters a key
         loop where Up/Down moves the highlight, Enter selects the item, and
         Escape returns Back or Quit. Hides the cursor during navigation.
+        Supports viewport scrolling for lists that exceed the available
+        terminal height.
     .PARAMETER Title
         The menu title displayed above the items.
     .PARAMETER Options
@@ -50,12 +52,38 @@ function Show-TBMenuArrowSingle {
     $selectedIndex = 0
     $itemCount = $Options.Count
 
+    # Viewport: chrome rows = top-empty + bottom-empty + separator + hint + bottom-border
+    $chromeRows = 5
+    $maxVisible = [Math]::Max(3, [Console]::WindowHeight - $anchorTop - $chromeRows)
+    $viewportSize = if ($itemCount -gt $maxVisible) { $maxVisible } else { 0 }
+    $viewportOffset = 0
+
+    $adjustViewport = {
+        if ($viewportSize -le 0) { return }
+        $hasAbove = ($viewportOffset -gt 0)
+        $hasBelow = (($viewportOffset + $viewportSize) -lt $itemCount)
+        $visibleFirst = $viewportOffset + $(if ($hasAbove) { 1 } else { 0 })
+        $visibleLast  = $viewportOffset + $viewportSize - 1 - $(if ($hasBelow) { 1 } else { 0 })
+        $newOffset = $viewportOffset
+        if ($selectedIndex -lt $visibleFirst) {
+            $newOffset = [Math]::Max(0, $selectedIndex - 1)
+            if ($selectedIndex -eq 0) { $newOffset = 0 }
+        }
+        elseif ($selectedIndex -gt $visibleLast) {
+            $newOffset = [Math]::Min($itemCount - $viewportSize, $selectedIndex - $viewportSize + 2)
+            if ($selectedIndex -eq ($itemCount - 1)) { $newOffset = $itemCount - $viewportSize }
+        }
+        Set-Variable -Name viewportOffset -Value $newOffset -Scope 1
+    }
+
     try {
         try { [Console]::CursorVisible = $false } catch { }
 
         # Initial render
+        & $adjustViewport
         Render-TBMenuBox -Items $Options -SelectedIndex $selectedIndex -AnchorTop $anchorTop `
-            -IncludeBack:$IncludeBack -IncludeQuit:$IncludeQuit
+            -IncludeBack:$IncludeBack -IncludeQuit:$IncludeQuit `
+            -ViewportOffset $viewportOffset -ViewportSize $viewportSize
 
         while ($true) {
             $key = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
@@ -68,8 +96,10 @@ function Show-TBMenuArrowSingle {
                     else {
                         $selectedIndex = $itemCount - 1
                     }
+                    & $adjustViewport
                     Render-TBMenuBox -Items $Options -SelectedIndex $selectedIndex -AnchorTop $anchorTop `
-                        -IncludeBack:$IncludeBack -IncludeQuit:$IncludeQuit
+                        -IncludeBack:$IncludeBack -IncludeQuit:$IncludeQuit `
+                        -ViewportOffset $viewportOffset -ViewportSize $viewportSize
                 }
                 40 { # Down arrow
                     if ($selectedIndex -lt ($itemCount - 1)) {
@@ -78,8 +108,10 @@ function Show-TBMenuArrowSingle {
                     else {
                         $selectedIndex = 0
                     }
+                    & $adjustViewport
                     Render-TBMenuBox -Items $Options -SelectedIndex $selectedIndex -AnchorTop $anchorTop `
-                        -IncludeBack:$IncludeBack -IncludeQuit:$IncludeQuit
+                        -IncludeBack:$IncludeBack -IncludeQuit:$IncludeQuit `
+                        -ViewportOffset $viewportOffset -ViewportSize $viewportSize
                 }
                 13 { # Enter
                     return $selectedIndex

@@ -48,12 +48,12 @@ function Invoke-TBMonitorAction {
                     $params['Description'] = $description
                 }
 
-                # Build simple baseline resources from type names
+                # Build baseline resources with IsSingleInstance key property
                 $resources = foreach ($rt in $resourceTypes) {
                     [PSCustomObject]@{
                         resourceType = $rt
                         displayName  = $rt
-                        properties   = @{}
+                        properties   = @{ IsSingleInstance = 'Yes' }
                     }
                 }
                 $params['Resources'] = $resources
@@ -70,7 +70,85 @@ function Invoke-TBMonitorAction {
 
             Read-Host -Prompt '  Press Enter to continue'
         }
-        1 { # List monitors
+        1 { # Create from security catalog
+            $catalog = Get-TBBaselineCatalog
+            $resourceTypes = Select-TBCatalogEntry
+            if (-not $resourceTypes) {
+                Write-Host '  No categories selected. Cancelled.' -ForegroundColor Yellow
+                Read-Host -Prompt '  Press Enter to continue'
+                return
+            }
+
+            $displayName = Read-TBUserInput -Prompt 'Monitor display name' -Mandatory `
+                -MinLength 8 -MaxLength 32 `
+                -Pattern '^[a-zA-Z0-9 ]{8,32}$' `
+                -PatternMessage 'Must be 8-32 characters, alphanumeric and spaces only.'
+
+            if (-not $displayName) { return }
+
+            $description = Read-TBUserInput -Prompt 'Description (optional)'
+
+            $confirmed = Read-TBUserInput -Prompt ('Create monitor "{0}" with {1} resource type(s) from security catalog?' -f $displayName, $resourceTypes.Count) -Confirm
+            if (-not $confirmed) { return }
+
+            try {
+                $params = @{
+                    DisplayName = $displayName
+                    Confirm     = $false
+                }
+                if ($description) {
+                    $params['Description'] = $description
+                }
+
+                # Build resources from catalog BaselineResources with typed
+                # EIDSCA recommended values as baseline properties.
+                $resources = foreach ($rt in $resourceTypes) {
+                    $baselineProps = $null
+                    foreach ($cat in $catalog.Categories) {
+                        foreach ($br in $cat.BaselineResources) {
+                            if ($br.ResourceType -eq $rt) {
+                                $baselineProps = $br.Properties
+                                break
+                            }
+                        }
+                        if ($baselineProps) { break }
+                    }
+                    if (-not $baselineProps) {
+                        $baselineProps = @{ IsSingleInstance = 'Yes' }
+                    }
+                    [PSCustomObject]@{
+                        resourceType = $rt
+                        displayName  = $rt
+                        properties   = $baselineProps
+                    }
+                }
+                $params['Resources'] = $resources
+
+                # Log what will be sent
+                foreach ($r in $resources) {
+                    $propCount = 0
+                    if ($r.properties -is [hashtable]) {
+                        $propCount = @($r.properties.Keys | Where-Object { $_ -ne 'IsSingleInstance' }).Count
+                    }
+                    elseif ($r.properties.PSObject.Properties) {
+                        $propCount = @($r.properties.PSObject.Properties.Name | Where-Object { $_ -ne 'IsSingleInstance' }).Count
+                    }
+                    Write-Verbose ('  Resource: {0} with {1} baseline properties' -f $r.resourceType, $propCount)
+                }
+
+                $result = New-TBMonitor @params
+                Write-Host ''
+                Write-Host ('  Monitor created: {0}' -f $result.Id) -ForegroundColor Green
+                Write-Host ('  Display Name: {0}' -f $result.DisplayName) -ForegroundColor White
+                Write-Host ('  Status: {0}' -f $result.Status) -ForegroundColor White
+            }
+            catch {
+                Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
+            }
+
+            Read-Host -Prompt '  Press Enter to continue'
+        }
+        2 { # List monitors
             Write-Host ''
             Write-Host '  -- Monitors --' -ForegroundColor Cyan
             Write-Host ''
@@ -95,7 +173,7 @@ function Invoke-TBMonitorAction {
 
             Read-Host -Prompt '  Press Enter to continue'
         }
-        2 { # View monitor details
+        3 { # View monitor details
             try {
                 $monitors = @(Get-TBMonitor)
                 if ($monitors.Count -eq 0) {
@@ -121,6 +199,102 @@ function Invoke-TBMonitorAction {
                 Write-Host ('  Status:       {0}' -f $monitor.Status) -ForegroundColor White
                 Write-Host ('  Created:      {0}' -f $monitor.CreatedDateTime) -ForegroundColor White
                 Write-Host ('  Modified:     {0}' -f $monitor.LastModifiedDateTime) -ForegroundColor White
+
+                # Fetch and display baseline resources
+                try {
+                    $baseline = Get-TBBaseline -MonitorId $monitor.Id
+                    $baselineResources = @($baseline.Resources)
+                    if ($baselineResources.Count -gt 0) {
+                        # Build catalog lookup tables for annotations
+                        $catalog = Get-TBBaselineCatalog
+                        $catLookup = @{}
+                        $testLookup = @{}
+                        foreach ($cat in $catalog.Categories) {
+                            foreach ($rt in $cat.ResourceTypes) {
+                                $catLookup[$rt] = $cat
+                            }
+                            foreach ($test in $cat.Tests) {
+                                $key = '{0}|{1}' -f $test.ResourceType, $test.Property
+                                if (-not $testLookup.ContainsKey($key)) {
+                                    $testLookup[$key] = $test
+                                }
+                            }
+                        }
+
+                        Write-Host ''
+                        Write-Host ('  Baseline: {0}' -f $baseline.DisplayName) -ForegroundColor Cyan
+                        Write-Host ('  Resources ({0}):' -f $baselineResources.Count) -ForegroundColor Cyan
+                        foreach ($res in $baselineResources) {
+                            # Handle both hashtable and PSCustomObject responses
+                            if ($res -is [hashtable]) {
+                                $rtName = if ($res.ContainsKey('resourceType')) { $res['resourceType'] } else { '(unknown)' }
+                                $resDisplay = if ($res.ContainsKey('displayName')) { $res['displayName'] } else { $rtName }
+                                $props = if ($res.ContainsKey('properties')) { $res['properties'] } else { $null }
+                            }
+                            else {
+                                $rtName = if ($res.PSObject.Properties['resourceType']) { $res.resourceType } else { '(unknown)' }
+                                $resDisplay = if ($res.PSObject.Properties['displayName']) { $res.displayName } else { $rtName }
+                                $props = if ($res.PSObject.Properties['properties']) { $res.properties } else { $null }
+                            }
+                            Write-Host ''
+                            Write-Host ('    {0}' -f $resDisplay) -ForegroundColor White
+                            Write-Host ('    Type: {0}' -f $rtName) -ForegroundColor DarkGray
+
+                            # Show catalog source if resource type is in the EIDSCA catalog
+                            $catInfo = $catLookup[$rtName]
+                            if ($catInfo) {
+                                Write-Host ('    Source: {0} - {1} [{2}]' -f $catInfo.Framework, $catInfo.Name, $catInfo.Severity) -ForegroundColor DarkGray
+                            }
+
+                            if ($props) {
+                                $propNames = @()
+                                if ($props -is [hashtable]) {
+                                    $propNames = @($props.Keys | Sort-Object)
+                                }
+                                elseif ($props.PSObject.Properties) {
+                                    $propNames = @($props.PSObject.Properties.Name | Sort-Object)
+                                }
+
+                                $displayableProps = @($propNames | Where-Object { $_ -ne 'IsSingleInstance' })
+                                if ($displayableProps.Count -gt 0) {
+                                    Write-Host ''
+                                    Write-Host '    Baseline Property                         Desired Value' -ForegroundColor DarkCyan
+                                    Write-Host '    -----------------                         -------------' -ForegroundColor DarkGray
+                                    foreach ($pName in $displayableProps) {
+                                        $pValue = if ($props -is [hashtable]) { $props[$pName] } else { $props.$pName }
+                                        # Format arrays for display
+                                        if ($pValue -is [System.Collections.IEnumerable] -and $pValue -isnot [string]) {
+                                            $pValue = ($pValue -join ', ')
+                                        }
+                                        $pValueStr = "$pValue"
+                                        if ($pValueStr.Length -gt 30) {
+                                            $pValueStr = $pValueStr.Substring(0, 27) + '...'
+                                        }
+                                        Write-Host ('    {0}  {1}' -f $pName.PadRight(42), $pValueStr) -ForegroundColor White
+
+                                        # Annotate with EIDSCA test description if available
+                                        $testKey = '{0}|{1}' -f $rtName, $pName
+                                        $testInfo = $testLookup[$testKey]
+                                        if ($testInfo) {
+                                            Write-Host ('      {0}' -f $testInfo.Description) -ForegroundColor DarkGray
+                                        }
+                                    }
+                                }
+                                else {
+                                    Write-Host '    No baseline property values configured.' -ForegroundColor DarkGray
+                                    Write-Host '    Tip: Create from security catalog to include recommended values.' -ForegroundColor DarkGray
+                                }
+                            }
+                            else {
+                                Write-Host '    No properties returned by API.' -ForegroundColor DarkGray
+                            }
+                        }
+                    }
+                }
+                catch {
+                    Write-Host ''
+                    Write-Host ('  Could not load baseline: {0}' -f $_.Exception.Message) -ForegroundColor DarkGray
+                }
             }
             catch {
                 Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
@@ -128,7 +302,7 @@ function Invoke-TBMonitorAction {
 
             Read-Host -Prompt '  Press Enter to continue'
         }
-        3 { # Update monitor
+        4 { # Update monitor
             try {
                 $monitors = @(Get-TBMonitor)
                 if ($monitors.Count -eq 0) {
@@ -180,7 +354,7 @@ function Invoke-TBMonitorAction {
 
             Read-Host -Prompt '  Press Enter to continue'
         }
-        4 { # Delete monitor
+        5 { # Delete monitor
             try {
                 $monitors = @(Get-TBMonitor)
                 if ($monitors.Count -eq 0) {
@@ -213,7 +387,7 @@ function Invoke-TBMonitorAction {
 
             Read-Host -Prompt '  Press Enter to continue'
         }
-        5 { # View monitor results
+        6 { # View monitor results
             try {
                 $monitors = @(Get-TBMonitor)
                 if ($monitors.Count -eq 0) {
@@ -284,6 +458,7 @@ function Show-TBMonitorMenu {
 
         $options = @(
             'Create new monitor'
+            'Create from Maester'
             'List monitors'
             'View monitor details'
             'Update monitor'

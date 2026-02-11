@@ -420,6 +420,7 @@ function Show-TBMainMenu {
                 Title    = $monitorTitle
                 Children = @(
                     'Create new monitor'
+                    'Create from Maester'
                     'List monitors'
                     'View monitor details'
                     'Update monitor'

@@ -41,6 +41,7 @@ function Get-TBHeaderModel {
             LinksLine         = 'TenantBaseline.com |  GitHub.com/ugurkocde/tenantbaseline'
             UTCMShort         = 'UTCM: Unified Tenant Configuration Management (Microsoft Graph)'
             CapabilitiesLine  = 'Monitoring, Drift Detection, Snapshots, Baselines, Reports'
+            ReadOnlyLine      = 'Read-Only: Monitors and audits tenant configuration. Never modifies tenant settings.'
         }
     }
 
@@ -61,6 +62,7 @@ function Get-TBHeaderModel {
         LinksLine        = $script:TBHeaderModelCache.LinksLine
         UTCMShort        = $script:TBHeaderModelCache.UTCMShort
         CapabilitiesLine = $script:TBHeaderModelCache.CapabilitiesLine
+        ReadOnlyLine     = $script:TBHeaderModelCache.ReadOnlyLine
     }
 }
 
@@ -304,6 +306,7 @@ function Write-TBMenuHeaderPremium {
         & $writePaddedLine -Text $HeaderModel.MetaLine -Style $palette.Dim
         & $writePaddedLine -Text $HeaderModel.UTCMShort -Style $palette.Peach
         & $writePaddedLine -Text $HeaderModel.CapabilitiesLine -Style $palette.Subtext
+        & $writePaddedLine -Text $HeaderModel.ReadOnlyLine -Style $palette.Green
     }
 
     # Empty line
@@ -397,6 +400,7 @@ function Write-TBMenuHeaderClassic {
         $null = $lines.Add((& $fitText $HeaderModel.MetaLine).PadRight($maxWidth))
         $null = $lines.Add((& $fitText $HeaderModel.UTCMShort).PadRight($maxWidth))
         $null = $lines.Add((& $fitText $HeaderModel.CapabilitiesLine).PadRight($maxWidth))
+        $null = $lines.Add((& $fitText $HeaderModel.ReadOnlyLine).PadRight($maxWidth))
     }
 
     $border = '=' * ($maxWidth + 2)

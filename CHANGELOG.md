@@ -5,6 +5,24 @@ All notable changes to the TenantBaseline module will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-02-11
+
+### Added
+- Maester security catalog integration: create monitors from EIDSCA baseline categories with recommended property values
+- Baseline catalog artifact (`Data/BaselineCatalog.json`) with security checks grouped by workload and category
+- `Get-TBBaselineCatalog` private helper to load and cache the catalog
+- `Select-TBCatalogEntry` private helper for two-level workload/category selection with detail view
+- Viewport scrolling in arrow-key menus for lists that exceed terminal height (fixes SetCursorPosition overflow with large workloads)
+- Scroll indicators showing items above/below the visible window
+- Buffer height guards on all `SetCursorPosition` calls in `Render-TBMenuBox`
+- Read-only safety notice in the hero header: monitors and audits tenant configuration without modifying tenant settings
+- Monitor detail view now annotates baseline resources with catalog source and EIDSCA test descriptions
+
+### Changed
+- "Create from security catalog" monitor option renamed to "Create from Maester"
+- `Render-TBMenuBox` accepts optional `ViewportOffset` and `ViewportSize` parameters (backward compatible)
+- `Show-TBMenuArrowMultiSelect` and `Show-TBMenuArrowSingle` compute viewport size from available terminal space
+
 ## [0.1.8] - 2026-02-10
 
 ### Changed
