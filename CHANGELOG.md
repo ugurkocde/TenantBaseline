@@ -5,6 +5,11 @@ All notable changes to the TenantBaseline module will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-02-11
+
+### Fixed
+- Monitor creation from manual resource selection: send required empty `properties` object (API mandates the field but accepts `{}` for current-config-as-baseline)
+
 ## [0.2.1] - 2026-02-11
 
 ### Fixed

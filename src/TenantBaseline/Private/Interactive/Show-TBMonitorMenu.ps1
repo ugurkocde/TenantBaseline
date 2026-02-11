@@ -48,11 +48,12 @@ function Invoke-TBMonitorAction {
                     $params['Description'] = $description
                 }
 
-                # Build baseline resources (no properties -- API reads current config)
+                # Build baseline resources with empty properties (field is required by API)
                 $resources = foreach ($rt in $resourceTypes) {
                     [PSCustomObject]@{
                         resourceType = $rt
                         displayName  = $rt
+                        properties   = @{}
                     }
                 }
                 $params['Resources'] = $resources

@@ -1,6 +1,6 @@
 @{
     RootModule        = 'TenantBaseline.psm1'
-    ModuleVersion     = '0.2.1'
+    ModuleVersion     = '0.2.2'
     GUID              = 'edee0e7b-afeb-4cc1-b30c-ef8486d7c9a6'
     Author            = 'TenantBaseline Contributors'
     CompanyName       = 'Community'
@@ -67,7 +67,7 @@
             Tags         = @('Microsoft365', 'Graph', 'UTCM', 'Baseline', 'Drift', 'Security', 'Compliance', 'Intune', 'ConditionalAccess', 'EntraID')
             LicenseUri   = 'https://github.com/ugurkocde/TenantBaseline/blob/main/LICENSE'
             ProjectUri   = 'https://github.com/ugurkocde/TenantBaseline'
-            ReleaseNotes = 'Fix BadRequest when creating monitors from manual resource selection by removing invalid IsSingleInstance property.'
+            ReleaseNotes = 'Fix monitor creation: send required empty properties object for manual resource selection.'
         }
     }
 }
