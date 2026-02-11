@@ -35,6 +35,19 @@ function ConvertTo-TBBaselineResource {
 
     if ($obj.PSObject.Properties['properties']) {
         $result['properties'] = $obj.properties
+
+        # Warn when properties is empty -- the API will reject this if the
+        # resource type has no existing policy in the tenant.
+        $propsEmpty = $false
+        if ($obj.properties -is [hashtable]) {
+            $propsEmpty = $obj.properties.Count -eq 0
+        }
+        elseif ($obj.properties.PSObject.Properties) {
+            $propsEmpty = @($obj.properties.PSObject.Properties).Count -eq 0
+        }
+        if ($propsEmpty) {
+            Write-TBLog -Message ('Resource "{0}" has empty properties. The API may reject this if the resource type has no existing tenant configuration.' -f ($obj.resourceType)) -Level 'Warning'
+        }
     }
 
     if ($obj.PSObject.Properties['displayName']) {

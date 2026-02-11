@@ -79,8 +79,8 @@ Describe 'New-TBMonitor' {
             Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { return $fixtureData }
 
             $resources = @(
-                [PSCustomObject]@{ resourceType = 'microsoft.entra.conditionalaccesspolicy'; displayName = 'Policy 1'; properties = @{} }
-                [PSCustomObject]@{ resourceType = 'microsoft.exchange.accepteddomain'; displayName = 'Domain 1'; properties = @{} }
+                [PSCustomObject]@{ resourceType = 'microsoft.entra.conditionalaccesspolicy'; displayName = 'Policy 1'; properties = @{ State = 'enabled' } }
+                [PSCustomObject]@{ resourceType = 'microsoft.exchange.accepteddomain'; displayName = 'Domain 1'; properties = @{ DomainType = 'Authoritative' } }
             )
 
             $result = $resources | New-TBMonitor -DisplayName 'Pipeline Monitor' -Confirm:$false

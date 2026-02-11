@@ -29,7 +29,7 @@ function Invoke-TBMonitorAction {
             Write-Host ''
             Write-Host '  Select resource types for the baseline:' -ForegroundColor Cyan
 
-            $resourceTypes = Select-TBResourceType
+            $resourceTypes = Select-TBResourceType -SingleWorkload
             if (-not $resourceTypes) {
                 Write-Host '  No resource types selected. Cancelled.' -ForegroundColor Yellow
                 Read-Host -Prompt '  Press Enter to continue'
@@ -40,29 +40,119 @@ function Invoke-TBMonitorAction {
             if (-not $confirmed) { return }
 
             try {
-                $params = @{
-                    DisplayName = $displayName
-                    Confirm     = $false
-                }
-                if ($description) {
-                    $params['Description'] = $description
+                # Take an automatic snapshot to discover current tenant config
+                Write-Host ''
+                Write-Host '  Capturing current tenant configuration...' -ForegroundColor Cyan
+
+                $discovery = New-TBSnapshotDiscovery -ResourceTypes $resourceTypes
+                $snapshotProps = $discovery.Properties
+                $unsupportedBySnapshot = $discovery.UnsupportedTypes
+
+                if ($discovery.UnsupportedTypes.Count -gt 0) {
+                    Write-Host ''
+                    Write-Host ('  Note: {0} resource type(s) not supported by the snapshot API:' -f $discovery.UnsupportedTypes.Count) -ForegroundColor Yellow
+                    foreach ($u in $discovery.UnsupportedTypes) {
+                        Write-Host ('    - {0}' -f $u) -ForegroundColor Yellow
+                    }
+                    Write-Host '  These will use current tenant configuration as baseline.' -ForegroundColor Yellow
                 }
 
-                # Build baseline resources with empty properties (field is required by API)
-                $resources = foreach ($rt in $resourceTypes) {
-                    [PSCustomObject]@{
-                        resourceType = $rt
-                        displayName  = $rt
-                        properties   = @{}
+                if (-not $discovery.Success) {
+                    Write-Host '  Snapshot failed. Cannot resolve resource properties.' -ForegroundColor Yellow
+                }
+
+                # Build resources: use snapshot properties where available,
+                # fall back to empty properties for snapshot-unsupported types
+                $resources = @()
+                $skippedTypes = @()
+                foreach ($rt in $resourceTypes) {
+                    $key = $rt.ToLower()
+                    if ($snapshotProps.ContainsKey($key)) {
+                        $resources += [PSCustomObject]@{
+                            resourceType = $rt
+                            displayName  = $rt
+                            properties   = $snapshotProps[$key]
+                        }
+                    }
+                    elseif ($key -in @($unsupportedBySnapshot | ForEach-Object { $_.ToLower() })) {
+                        # Snapshot API doesn't support this type; use empty properties
+                        # (the monitor API will use current tenant config as baseline)
+                        $resources += [PSCustomObject]@{
+                            resourceType = $rt
+                            displayName  = $rt
+                            properties   = @{}
+                        }
+                    }
+                    else {
+                        $skippedTypes += $rt
                     }
                 }
-                $params['Resources'] = $resources
 
-                $result = New-TBMonitor @params
-                Write-Host ''
-                Write-Host ('  Monitor created: {0}' -f $result.Id) -ForegroundColor Green
-                Write-Host ('  Display Name: {0}' -f $result.DisplayName) -ForegroundColor White
-                Write-Host ('  Status: {0}' -f $result.Status) -ForegroundColor White
+                # Report types with no existing config in the snapshot
+                if ($skippedTypes.Count -gt 0) {
+                    Write-Host ''
+                    Write-Host ('  Note: {0} resource type(s) have no existing configuration and were excluded:' -f $skippedTypes.Count) -ForegroundColor Yellow
+                    foreach ($st in $skippedTypes) {
+                        Write-Host ('    - {0}' -f $st) -ForegroundColor Yellow
+                    }
+                }
+
+                # Abort if nothing left
+                if ($resources.Count -eq 0) {
+                    Write-Host ''
+                    Write-Host '  No resource types could be resolved. Cannot create monitor.' -ForegroundColor Red
+                    if ($discovery.SnapshotId) {
+                        try { Remove-TBSnapshot -SnapshotId $discovery.SnapshotId -Confirm:$false } catch {}
+                    }
+                    Read-Host -Prompt '  Press Enter to continue'
+                    return
+                }
+
+                # Re-confirm if types were filtered
+                if ($skippedTypes.Count -gt 0) {
+                    Write-Host ''
+                    $reconfirmed = Read-TBUserInput -Prompt ('Create monitor with {0} resource type(s)?' -f $resources.Count) -Confirm
+                    if (-not $reconfirmed) {
+                        if ($discovery.SnapshotId) {
+                            try { Remove-TBSnapshot -SnapshotId $discovery.SnapshotId -Confirm:$false } catch {}
+                        }
+                        return
+                    }
+                }
+
+                $createParams = @{
+                    DisplayName = $displayName
+                    Resources   = $resources
+                }
+                if ($description) {
+                    $createParams['Description'] = $description
+                }
+
+                $creation = Invoke-TBMonitorCreateWithRetry @createParams
+
+                if ($creation.RejectedTypes.Count -gt 0) {
+                    Write-Host ''
+                    Write-Host ('  Note: {0} resource type(s) rejected by the monitor API:' -f $creation.RejectedTypes.Count) -ForegroundColor Yellow
+                    foreach ($rj in $creation.RejectedTypes) {
+                        Write-Host ('    - {0}' -f $rj) -ForegroundColor Yellow
+                    }
+                }
+
+                if ($creation.Result) {
+                    Write-Host ''
+                    Write-Host ('  Monitor created: {0}' -f $creation.Result.Id) -ForegroundColor Green
+                    Write-Host ('  Display Name: {0}' -f $creation.Result.DisplayName) -ForegroundColor White
+                    Write-Host ('  Status: {0}' -f $creation.Result.Status) -ForegroundColor White
+                }
+                else {
+                    Write-Host ''
+                    Write-Host '  All resource types were rejected. Monitor was not created.' -ForegroundColor Red
+                }
+
+                # Best-effort cleanup of the temporary snapshot
+                if ($discovery.SnapshotId) {
+                    try { Remove-TBSnapshot -SnapshotId $discovery.SnapshotId -Confirm:$false } catch {}
+                }
             }
             catch {
                 Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
@@ -92,55 +182,151 @@ function Invoke-TBMonitorAction {
             if (-not $confirmed) { return }
 
             try {
-                $params = @{
-                    DisplayName = $displayName
-                    Confirm     = $false
-                }
-                if ($description) {
-                    $params['Description'] = $description
+                # Snapshot discovers required keys (like Id) that the catalog lacks
+                Write-Host ''
+                Write-Host '  Capturing current tenant configuration...' -ForegroundColor Cyan
+
+                $discovery = New-TBSnapshotDiscovery -ResourceTypes $resourceTypes
+                $snapshotProps = $discovery.Properties
+
+                if ($discovery.UnsupportedTypes.Count -gt 0) {
+                    Write-Host ''
+                    Write-Host ('  Note: {0} resource type(s) not supported by the snapshot API:' -f $discovery.UnsupportedTypes.Count) -ForegroundColor Yellow
+                    foreach ($u in $discovery.UnsupportedTypes) {
+                        Write-Host ('    - {0}' -f $u) -ForegroundColor Yellow
+                    }
                 }
 
-                # Build resources from catalog BaselineResources with typed
-                # EIDSCA recommended values as baseline properties.
-                $resources = foreach ($rt in $resourceTypes) {
-                    $baselineProps = $null
-                    foreach ($cat in $catalog.Categories) {
-                        foreach ($br in $cat.BaselineResources) {
-                            if ($br.ResourceType -eq $rt) {
-                                $baselineProps = $br.Properties
-                                break
+                if (-not $discovery.Success) {
+                    Write-Host '  Snapshot failed. Cannot resolve resource properties.' -ForegroundColor Yellow
+                }
+
+                # Build catalog property lookup (keyed by lowercase resource type)
+                $catalogProps = @{}
+                foreach ($cat in $catalog.Categories) {
+                    foreach ($br in $cat.BaselineResources) {
+                        $key = $br.ResourceType.ToLower()
+                        if (-not $catalogProps.ContainsKey($key)) {
+                            $catalogProps[$key] = $br.Properties
+                        }
+                    }
+                }
+
+                # Build resources: snapshot base + catalog overlay (minus IsSingleInstance)
+                $resources = @()
+                $skippedTypes = @()
+                foreach ($rt in $resourceTypes) {
+                    $key = $rt.ToLower()
+                    $baseProps = $null
+                    $hasSnapshot = $snapshotProps.ContainsKey($key)
+                    $isUnsupported = $key -in @($discovery.UnsupportedTypes | ForEach-Object { $_.ToLower() })
+
+                    if ($hasSnapshot) {
+                        # Start with snapshot properties as base
+                        $baseProps = @{}
+                        $snapObj = $snapshotProps[$key]
+                        if ($snapObj -is [hashtable]) {
+                            foreach ($k in $snapObj.Keys) { $baseProps[$k] = $snapObj[$k] }
+                        }
+                        else {
+                            foreach ($p in $snapObj.PSObject.Properties) { $baseProps[$p.Name] = $p.Value }
+                        }
+                    }
+                    elseif ($isUnsupported) {
+                        # Snapshot API does not support this type; start with empty base
+                        $baseProps = @{}
+                    }
+                    else {
+                        # No snapshot data and not unsupported -- type has no config
+                        $skippedTypes += $rt
+                        continue
+                    }
+
+                    # Overlay catalog recommended values (minus IsSingleInstance)
+                    if ($catalogProps.ContainsKey($key)) {
+                        $catObj = $catalogProps[$key]
+                        if ($catObj -is [hashtable]) {
+                            foreach ($k in $catObj.Keys) {
+                                if ($k -ne 'IsSingleInstance') { $baseProps[$k] = $catObj[$k] }
                             }
                         }
-                        if ($baselineProps) { break }
+                        else {
+                            foreach ($p in $catObj.PSObject.Properties) {
+                                if ($p.Name -ne 'IsSingleInstance') { $baseProps[$p.Name] = $p.Value }
+                            }
+                        }
                     }
-                    if (-not $baselineProps) {
-                        $baselineProps = @{ IsSingleInstance = 'Yes' }
-                    }
-                    [PSCustomObject]@{
+
+                    $resources += [PSCustomObject]@{
                         resourceType = $rt
                         displayName  = $rt
-                        properties   = $baselineProps
+                        properties   = $baseProps
                     }
                 }
-                $params['Resources'] = $resources
 
-                # Log what will be sent
-                foreach ($r in $resources) {
-                    $propCount = 0
-                    if ($r.properties -is [hashtable]) {
-                        $propCount = @($r.properties.Keys | Where-Object { $_ -ne 'IsSingleInstance' }).Count
+                if ($skippedTypes.Count -gt 0) {
+                    Write-Host ''
+                    Write-Host ('  Note: {0} resource type(s) have no existing configuration and were excluded:' -f $skippedTypes.Count) -ForegroundColor Yellow
+                    foreach ($st in $skippedTypes) {
+                        Write-Host ('    - {0}' -f $st) -ForegroundColor Yellow
                     }
-                    elseif ($r.properties.PSObject.Properties) {
-                        $propCount = @($r.properties.PSObject.Properties.Name | Where-Object { $_ -ne 'IsSingleInstance' }).Count
-                    }
-                    Write-Verbose ('  Resource: {0} with {1} baseline properties' -f $r.resourceType, $propCount)
                 }
 
-                $result = New-TBMonitor @params
-                Write-Host ''
-                Write-Host ('  Monitor created: {0}' -f $result.Id) -ForegroundColor Green
-                Write-Host ('  Display Name: {0}' -f $result.DisplayName) -ForegroundColor White
-                Write-Host ('  Status: {0}' -f $result.Status) -ForegroundColor White
+                if ($resources.Count -eq 0) {
+                    Write-Host ''
+                    Write-Host '  No resource types could be resolved. Cannot create monitor.' -ForegroundColor Red
+                    if ($discovery.SnapshotId) {
+                        try { Remove-TBSnapshot -SnapshotId $discovery.SnapshotId -Confirm:$false } catch {}
+                    }
+                    Read-Host -Prompt '  Press Enter to continue'
+                    return
+                }
+
+                # Re-confirm if types were filtered
+                if ($skippedTypes.Count -gt 0) {
+                    Write-Host ''
+                    $reconfirmed = Read-TBUserInput -Prompt ('Create monitor with {0} resource type(s)?' -f $resources.Count) -Confirm
+                    if (-not $reconfirmed) {
+                        if ($discovery.SnapshotId) {
+                            try { Remove-TBSnapshot -SnapshotId $discovery.SnapshotId -Confirm:$false } catch {}
+                        }
+                        return
+                    }
+                }
+
+                $createParams = @{
+                    DisplayName = $displayName
+                    Resources   = $resources
+                }
+                if ($description) {
+                    $createParams['Description'] = $description
+                }
+
+                $creation = Invoke-TBMonitorCreateWithRetry @createParams
+
+                if ($creation.RejectedTypes.Count -gt 0) {
+                    Write-Host ''
+                    Write-Host ('  Note: {0} resource type(s) rejected by the monitor API:' -f $creation.RejectedTypes.Count) -ForegroundColor Yellow
+                    foreach ($rj in $creation.RejectedTypes) {
+                        Write-Host ('    - {0}' -f $rj) -ForegroundColor Yellow
+                    }
+                }
+
+                if ($creation.Result) {
+                    Write-Host ''
+                    Write-Host ('  Monitor created: {0}' -f $creation.Result.Id) -ForegroundColor Green
+                    Write-Host ('  Display Name: {0}' -f $creation.Result.DisplayName) -ForegroundColor White
+                    Write-Host ('  Status: {0}' -f $creation.Result.Status) -ForegroundColor White
+                }
+                else {
+                    Write-Host ''
+                    Write-Host '  All resource types were rejected. Monitor was not created.' -ForegroundColor Red
+                }
+
+                # Best-effort cleanup of the temporary snapshot
+                if ($discovery.SnapshotId) {
+                    try { Remove-TBSnapshot -SnapshotId $discovery.SnapshotId -Confirm:$false } catch {}
+                }
             }
             catch {
                 Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
