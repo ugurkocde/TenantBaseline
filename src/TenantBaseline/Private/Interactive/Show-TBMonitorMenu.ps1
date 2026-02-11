@@ -48,12 +48,11 @@ function Invoke-TBMonitorAction {
                     $params['Description'] = $description
                 }
 
-                # Build baseline resources with IsSingleInstance key property
+                # Build baseline resources (no properties -- API reads current config)
                 $resources = foreach ($rt in $resourceTypes) {
                     [PSCustomObject]@{
                         resourceType = $rt
                         displayName  = $rt
-                        properties   = @{ IsSingleInstance = 'Yes' }
                     }
                 }
                 $params['Resources'] = $resources
