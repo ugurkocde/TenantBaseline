@@ -5,11 +5,10 @@
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/TenantBaseline?label=PSGallery&color=blue)](https://www.powershellgallery.com/packages/TenantBaseline)
 [![Downloads](https://img.shields.io/powershellgallery/dt/TenantBaseline?label=Downloads&color=blue)](https://www.powershellgallery.com/packages/TenantBaseline)
 [![PowerShell 7.2+](https://img.shields.io/badge/PowerShell-7.2%2B-blue)](https://github.com/PowerShell/PowerShell)
-[![Tests](https://img.shields.io/badge/tests-255%20passing-brightgreen)](tests/)
+[![Tests](https://img.shields.io/badge/tests-331%20passing-brightgreen)](tests/)
 [![CI](https://github.com/ugurkocde/TenantBaseline/actions/workflows/ci.yml/badge.svg)](https://github.com/ugurkocde/TenantBaseline/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-<img src="Screenshot.png" alt="TenantBaseline interactive console">
 </div>
 
 ```powershell
@@ -40,7 +39,7 @@ Install-Module -Name TenantBaseline -Scope CurrentUser
 
 TenantBaseline wraps the Microsoft Graph Unified Tenant Configuration Management (UTCM) beta API into a set of PowerShell cmdlets that make it straightforward to define baselines, detect drift, capture snapshots, and generate compliance reports for your Microsoft 365 tenant.
 
-The module covers 268 resource types across M365 workloads including Entra ID, Exchange Online, Microsoft Intune, Microsoft Teams, SharePoint, OneDrive, and more. Whether you are an IT administrator tracking Conditional Access policy changes or a compliance team auditing Intune device configurations, TenantBaseline provides the tooling to monitor and document tenant state.
+The module covers 249 resource types across M365 workloads including Entra ID, Exchange Online, Microsoft Intune, Microsoft Teams, and Microsoft Defender / Purview. Whether you are an IT administrator tracking Conditional Access policy changes or a compliance team auditing Intune device configurations, TenantBaseline provides the tooling to monitor and document tenant state.
 
 ---
 
@@ -51,7 +50,8 @@ The module covers 268 resource types across M365 workloads including Entra ID, E
 - **Monitor Management** - Create, update, and remove configuration monitors that track resources against a known-good baseline.
 - **Drift Detection** - Detect configuration drift with filtering by monitor or resource type, and get aggregated summaries grouped by status and workload.
 - **Baseline Export/Import** - Export baselines to JSON for version control or migration, and import them to seed new monitors.
-- **Configuration Snapshots** - Capture point-in-time tenant configuration snapshots, wait for completion, and export data before the 7-day expiry.
+- **Configuration Snapshots** - Capture point-in-time tenant configuration snapshots, wait for completion, export data before the 7-day expiry, and compare snapshots to detect property-level changes.
+- **Monitor Operations** - Clone monitors, export/import portable JSON backups, and track UTCM quota usage across monitors, resource-days, and snapshot jobs.
 - **Compliance Reporting** - Generate HTML drift reports, interactive dashboards with embedded timelines, and formatted documentation for compliance review.
 - **Interactive Console** - A menu-driven TUI (`Start-TBInteractive`) with guided workflows, input validation, and resource type pickers for all module operations.
 
@@ -142,7 +142,7 @@ TenantBaseline uses interactive/delegated authentication via `Connect-MgGraph`. 
 |---|---|---|
 | `ReadOnly` | `ConfigurationMonitoring.Read.All` | View monitors, drifts, and snapshots |
 | `Manage` | `ConfigurationMonitoring.ReadWrite.All` | Create/update monitors, snapshots, and reports |
-| `Setup` | `ConfigurationMonitoring.ReadWrite.All`, `Application.ReadWrite.All` | One-time UTCM service principal provisioning |
+| `Setup` | `ConfigurationMonitoring.ReadWrite.All`, `Application.ReadWrite.All`, `AppRoleAssignment.ReadWrite.All` | One-time UTCM service principal provisioning |
 
 For details, see [docs/Authentication.md](docs/Authentication.md).
 
@@ -176,6 +176,9 @@ For details, see [docs/Authentication.md](docs/Authentication.md).
 | `Set-TBMonitor` | Updates display name, description, status, or baseline of a monitor |
 | `Remove-TBMonitor` | Deletes a configuration monitor |
 | `Get-TBMonitorResult` | Gets monitoring run results and errors, optionally filtered by monitor |
+| `Get-TBQuotaStatus` | Returns current UTCM quota usage vs limits (monitors, resource-days, snapshots) |
+| `Export-TBMonitor` | Exports a monitor and its baseline to a portable JSON file |
+| `Copy-TBMonitor` | Clones an existing monitor with a new display name |
 
 ### Drift Detection
 
@@ -197,10 +200,12 @@ For details, see [docs/Authentication.md](docs/Authentication.md).
 | Command | Description |
 |---|---|
 | `New-TBSnapshot` | Creates a snapshot job for specified resource types |
+| `New-TBBaselineSnapshot` | Creates a snapshot from a monitor's baseline resource types |
 | `Get-TBSnapshot` | Gets one or all snapshot jobs |
 | `Remove-TBSnapshot` | Deletes a snapshot job |
 | `Wait-TBSnapshot` | Polls until a snapshot job reaches a terminal state |
 | `Export-TBSnapshot` | Downloads snapshot content to a local JSON file before expiry |
+| `Compare-TBSnapshot` | Compares two snapshots and returns property-level diffs |
 
 ### Report
 
@@ -225,7 +230,7 @@ For details, see [docs/Authentication.md](docs/Authentication.md).
 ```powershell
 Connect-TBTenant -Scenario Setup
 Install-TBServicePrincipal
-Grant-TBServicePrincipalPermission -ResourceTypes @('microsoft.entra.conditionalaccesspolicy')
+Grant-TBServicePrincipalPermission -ResourceType @('microsoft.entra.conditionalaccesspolicy')
 ```
 
 ### Daily Monitoring
@@ -255,6 +260,29 @@ Wait-TBSnapshot -SnapshotId $snapshot.id
 Export-TBSnapshot -SnapshotId $snapshot.id -OutputPath ./snapshot.json
 ```
 
+### Snapshot Comparison
+
+```powershell
+# Compare two snapshots to see what changed
+Compare-TBSnapshot -ReferenceSnapshotId $before.Id -DifferenceSnapshotId $after.Id
+
+# Export the comparison to a file
+Compare-TBSnapshot -ReferenceSnapshotId $before.Id -DifferenceSnapshotId $after.Id -OutputPath ./diff.json
+```
+
+### Monitor Cloning and Export
+
+```powershell
+# Clone a monitor with a new name
+Copy-TBMonitor -MonitorId $monitor.Id -NewDisplayName 'CA Monitor (Copy)'
+
+# Export a monitor and its baseline to a portable JSON file
+Export-TBMonitor -MonitorId $monitor.Id -OutputPath ./monitor-backup.json
+
+# Check UTCM quota usage
+Get-TBQuotaStatus
+```
+
 ---
 
 ## API Limits
@@ -264,6 +292,8 @@ Export-TBSnapshot -SnapshotId $snapshot.id -OutputPath ./snapshot.json
 | Monitors per tenant | 30 |
 | Daily monitored resources | 800 |
 | Monitoring cycle interval | 6 hours |
+| Visible snapshot jobs | 12 |
+| Monthly snapshot resource extractions | 20,000 |
 | Snapshot retention | 7 days |
 
 For details, see [docs/API-Limits.md](docs/API-Limits.md).
@@ -278,7 +308,7 @@ tenantbaseline/
   build/               Build and packaging scripts
   docs/                Documentation (Getting Started, Auth, API Limits, Migration)
   src/TenantBaseline/  Module source
-    Public/            26 exported cmdlets organized by functional area
+    Public/            31 exported cmdlets organized by functional area
     Private/           Internal helpers (API wrapper, interactive menu system)
     Data/              Resource type registry and workload metadata
     en-US/             Help content
