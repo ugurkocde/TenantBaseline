@@ -1,37 +1,3 @@
-function Write-TBProgressInline {
-    <#
-    .SYNOPSIS
-        Displays a simple inline spinner for polling operations.
-    .DESCRIPTION
-        Updates a single line with spinner animation. Call repeatedly in a loop.
-        Use Write-TBProgressComplete when done.
-    .PARAMETER Activity
-        Description of the activity.
-    .PARAMETER Stopwatch
-        A running Stopwatch instance for elapsed time display.
-    .PARAMETER SpinIndex
-        The current spin index (caller increments each call).
-    #>
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$Activity,
-
-        [Parameter(Mandatory = $true)]
-        [System.Diagnostics.Stopwatch]$Stopwatch,
-
-        [Parameter(Mandatory = $true)]
-        [int]$SpinIndex
-    )
-
-    $spinChars = @('|', '/', '-', '\')
-    $elapsed = $Stopwatch.Elapsed
-    $timeStr = '{0:00}:{1:00}' -f [Math]::Floor($elapsed.TotalMinutes), $elapsed.Seconds
-    $char = $spinChars[$SpinIndex % $spinChars.Count]
-    $line = "`r  {0} {1}  [{2}]" -f $char, $Activity, $timeStr
-    Write-Host $line -NoNewline -ForegroundColor Yellow
-}
-
 function Write-TBSnapshotProgress {
     <#
     .SYNOPSIS
