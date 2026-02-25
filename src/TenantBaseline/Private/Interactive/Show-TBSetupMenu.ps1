@@ -71,14 +71,13 @@ function Invoke-TBSetupAction {
                 'Intune'
                 'Teams'
                 'SecurityAndCompliance'
-                'SharePoint (compatibility only)'
                 'MultiWorkload (all graph permissions)'
             )
 
             $selected = Show-TBMenu -Title 'Select Workload' -Options $workloadOptions -IncludeBack
             if ($selected -eq 'Back') { return }
 
-            $workloadNames = @('ConditionalAccess', 'EntraID', 'ExchangeOnline', 'Intune', 'Teams', 'SecurityAndCompliance', 'SharePoint', 'MultiWorkload')
+            $workloadNames = @('ConditionalAccess', 'EntraID', 'ExchangeOnline', 'Intune', 'Teams', 'SecurityAndCompliance', 'MultiWorkload')
             $workload = $workloadNames[$selected]
 
             $confirmed = Read-TBUserInput -Prompt ('Grant {0} permissions to the UTCM service principal?' -f $workload) -Confirm

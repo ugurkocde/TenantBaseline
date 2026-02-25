@@ -16,13 +16,13 @@ Describe 'Grant-TBServicePrincipalPermission' {
         Mock -ModuleName TenantBaseline Get-MgContext { return $null }
         Mock -ModuleName TenantBaseline Get-TBGraphBaseUri { return 'https://graph.microsoft.com' }
         Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { throw 'Should not be called in this test path.' }
+        Mock -ModuleName TenantBaseline Invoke-TBGraphPagedRequest { return @() }
         Mock -ModuleName TenantBaseline Get-TBPermissionPlan {
             [PSCustomObject]@{
                 RequestedWorkloads        = @('ConditionalAccess')
                 CanonicalResourceTypes    = @('microsoft.entra.conditionalaccesspolicy')
                 AutoGrantGraphPermissions = @('Policy.Read.All', 'Policy.ReadWrite.ConditionalAccess')
                 ManualSteps               = @('Manual step')
-                CompatibilityNotes        = @()
             }
         }
     }
@@ -113,12 +113,23 @@ Describe 'Grant-TBServicePrincipalPermission' {
         It 'Throws when Application.ReadWrite.All is missing for auto-grant operations' {
             Mock -ModuleName TenantBaseline Get-MgContext {
                 [PSCustomObject]@{
-                    Scopes = @('ConfigurationMonitoring.ReadWrite.All')
+                    Scopes = @('ConfigurationMonitoring.ReadWrite.All', 'AppRoleAssignment.ReadWrite.All')
                 }
             }
 
             { Grant-TBServicePrincipalPermission -Workload 'ConditionalAccess' -Confirm:$false } |
                 Should -Throw '*Application.ReadWrite.All*'
+        }
+
+        It 'Throws when AppRoleAssignment.ReadWrite.All is missing for auto-grant operations' {
+            Mock -ModuleName TenantBaseline Get-MgContext {
+                [PSCustomObject]@{
+                    Scopes = @('ConfigurationMonitoring.ReadWrite.All', 'Application.ReadWrite.All')
+                }
+            }
+
+            { Grant-TBServicePrincipalPermission -Workload 'ConditionalAccess' -Confirm:$false } |
+                Should -Throw '*AppRoleAssignment.ReadWrite.All*'
         }
     }
 
@@ -140,8 +151,8 @@ Describe 'Grant-TBServicePrincipalPermission' {
                 )
             }
 
-            $existingAssignments = [PSCustomObject]@{
-                value = @(
+            Mock -ModuleName TenantBaseline Invoke-TBGraphPagedRequest {
+                @(
                     [PSCustomObject]@{
                         resourceId = 'graph-sp-id-001'
                         appRoleId  = 'role-policy-read'
@@ -152,7 +163,6 @@ Describe 'Grant-TBServicePrincipalPermission' {
             Mock -ModuleName TenantBaseline Invoke-TBGraphRequest {
                 if ($Uri -match '03b07b79') { return $spListData }
                 if ($Uri -match '00000003-0000-0000-c000-000000000000') { return $graphSpResponse }
-                if ($Uri -match 'appRoleAssignments' -and $Method -eq 'GET') { return $existingAssignments }
                 return [PSCustomObject]@{ id = 'assignment-001' }
             }
 

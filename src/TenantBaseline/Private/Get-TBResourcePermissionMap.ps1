@@ -14,12 +14,8 @@ function Get-TBResourcePermissionMap {
         $map[$profileEntry.Name] = @($profileEntry.Value.AutoGrantGraphPermissions)
     }
 
-    # Compatibility workload retained for existing scripts.
-    $map['SharePoint'] = @()
-
     $union = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($key in $map.Keys) {
-        if ($key -eq 'SharePoint') { continue }
         foreach ($perm in $map[$key]) {
             if ($perm) {
                 $null = $union.Add($perm)

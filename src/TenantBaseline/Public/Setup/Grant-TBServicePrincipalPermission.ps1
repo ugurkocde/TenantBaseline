@@ -16,7 +16,7 @@ function Grant-TBServicePrincipalPermission {
     [CmdletBinding(SupportsShouldProcess = $true, DefaultParameterSetName = 'ByWorkload')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'ByWorkload')]
-        [ValidateSet('ConditionalAccess', 'EntraID', 'ExchangeOnline', 'Intune', 'Teams', 'SecurityAndCompliance', 'SharePoint', 'MultiWorkload')]
+        [ValidateSet('ConditionalAccess', 'EntraID', 'ExchangeOnline', 'Intune', 'Teams', 'SecurityAndCompliance', 'MultiWorkload')]
         [string]$Workload,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ByResourceType')]
@@ -55,8 +55,8 @@ function Grant-TBServicePrincipalPermission {
             }
         }
 
-        if (-not $scopeSet.Contains('Application.ReadWrite.All')) {
-            throw 'Granting UTCM service principal permissions requires Application.ReadWrite.All. Reconnect using Connect-TBTenant -Scenario Setup.'
+        if (-not $scopeSet.Contains('Application.ReadWrite.All') -or -not $scopeSet.Contains('AppRoleAssignment.ReadWrite.All')) {
+            throw 'Granting UTCM service principal permissions requires Application.ReadWrite.All and AppRoleAssignment.ReadWrite.All. Reconnect using Connect-TBTenant -Scenario Setup.'
         }
     }
 
@@ -190,6 +190,5 @@ function Grant-TBServicePrincipalPermission {
         PermissionsMissingInTenant  = @($missingRoles)
         PermissionsFailedToGrant    = @($failedRoles)
         ManualSteps                 = $plan.ManualSteps
-        CompatibilityNotes          = $plan.CompatibilityNotes
     }
 }

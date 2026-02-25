@@ -2067,7 +2067,7 @@
     },
     "Teams": {
       "WorkloadId": "Teams",
-      "AutoGrantGraphPermissions": [],
+      "AutoGrantGraphPermissions": ["Organization.Read.All"],
       "ManualSteps": [
         "Assign UTCM service principal the required Teams administrative roles per Microsoft UTCM Teams resource documentation."
       ]

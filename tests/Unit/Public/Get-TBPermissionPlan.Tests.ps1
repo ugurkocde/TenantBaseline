@@ -8,25 +8,39 @@ BeforeAll {
 
 Describe 'Get-TBPermissionPlan' {
 
-    It 'Builds a workload-based plan for ConditionalAccess' {
-        $result = Get-TBPermissionPlan -Workload ConditionalAccess
+    Context 'Workload-based plan' {
 
-        $result | Should -Not -BeNullOrEmpty
-        $result.RequestedWorkloads | Should -Contain 'ConditionalAccess'
-        $result.AutoGrantGraphPermissions.Count | Should -BeGreaterThan 0
+        It 'Builds a plan for ConditionalAccess' {
+            $result = Get-TBPermissionPlan -Workload ConditionalAccess
+
+            $result | Should -Not -BeNullOrEmpty
+            $result.RequestedWorkloads | Should -Contain 'ConditionalAccess'
+            $result.AutoGrantGraphPermissions.Count | Should -BeGreaterThan 0
+        }
+
+        It 'Supports MultiWorkload aggregation' {
+            $result = Get-TBPermissionPlan -Workload MultiWorkload
+            $result.RequestedWorkloads.Count | Should -BeGreaterThan 3
+        }
     }
 
-    It 'Builds a resource-type-based plan and resolves aliases' {
-        Mock -ModuleName TenantBaseline Write-TBLog {}
+    Context 'Resource-type-based plan' {
 
-        $result = Get-TBPermissionPlan -ResourceType 'microsoft.graph.conditionalAccessPolicy'
+        It 'Resolves canonical resource types from aliases' {
+            Mock -ModuleName TenantBaseline Write-TBLog {}
 
-        $result.CanonicalResourceTypes | Should -Contain 'microsoft.entra.conditionalaccesspolicy'
-        $result.RequestedWorkloads | Should -Contain 'ConditionalAccess'
+            $result = Get-TBPermissionPlan -ResourceType 'microsoft.graph.conditionalAccessPolicy'
+
+            $result.CanonicalResourceTypes | Should -Contain 'microsoft.entra.conditionalaccesspolicy'
+            $result.RequestedWorkloads | Should -Contain 'ConditionalAccess'
+        }
     }
 
-    It 'Supports MultiWorkload aggregation' {
-        $result = Get-TBPermissionPlan -Workload MultiWorkload
-        $result.RequestedWorkloads.Count | Should -BeGreaterThan 3
+    Context 'Workload-specific permissions' {
+
+        It 'Includes Organization.Read.All for Teams workload' {
+            $result = Get-TBPermissionPlan -Workload Teams
+            $result.AutoGrantGraphPermissions | Should -Contain 'Organization.Read.All'
+        }
     }
 }

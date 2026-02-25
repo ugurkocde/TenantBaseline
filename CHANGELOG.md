@@ -5,6 +5,19 @@ All notable changes to the TenantBaseline module will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.4] - 2026-02-25
+
+### Fixed
+- Add missing `AppRoleAssignment.ReadWrite.All` scope to `Connect-TBTenant -Scenario Setup`, required for granting app role assignments during service principal provisioning
+- `Grant-TBServicePrincipalPermission` now validates both `Application.ReadWrite.All` and `AppRoleAssignment.ReadWrite.All` scopes before attempting grants
+- Add `Organization.Read.All` to Teams auto-grant permissions in the UTCM resource catalog (required by all Teams resource types)
+- Add national cloud warning in `Connect-TBTenant` when `Environment` is not `Global` (UTCM APIs are Global-only)
+
+### Removed
+- `SharePoint` workload option from `Grant-TBServicePrincipalPermission`, `Get-TBPermissionPlan`, and the interactive setup menu (no catalog profile exists)
+- Dead `CompatibilityNotes` output field from permission plan and grant result objects
+- Orphaned SharePoint compatibility code from `Get-TBResourcePermissionMap`
+
 ## [0.2.2] - 2026-02-11
 
 ### Fixed

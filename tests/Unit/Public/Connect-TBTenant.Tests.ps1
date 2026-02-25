@@ -87,7 +87,8 @@ Describe 'Connect-TBTenant' {
 
             Should -Invoke -CommandName Connect-MgGraph -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
                 $Scopes -contains 'ConfigurationMonitoring.ReadWrite.All' -and
-                $Scopes -contains 'Application.ReadWrite.All'
+                $Scopes -contains 'Application.ReadWrite.All' -and
+                $Scopes -contains 'AppRoleAssignment.ReadWrite.All'
             }
         }
 
@@ -182,6 +183,22 @@ Describe 'Connect-TBTenant' {
 
             $uri = InModuleScope TenantBaseline { $script:TBApiBaseUri }
             $uri | Should -Be 'https://graph.microsoft.us/beta/admin/configurationManagement'
+        }
+
+        It 'Emits a warning when Environment is not Global' {
+            Connect-TBTenant -Environment USGov
+
+            Should -Invoke -CommandName Write-TBLog -ModuleName TenantBaseline -ParameterFilter {
+                $Message -like '*UTCM APIs are only available in the Global cloud*' -and $Level -eq 'Warning'
+            } -Times 1
+        }
+
+        It 'Does not emit a national cloud warning for Global environment' {
+            Connect-TBTenant -Environment Global
+
+            Should -Invoke -CommandName Write-TBLog -ModuleName TenantBaseline -ParameterFilter {
+                $Message -like '*UTCM APIs are only available in the Global cloud*' -and $Level -eq 'Warning'
+            } -Times 0 -Exactly
         }
     }
 }

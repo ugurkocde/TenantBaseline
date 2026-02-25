@@ -14,7 +14,7 @@ function Connect-TBTenant {
         Authentication scope profile:
         - ReadOnly: ConfigurationMonitoring.Read.All
         - Manage: ConfigurationMonitoring.ReadWrite.All
-        - Setup: Manage + Application.ReadWrite.All
+        - Setup: Manage + Application.ReadWrite.All + AppRoleAssignment.ReadWrite.All
     .PARAMETER Scopes
         Additional scopes to request beyond the selected scenario scopes.
     .PARAMETER IncludeDirectoryMetadata
@@ -63,7 +63,7 @@ function Connect-TBTenant {
     $defaultScopes = switch ($Scenario) {
         'ReadOnly' { @('ConfigurationMonitoring.Read.All') }
         'Manage' { @('ConfigurationMonitoring.ReadWrite.All') }
-        'Setup' { @('ConfigurationMonitoring.ReadWrite.All', 'Application.ReadWrite.All') }
+        'Setup' { @('ConfigurationMonitoring.ReadWrite.All', 'Application.ReadWrite.All', 'AppRoleAssignment.ReadWrite.All') }
     }
 
     $allScopes = @($defaultScopes)
@@ -97,6 +97,10 @@ function Connect-TBTenant {
         $context = Get-MgContext
 
         $script:TBApiBaseUri = "$(Get-TBGraphBaseUri)/beta/admin/configurationManagement"
+
+        if ($Environment -ne 'Global') {
+            Write-TBLog -Message 'UTCM APIs are only available in the Global cloud; operations may fail.' -Level 'Warning'
+        }
 
         $tenantDisplayName = $null
         $primaryDomain = $null

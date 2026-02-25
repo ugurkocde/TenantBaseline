@@ -18,7 +18,7 @@ function Get-TBPermissionPlan {
     [OutputType([PSCustomObject])]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'ByWorkload')]
-        [ValidateSet('ConditionalAccess', 'EntraID', 'ExchangeOnline', 'Intune', 'Teams', 'SecurityAndCompliance', 'SharePoint', 'MultiWorkload')]
+        [ValidateSet('ConditionalAccess', 'EntraID', 'ExchangeOnline', 'Intune', 'Teams', 'SecurityAndCompliance', 'MultiWorkload')]
         [string[]]$Workload,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ByResourceType')]
@@ -85,14 +85,8 @@ function Get-TBPermissionPlan {
 
     $autoGrant = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     $manualSteps = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
-    $compatibilityNotes = [System.Collections.ArrayList]::new()
 
     foreach ($name in $selectedWorkloads) {
-        if ($name -eq 'SharePoint') {
-            $null = $compatibilityNotes.Add('SharePoint workload mapping is retained for backward compatibility. UTCM canonical schema currently does not expose a dedicated SharePoint resource namespace in this module catalog snapshot.')
-            continue
-        }
-
         $profileDetails = $profileLookup[$name]
         if (-not $profileDetails) {
             continue
@@ -121,6 +115,5 @@ function Get-TBPermissionPlan {
         CanonicalResourceTypes   = @($resolvedResourceTypes | Sort-Object -Unique)
         AutoGrantGraphPermissions = @($autoGrant | Sort-Object)
         ManualSteps              = @($manualSteps | Sort-Object)
-        CompatibilityNotes       = @($compatibilityNotes)
     }
 }
