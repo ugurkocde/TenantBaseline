@@ -13,7 +13,7 @@ on:
 env:
   MODULE_NAME: TenantBaseline
   MODULE_PATH: ./src/TenantBaseline
-  EXPECTED_COMMAND_COUNT: 26
+  EXPECTED_COMMAND_COUNT: 31
 
 permissions:
   contents: write

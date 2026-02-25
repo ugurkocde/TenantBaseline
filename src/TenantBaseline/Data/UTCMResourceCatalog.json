@@ -18,7 +18,10 @@
       "DisplayName": "Application",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Application.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationcontextclassreference",
@@ -34,7 +37,10 @@
       "DisplayName": "AuthenticationmethodPolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationmethodpolicyauthenticator",
@@ -42,7 +48,10 @@
       "DisplayName": "AuthenticationmethodPolicyauthenticator",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationmethodpolicyemail",
@@ -50,7 +59,10 @@
       "DisplayName": "AuthenticationmethodPolicyemail",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationmethodpolicyfido2",
@@ -58,7 +70,10 @@
       "DisplayName": "AuthenticationmethodPolicy FIDO 2",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationmethodpolicysms",
@@ -66,7 +81,10 @@
       "DisplayName": "AuthenticationmethodPolicysms",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationmethodpolicysoftware",
@@ -74,7 +92,10 @@
       "DisplayName": "AuthenticationmethodPolicysoftware",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationmethodpolicytemporary",
@@ -82,7 +103,10 @@
       "DisplayName": "AuthenticationmethodPolicytemporary",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationmethodpolicyvoice",
@@ -90,7 +114,10 @@
       "DisplayName": "AuthenticationmethodPolicyvoice",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationmethodpolicyx509",
@@ -98,7 +125,10 @@
       "DisplayName": "AuthenticationmethodPolicy X.509",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.AuthenticationMethod"
+      ]
     },
     {
       "Name": "microsoft.entra.authenticationstrengthpolicy",
@@ -106,7 +136,10 @@
       "DisplayName": "AuthenticationstrengthPolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.authorizationpolicy",
@@ -114,7 +147,10 @@
       "DisplayName": "AuthorizationPolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.ReadWrite.Authorization"
+      ]
     },
     {
       "Name": "microsoft.entra.conditionalaccesspolicy",
@@ -122,7 +158,14 @@
       "DisplayName": "ConditionalaccessPolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.All",
+        "Application.Read.All",
+        "Group.Read.All",
+        "User.Read.All",
+        "RoleManagement.Read.Directory"
+      ]
     },
     {
       "Name": "microsoft.entra.crosstenantaccesspolicy",
@@ -130,7 +173,11 @@
       "DisplayName": "CrosstenantaccessPolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.ReadWrite.CrossTenantAccess",
+        "Policy.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.crosstenantaccesspolicyconfigurationdefault",
@@ -138,7 +185,11 @@
       "DisplayName": "CrosstenantaccessPolicyconfigurationdefault",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.ReadWrite.CrossTenantAccess",
+        "Policy.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.crosstenantaccesspolicyconfigurationpartner",
@@ -146,7 +197,11 @@
       "DisplayName": "CrosstenantaccessPolicyconfigurationpartner",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.ReadWrite.CrossTenantAccess",
+        "Policy.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.entitlementmanagementaccesspackage",
@@ -154,7 +209,10 @@
       "DisplayName": "Entitlementmanagementaccesspackage",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "EntitlementManagement.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.entitlementmanagementaccesspackageassignmentpolicy",
@@ -162,7 +220,10 @@
       "DisplayName": "EntitlementmanagementaccesspackageassignmentPolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "EntitlementManagement.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.entitlementmanagementaccesspackagecatalog",
@@ -170,7 +231,10 @@
       "DisplayName": "Entitlementmanagementaccesspackagecatalog",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "EntitlementManagement.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.entitlementmanagementaccesspackagecatalogresource",
@@ -178,7 +242,10 @@
       "DisplayName": "Entitlementmanagementaccesspackagecatalogresource",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "EntitlementManagement.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.entitlementmanagementconnectedorganization",
@@ -186,7 +253,10 @@
       "DisplayName": "Entitlementmanagementconnectedorganization",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "EntitlementManagement.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.externalidentitypolicy",
@@ -194,7 +264,11 @@
       "DisplayName": "ExternalidentityPolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.ReadWrite.CrossTenantAccess",
+        "Policy.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.group",
@@ -202,7 +276,10 @@
       "DisplayName": "Group",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Group.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.grouplifecyclepolicy",
@@ -210,7 +287,10 @@
       "DisplayName": "GrouplifecyclePolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Group.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.namedlocationpolicy",
@@ -218,7 +298,10 @@
       "DisplayName": "NamedlocationPolicy",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.roledefinition",
@@ -226,7 +309,10 @@
       "DisplayName": "Roledefinition",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "RoleManagement.Read.Directory"
+      ]
     },
     {
       "Name": "microsoft.entra.roleeligibilityschedulerequest",
@@ -234,7 +320,10 @@
       "DisplayName": "Roleeligibilityschedulerequest",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "RoleManagement.Read.Directory"
+      ]
     },
     {
       "Name": "microsoft.entra.rolesetting",
@@ -242,7 +331,10 @@
       "DisplayName": "Rolesetting",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "RoleManagement.Read.Directory"
+      ]
     },
     {
       "Name": "microsoft.entra.securitydefaults",
@@ -250,7 +342,10 @@
       "DisplayName": "Securitydefaults",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Policy.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.serviceprincipal",
@@ -258,7 +353,10 @@
       "DisplayName": "Serviceprincipal",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Application.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.socialidentityprovider",
@@ -274,7 +372,10 @@
       "DisplayName": "Tenantdetails",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "Organization.Read.All"
+      ]
     },
     {
       "Name": "microsoft.entra.tokenlifetimepolicy",
@@ -290,7 +391,10 @@
       "DisplayName": "User",
       "WorkloadId": "EntraID",
       "WorkloadDisplayName": "Entra ID",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "User.Read.All"
+      ]
     },
     {
       "Name": "microsoft.exchange.accepteddomain",
@@ -858,7 +962,10 @@
       "DisplayName": "AppconfigurationPolicy",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementApps.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.applicationcontrolpolicywindows10",
@@ -874,7 +981,10 @@
       "DisplayName": "AppprotectionPolicyandroid",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementApps.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.appprotectionpolicyios",
@@ -882,7 +992,10 @@
       "DisplayName": "AppprotectionPolicyi OS",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementApps.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.attacksurfacereductionrulespolicywindows10configmanager",
@@ -906,7 +1019,10 @@
       "DisplayName": "Devicecategory",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementServiceConfig.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.devicecleanuprule",
@@ -1194,7 +1310,10 @@
       "DisplayName": "Deviceenrollmentlimitrestriction",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementServiceConfig.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.deviceenrollmentplatformrestriction",
@@ -1202,7 +1321,10 @@
       "DisplayName": "Deviceenrollmentplatformrestriction",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementServiceConfig.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.deviceenrollmentstatuspagewindows10",
@@ -1210,7 +1332,10 @@
       "DisplayName": "Deviceenrollmentstatuspagewindows 10",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementServiceConfig.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.endpointdetectionandresponsepolicywindows10",
@@ -1338,7 +1463,10 @@
       "DisplayName": "Windowsautopilotdeploymentprofileazureadhybridjoined",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementServiceConfig.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.windowsautopilotdeploymentprofileazureadjoined",
@@ -1346,7 +1474,10 @@
       "DisplayName": "Windowsautopilotdeploymentprofileazureadjoined",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementServiceConfig.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.windowsinformationprotectionpolicywindows10mdmenrolled",
@@ -1354,7 +1485,10 @@
       "DisplayName": "WindowsinformationprotectionPolicywindows 10mdmenrolled",
       "WorkloadId": "Intune",
       "WorkloadDisplayName": "Intune",
-      "Provider": "Graph"
+      "Provider": "Graph",
+      "GraphReadPermissions": [
+        "DeviceManagementApps.Read.All"
+      ]
     },
     {
       "Name": "microsoft.intune.windowsupdateforbusinessfeatureupdateprofilewindows10",
@@ -2051,6 +2185,10 @@
         "Policy.Read.AuthenticationMethod",
         "Policy.ReadWrite.AuthenticationMethod",
         "Policy.ReadWrite.CrossTenantAccess",
+        "Organization.Read.All",
+        "User.Read.All",
+        "RoleManagement.Read.Directory",
+        "EntitlementManagement.Read.All",
         "Group.Read.All"
       ],
       "ManualSteps": []
@@ -2060,14 +2198,17 @@
       "AutoGrantGraphPermissions": [
         "Group.Read.All",
         "DeviceManagementConfiguration.Read.All",
-        "DeviceManagementConfiguration.ReadWrite.All",
-        "DeviceManagementScripts.Read.All"
+        "DeviceManagementScripts.Read.All",
+        "DeviceManagementApps.Read.All",
+        "DeviceManagementServiceConfig.Read.All"
       ],
       "ManualSteps": []
     },
     "Teams": {
       "WorkloadId": "Teams",
-      "AutoGrantGraphPermissions": ["Organization.Read.All"],
+      "AutoGrantGraphPermissions": [
+        "Organization.Read.All"
+      ],
       "ManualSteps": [
         "Assign UTCM service principal the required Teams administrative roles per Microsoft UTCM Teams resource documentation."
       ]

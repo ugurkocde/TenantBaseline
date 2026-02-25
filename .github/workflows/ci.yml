@@ -80,8 +80,8 @@ jobs:
           $commands = Get-Command -Module TenantBaseline -CommandType Function
           Write-Host "Exported functions: $($commands.Count)"
           $commands | Format-Table Name, CommandType -AutoSize
-          if ($commands.Count -ne 26) {
-              throw "Expected 26 exported functions, got $($commands.Count)"
+          if ($commands.Count -ne 31) {
+              throw "Expected 31 exported functions, got $($commands.Count)"
           }
           $alias = Get-Alias -Name TenantBaseline -ErrorAction SilentlyContinue
           if (-not $alias) {

@@ -39,6 +39,17 @@ function New-TBSnapshot {
     }
 
     if ($PSCmdlet.ShouldProcess($DisplayName, 'Create configuration snapshot')) {
+        # Pre-flight quota check
+        try {
+            $existingSnapshots = @(Get-TBSnapshot)
+            if ($existingSnapshots.Count -ge 10) {
+                Write-Warning ('Snapshot quota: {0}/12 snapshot jobs in use. Approaching the 12-job limit.' -f $existingSnapshots.Count)
+            }
+        }
+        catch {
+            Write-TBLog -Message ('Quota pre-flight check skipped: {0}' -f $_.Exception.Message) -Level 'Warning'
+        }
+
         Write-TBLog -Message ('Creating snapshot: {0}' -f $DisplayName)
         $response = Invoke-TBGraphRequest -Uri $uri -Method 'POST' -Body $body
         return ConvertFrom-TBSnapshotResponse -Response $response

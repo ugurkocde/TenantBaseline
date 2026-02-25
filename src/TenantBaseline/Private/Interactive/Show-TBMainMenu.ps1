@@ -426,6 +426,10 @@ function Show-TBMainMenu {
                     'Update monitor'
                     'Delete monitor'
                     'View monitor results'
+                    'Pause/Resume monitor'
+                    'Clone monitor'
+                    'Export monitor'
+                    'Quota status'
                 )
                 IsDirect = $false
             }
@@ -448,6 +452,8 @@ function Show-TBMainMenu {
                     'View snapshot details'
                     'Export snapshot'
                     'Delete snapshot'
+                    'Create from monitor baseline'
+                    'Compare snapshots'
                 )
                 IsDirect = $false
             }

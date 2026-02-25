@@ -13,6 +13,8 @@ Describe 'New-TBSnapshot' {
     BeforeEach {
         Mock -ModuleName TenantBaseline Test-TBGraphConnection { return $true }
         Mock -ModuleName TenantBaseline Write-TBLog {}
+        # Mock Get-TBSnapshot for the pre-flight quota check
+        Mock -ModuleName TenantBaseline Get-TBSnapshot { return @() }
     }
 
     Context 'Creates a snapshot with required parameters' {

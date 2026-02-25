@@ -616,6 +616,145 @@ function Invoke-TBMonitorAction {
 
             Read-Host -Prompt '  Press Enter to continue'
         }
+        7 { # Pause/Resume monitor
+            try {
+                $monitors = @(Get-TBMonitor)
+                if ($monitors.Count -eq 0) {
+                    Write-Host ''
+                    Write-Host '  No monitors found.' -ForegroundColor Yellow
+                    Read-Host -Prompt '  Press Enter to continue'
+                    return
+                }
+
+                $monitorOptions = foreach ($m in $monitors) {
+                    '{0} - {1} ({2})' -f $m.DisplayName, $m.Id, $m.Status
+                }
+
+                $selected = Show-TBMenu -Title 'Select Monitor to Pause/Resume' -Options $monitorOptions -IncludeBack
+                if ($selected -eq 'Back') { return }
+
+                $monitor = $monitors[$selected]
+                $newStatus = if ($monitor.Status -eq 'active') { 'inactive' } else { 'active' }
+                $action = if ($newStatus -eq 'inactive') { 'Pause' } else { 'Resume' }
+
+                $confirmed = Read-TBUserInput -Prompt ('{0} monitor "{1}"?' -f $action, $monitor.DisplayName) -Confirm
+                if ($confirmed) {
+                    Set-TBMonitor -MonitorId $monitor.Id -Status $newStatus -Confirm:$false
+                    Write-Host ('  Monitor {0}d.' -f $action.ToLower()) -ForegroundColor Green
+                }
+            }
+            catch {
+                Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
+            }
+
+            Read-Host -Prompt '  Press Enter to continue'
+        }
+        8 { # Clone monitor
+            try {
+                $monitors = @(Get-TBMonitor)
+                if ($monitors.Count -eq 0) {
+                    Write-Host ''
+                    Write-Host '  No monitors found.' -ForegroundColor Yellow
+                    Read-Host -Prompt '  Press Enter to continue'
+                    return
+                }
+
+                $monitorOptions = foreach ($m in $monitors) {
+                    '{0} - {1}' -f $m.DisplayName, $m.Id
+                }
+
+                $selected = Show-TBMenu -Title 'Select Monitor to Clone' -Options $monitorOptions -IncludeBack
+                if ($selected -eq 'Back') { return }
+
+                $displayName = Read-TBUserInput -Prompt 'Display name for the clone' -Mandatory `
+                    -MinLength 8 -MaxLength 32 `
+                    -Pattern '^[a-zA-Z0-9 ]{8,32}$' `
+                    -PatternMessage 'Must be 8-32 characters, alphanumeric and spaces only.'
+
+                if (-not $displayName) { return }
+
+                $result = Copy-TBMonitor -MonitorId $monitors[$selected].Id -DisplayName $displayName -Confirm:$false
+
+                if ($result) {
+                    Write-Host ''
+                    Write-Host ('  Monitor cloned: {0}' -f $result.Id) -ForegroundColor Green
+                    Write-Host ('  Display Name: {0}' -f $result.DisplayName) -ForegroundColor White
+                }
+            }
+            catch {
+                Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
+            }
+
+            Read-Host -Prompt '  Press Enter to continue'
+        }
+        9 { # Export monitor
+            try {
+                $monitors = @(Get-TBMonitor)
+                if ($monitors.Count -eq 0) {
+                    Write-Host ''
+                    Write-Host '  No monitors found.' -ForegroundColor Yellow
+                    Read-Host -Prompt '  Press Enter to continue'
+                    return
+                }
+
+                $monitorOptions = foreach ($m in $monitors) {
+                    '{0} - {1}' -f $m.DisplayName, $m.Id
+                }
+
+                $selected = Show-TBMenu -Title 'Select Monitor to Export' -Options $monitorOptions -IncludeBack
+                if ($selected -eq 'Back') { return }
+
+                $outputPath = Read-TBUserInput -Prompt 'Output file path (leave blank for default)'
+
+                $exportParams = @{
+                    MonitorId = $monitors[$selected].Id
+                }
+                if ($outputPath) {
+                    $exportParams['OutputPath'] = $outputPath
+                }
+
+                $result = Export-TBMonitor @exportParams
+                Write-Host ''
+                Write-Host ('  Monitor exported to: {0}' -f $result.OutputPath) -ForegroundColor Green
+            }
+            catch {
+                Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
+            }
+
+            Read-Host -Prompt '  Press Enter to continue'
+        }
+        10 { # Quota status
+            Write-Host ''
+            Write-Host '  -- UTCM Quota Status --' -ForegroundColor Cyan
+            Write-Host ''
+
+            try {
+                $quota = Get-TBQuotaStatus
+
+                Write-Host ('  Monitors:              {0} / {1}' -f $quota.MonitorCount, $quota.MonitorLimit) -ForegroundColor White
+                Write-Host ('  Baseline Resources:    {0}' -f $quota.TotalBaselineResources) -ForegroundColor White
+                Write-Host ('  Resources/Day:         {0} / {1}' -f $quota.MonitoredResourcesPerDay, $quota.ResourceDayLimit) -ForegroundColor White
+                Write-Host ('  Snapshot Jobs:         {0} / {1}' -f $quota.SnapshotJobCount, $quota.SnapshotJobLimit) -ForegroundColor White
+
+                if ($quota.MonitorCount -ge 28) {
+                    Write-Host ''
+                    Write-Host '  Warning: Approaching monitor limit.' -ForegroundColor Yellow
+                }
+                if ($quota.MonitoredResourcesPerDay -ge 700) {
+                    Write-Host ''
+                    Write-Host '  Warning: Approaching daily resource evaluation limit.' -ForegroundColor Yellow
+                }
+                if ($quota.SnapshotJobCount -ge 10) {
+                    Write-Host ''
+                    Write-Host '  Warning: Approaching snapshot job limit.' -ForegroundColor Yellow
+                }
+            }
+            catch {
+                Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
+            }
+
+            Read-Host -Prompt '  Press Enter to continue'
+        }
     }
 }
 
@@ -650,6 +789,10 @@ function Show-TBMonitorMenu {
             'Update monitor'
             'Delete monitor'
             'View monitor results'
+            'Pause/Resume monitor'
+            'Clone monitor'
+            'Export monitor'
+            'Quota status'
         )
 
         $choice = Show-TBMenu -Title 'Monitor Management' -Options $options -IncludeBack

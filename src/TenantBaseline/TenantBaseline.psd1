@@ -1,6 +1,6 @@
 @{
     RootModule        = 'TenantBaseline.psm1'
-    ModuleVersion     = '0.2.4'
+    ModuleVersion     = '0.3.0'
     GUID              = 'edee0e7b-afeb-4cc1-b30c-ef8486d7c9a6'
     Author            = 'TenantBaseline Contributors'
     CompanyName       = 'Community'
@@ -32,6 +32,9 @@
         'Set-TBMonitor'
         'Remove-TBMonitor'
         'Get-TBMonitorResult'
+        'Get-TBQuotaStatus'
+        'Export-TBMonitor'
+        'Copy-TBMonitor'
 
         # Drift
         'Get-TBDrift'
@@ -48,6 +51,8 @@
         'Remove-TBSnapshot'
         'Export-TBSnapshot'
         'Wait-TBSnapshot'
+        'New-TBBaselineSnapshot'
+        'Compare-TBSnapshot'
 
         # Report
         'New-TBDriftReport'
@@ -67,7 +72,7 @@
             Tags         = @('Microsoft365', 'Graph', 'UTCM', 'Baseline', 'Drift', 'Security', 'Compliance', 'Intune', 'ConditionalAccess', 'EntraID')
             LicenseUri   = 'https://github.com/ugurkocde/TenantBaseline/blob/main/LICENSE'
             ProjectUri   = 'https://github.com/ugurkocde/TenantBaseline'
-            ReleaseNotes = 'Fix monitor creation: send required empty properties object for manual resource selection.'
+            ReleaseNotes = 'v0.3.0: Permission catalog update, resource-level permission granularity, New-TBBaselineSnapshot, Get-TBQuotaStatus, Export-TBMonitor, Copy-TBMonitor, Compare-TBSnapshot, interactive menu enhancements.'
         }
     }
 }

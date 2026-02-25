@@ -33,6 +33,9 @@ function Get-TBPermissionPlan {
 
     $selectedWorkloads = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     $resolvedResourceTypes = [System.Collections.ArrayList]::new()
+    $useResourceLevelPerms = $false
+    $resourceLevelPerms = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+    $fallbackWorkloads = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
 
     if ($PSCmdlet.ParameterSetName -eq 'ByWorkload') {
         foreach ($item in $Workload) {
@@ -47,6 +50,7 @@ function Get-TBPermissionPlan {
         }
     }
     else {
+        $useResourceLevelPerms = $true
         $resourceLookup = @{}
         foreach ($resource in $catalog.Resources) {
             $resourceLookup[$resource.Name.ToLowerInvariant()] = $resource
@@ -62,23 +66,42 @@ function Get-TBPermissionPlan {
                 continue
             }
 
+            # Check for per-resource GraphReadPermissions first
+            $hasResourcePerms = $false
+            if ($resource.PSObject.Properties['GraphReadPermissions'] -and $resource.GraphReadPermissions.Count -gt 0) {
+                foreach ($perm in $resource.GraphReadPermissions) {
+                    $null = $resourceLevelPerms.Add($perm)
+                }
+                $hasResourcePerms = $true
+            }
+
+            # Determine the workload for fallback or manual steps
+            $workloadName = $null
             if ($resolved.CanonicalResourceType -eq 'microsoft.entra.conditionalaccesspolicy') {
-                $null = $selectedWorkloads.Add('ConditionalAccess')
+                $workloadName = 'ConditionalAccess'
             }
             elseif ($resource.WorkloadId -eq 'EntraID') {
-                $null = $selectedWorkloads.Add('EntraID')
+                $workloadName = 'EntraID'
             }
             elseif ($resource.WorkloadId -eq 'ExchangeOnline') {
-                $null = $selectedWorkloads.Add('ExchangeOnline')
+                $workloadName = 'ExchangeOnline'
             }
             elseif ($resource.WorkloadId -eq 'Intune') {
-                $null = $selectedWorkloads.Add('Intune')
+                $workloadName = 'Intune'
             }
             elseif ($resource.WorkloadId -eq 'Teams') {
-                $null = $selectedWorkloads.Add('Teams')
+                $workloadName = 'Teams'
             }
             elseif ($resource.WorkloadId -eq 'SecurityAndCompliance') {
-                $null = $selectedWorkloads.Add('SecurityAndCompliance')
+                $workloadName = 'SecurityAndCompliance'
+            }
+
+            if ($workloadName) {
+                $null = $selectedWorkloads.Add($workloadName)
+                if (-not $hasResourcePerms) {
+                    # No per-resource permissions; fall back to full workload profile
+                    $null = $fallbackWorkloads.Add($workloadName)
+                }
             }
         }
     }
@@ -86,21 +109,49 @@ function Get-TBPermissionPlan {
     $autoGrant = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     $manualSteps = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
 
-    foreach ($name in $selectedWorkloads) {
-        $profileDetails = $profileLookup[$name]
-        if (-not $profileDetails) {
-            continue
+    if ($useResourceLevelPerms -and $resourceLevelPerms.Count -gt 0) {
+        # Add resource-level permissions
+        foreach ($perm in $resourceLevelPerms) {
+            $null = $autoGrant.Add($perm)
         }
 
-        foreach ($permission in @($profileDetails.AutoGrantGraphPermissions)) {
-            if ($permission) {
-                $null = $autoGrant.Add($permission)
+        # Add workload profile permissions only for resources without per-resource data
+        foreach ($name in $fallbackWorkloads) {
+            $profileDetails = $profileLookup[$name]
+            if (-not $profileDetails) { continue }
+
+            foreach ($permission in @($profileDetails.AutoGrantGraphPermissions)) {
+                if ($permission) { $null = $autoGrant.Add($permission) }
             }
         }
 
-        foreach ($step in @($profileDetails.ManualSteps)) {
-            if ($step) {
-                $null = $manualSteps.Add($step)
+        # Always include manual steps from all relevant workloads
+        foreach ($name in $selectedWorkloads) {
+            $profileDetails = $profileLookup[$name]
+            if (-not $profileDetails) { continue }
+
+            foreach ($step in @($profileDetails.ManualSteps)) {
+                if ($step) { $null = $manualSteps.Add($step) }
+            }
+        }
+    }
+    else {
+        foreach ($name in $selectedWorkloads) {
+            $profileDetails = $profileLookup[$name]
+            if (-not $profileDetails) {
+                continue
+            }
+
+            foreach ($permission in @($profileDetails.AutoGrantGraphPermissions)) {
+                if ($permission) {
+                    $null = $autoGrant.Add($permission)
+                }
+            }
+
+            foreach ($step in @($profileDetails.ManualSteps)) {
+                if ($step) {
+                    $null = $manualSteps.Add($step)
+                }
             }
         }
     }

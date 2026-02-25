@@ -13,6 +13,8 @@ Describe 'New-TBMonitor' {
     BeforeEach {
         Mock -ModuleName TenantBaseline Test-TBGraphConnection { return $true }
         Mock -ModuleName TenantBaseline Write-TBLog {}
+        # Mock Get-TBMonitor for the pre-flight quota check
+        Mock -ModuleName TenantBaseline Get-TBMonitor { return @() }
     }
 
     Context 'Creates a monitor with required parameters' {

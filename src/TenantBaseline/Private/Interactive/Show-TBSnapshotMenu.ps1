@@ -350,6 +350,114 @@ function Invoke-TBSnapshotAction {
 
             Read-Host -Prompt '  Press Enter to continue'
         }
+        7 { # Create from monitor baseline
+            Write-Host ''
+            Write-Host '  -- Create Snapshot from Monitor Baseline --' -ForegroundColor Cyan
+
+            try {
+                $monitors = @(Get-TBMonitor)
+                if ($monitors.Count -eq 0) {
+                    Write-Host '  No monitors found.' -ForegroundColor Yellow
+                    Read-Host -Prompt '  Press Enter to continue'
+                    return
+                }
+
+                $monitorOptions = foreach ($m in $monitors) {
+                    '{0} - {1}' -f $m.DisplayName, $m.Id
+                }
+
+                $selected = Show-TBMenu -Title 'Select Monitor' -Options $monitorOptions -IncludeBack
+                if ($selected -eq 'Back') { return }
+
+                $monitor = $monitors[$selected]
+
+                $displayName = Read-TBUserInput -Prompt 'Snapshot display name (leave blank for default)'
+
+                $snapshotParams = @{
+                    MonitorId = $monitor.Id
+                    Confirm   = $false
+                }
+                if ($displayName) {
+                    $snapshotParams['DisplayName'] = $displayName
+                }
+
+                $result = New-TBBaselineSnapshot @snapshotParams
+                if ($result) {
+                    Write-Host ''
+                    Write-Host ('  Snapshot created: {0}' -f $result.Id) -ForegroundColor Green
+                    Write-Host ('  Status: {0}' -f $result.Status) -ForegroundColor White
+
+                    $waitForIt = Read-TBUserInput -Prompt 'Wait for completion?' -Confirm
+                    if ($waitForIt) {
+                        $baseline = Get-TBBaseline -MonitorId $monitor.Id
+                        $resourceCount = @($baseline.Resources).Count
+                        $snapshot = Wait-TBSnapshotInteractive -SnapshotId $result.Id -ResourceCount $resourceCount
+                        Write-Host ('  Final status: {0}' -f $snapshot.Status) -ForegroundColor White
+                    }
+                }
+                else {
+                    Write-Host '  No snapshot created (baseline may be empty).' -ForegroundColor Yellow
+                }
+            }
+            catch {
+                Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
+            }
+
+            Read-Host -Prompt '  Press Enter to continue'
+        }
+        8 { # Compare snapshots
+            Write-Host ''
+            Write-Host '  -- Compare Snapshots --' -ForegroundColor Cyan
+
+            try {
+                $snapshots = @(Get-TBSnapshot)
+                $completedSnapshots = @($snapshots | Where-Object { $_.Status -eq 'succeeded' -or $_.Status -eq 'partiallySuccessful' })
+
+                if ($completedSnapshots.Count -lt 2) {
+                    Write-Host '  Need at least 2 completed snapshots to compare.' -ForegroundColor Yellow
+                    Read-Host -Prompt '  Press Enter to continue'
+                    return
+                }
+
+                $snapshotOptions = foreach ($s in $completedSnapshots) {
+                    '{0} - {1} ({2})' -f $s.DisplayName, $s.Id, $s.Status
+                }
+
+                Write-Host ''
+                $refSelected = Show-TBMenu -Title 'Select Reference Snapshot' -Options $snapshotOptions -IncludeBack
+                if ($refSelected -eq 'Back') { return }
+
+                $diffSelected = Show-TBMenu -Title 'Select Difference Snapshot' -Options $snapshotOptions -IncludeBack
+                if ($diffSelected -eq 'Back') { return }
+
+                if ($refSelected -eq $diffSelected) {
+                    Write-Host '  Cannot compare a snapshot with itself.' -ForegroundColor Yellow
+                    Read-Host -Prompt '  Press Enter to continue'
+                    return
+                }
+
+                Write-Host ''
+                Write-Host '  Comparing snapshots...' -ForegroundColor Cyan
+
+                $diffs = Compare-TBSnapshot `
+                    -ReferenceSnapshotId $completedSnapshots[$refSelected].Id `
+                    -DifferenceSnapshotId $completedSnapshots[$diffSelected].Id
+
+                if ($diffs.Count -eq 0) {
+                    Write-Host '  No differences found.' -ForegroundColor Green
+                }
+                else {
+                    Write-Host ''
+                    Write-Host ('  Found {0} difference(s):' -f $diffs.Count) -ForegroundColor Yellow
+                    $diffs | Format-Table -Property ResourceType, ResourceName, Property, DiffType, ReferenceValue, DifferenceValue -AutoSize | Out-Host
+                }
+            }
+            catch {
+                Write-Host ('  Error: {0}' -f $_.Exception.Message) -ForegroundColor Red
+            }
+
+            Read-Host -Prompt '  Press Enter to continue'
+        }
     }
 }
 
@@ -384,6 +492,8 @@ function Show-TBSnapshotMenu {
             'View snapshot details'
             'Export snapshot'
             'Delete snapshot'
+            'Create from monitor baseline'
+            'Compare snapshots'
         )
 
         $choice = Show-TBMenu -Title 'Snapshot Management' -Options $options -IncludeBack

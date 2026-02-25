@@ -5,6 +5,25 @@ All notable changes to the TenantBaseline module will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-02-25
+
+### Added
+- `New-TBBaselineSnapshot` creates a snapshot from a monitor's baseline resource types
+- `Get-TBQuotaStatus` returns current UTCM quota usage vs limits (monitors, resource-days, snapshot jobs)
+- `Export-TBMonitor` exports a monitor and its baseline to a portable JSON file
+- `Copy-TBMonitor` clones an existing monitor with a new display name
+- `Compare-TBSnapshot` compares two snapshots and returns property-level diff objects
+- Per-resource `GraphReadPermissions` on 42 catalog resources for fine-grained permission planning
+- `Get-TBPermissionPlan -ResourceType` now returns only the scopes needed for the specified resources instead of the full workload profile
+- Pre-flight quota warnings in `New-TBMonitor` (approaching 30-monitor limit) and `New-TBSnapshot` (approaching 12-job limit)
+- Interactive monitor menu: Pause/Resume, Clone, Export, and Quota Status actions
+- Interactive snapshot menu: Create from monitor baseline and Compare snapshots actions
+
+### Changed
+- EntraID permission profile: added `Organization.Read.All`, `User.Read.All`, `RoleManagement.Read.Directory`, `EntitlementManagement.Read.All`
+- Intune permission profile: switched to read-only scopes, removed `DeviceManagementConfiguration.ReadWrite.All`, added `DeviceManagementApps.Read.All` and `DeviceManagementServiceConfig.Read.All`
+- Module now exports 31 public functions (was 26)
+
 ## [0.2.4] - 2026-02-25
 
 ### Fixed

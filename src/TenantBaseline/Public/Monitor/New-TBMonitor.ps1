@@ -88,6 +88,17 @@ function New-TBMonitor {
         $uri = '{0}/configurationMonitors' -f (Get-TBApiBaseUri)
 
         if ($PSCmdlet.ShouldProcess($DisplayName, 'Create configuration monitor')) {
+            # Pre-flight quota check
+            try {
+                $existingMonitors = @(Get-TBMonitor)
+                if ($existingMonitors.Count -ge 28) {
+                    Write-Warning ('Monitor quota: {0}/30 monitors in use. Approaching the 30-monitor limit.' -f $existingMonitors.Count)
+                }
+            }
+            catch {
+                Write-TBLog -Message ('Quota pre-flight check skipped: {0}' -f $_.Exception.Message) -Level 'Warning'
+            }
+
             Write-TBLog -Message ('Creating monitor: {0}' -f $DisplayName)
             $response = Invoke-TBGraphRequest -Uri $uri -Method 'POST' -Body $body
             return ConvertFrom-TBMonitorResponse -Response $response
