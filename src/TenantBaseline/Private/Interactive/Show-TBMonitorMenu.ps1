@@ -708,6 +708,7 @@ function Invoke-TBMonitorAction {
 
                 $exportParams = @{
                     MonitorId = $monitors[$selected].Id
+                    Confirm   = $false
                 }
                 if ($outputPath) {
                     $exportParams['OutputPath'] = $outputPath

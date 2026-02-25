@@ -80,20 +80,8 @@ function Get-TBPermissionPlan {
             if ($resolved.CanonicalResourceType -eq 'microsoft.entra.conditionalaccesspolicy') {
                 $workloadName = 'ConditionalAccess'
             }
-            elseif ($resource.WorkloadId -eq 'EntraID') {
-                $workloadName = 'EntraID'
-            }
-            elseif ($resource.WorkloadId -eq 'ExchangeOnline') {
-                $workloadName = 'ExchangeOnline'
-            }
-            elseif ($resource.WorkloadId -eq 'Intune') {
-                $workloadName = 'Intune'
-            }
-            elseif ($resource.WorkloadId -eq 'Teams') {
-                $workloadName = 'Teams'
-            }
-            elseif ($resource.WorkloadId -eq 'SecurityAndCompliance') {
-                $workloadName = 'SecurityAndCompliance'
+            elseif ($resource.WorkloadId) {
+                $workloadName = $resource.WorkloadId
             }
 
             if ($workloadName) {

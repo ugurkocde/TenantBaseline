@@ -74,6 +74,21 @@ Describe 'New-TBMonitor' {
         }
     }
 
+    Context 'Pre-flight quota warning' {
+
+        It 'Emits a warning when 28 or more monitors exist' {
+            $fixtureData = Get-Content -Path (Join-Path $fixturesPath 'MonitorSingle.json') -Raw | ConvertFrom-Json
+            Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { return $fixtureData }
+            Mock -ModuleName TenantBaseline Get-TBMonitor { return @(1..28 | ForEach-Object { [PSCustomObject]@{ Id = "mon-$_" } }) }
+
+            $result = New-TBMonitor -DisplayName 'Quota Warning Test' -Confirm:$false -WarningVariable warnVar 3>&1
+
+            $warnings = @($warnVar)
+            $warnings.Count | Should -BeGreaterOrEqual 1
+            $warnings[0] | Should -BeLike '*28/30*'
+        }
+    }
+
     Context 'Accepts pipeline input for Resources' {
 
         It 'Collects resources from pipeline and sends them in the body' {

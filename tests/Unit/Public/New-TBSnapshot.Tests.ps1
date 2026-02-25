@@ -54,6 +54,23 @@ Describe 'New-TBSnapshot' {
         }
     }
 
+    Context 'Pre-flight quota warning' {
+
+        It 'Emits a warning when 10 or more snapshots exist' {
+            $fixtureData = Get-Content -Path (Join-Path $fixturesPath 'SnapshotSingle.json') -Raw | ConvertFrom-Json
+            Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { return $fixtureData }
+            Mock -ModuleName TenantBaseline Get-TBSnapshot { return @(1..10 | ForEach-Object { [PSCustomObject]@{ Id = "snap-$_" } }) }
+
+            $result = New-TBSnapshot -DisplayName 'Quota Test' `
+                -Resources @('microsoft.exchange.accepteddomain') `
+                -Confirm:$false -WarningVariable warnVar 3>&1
+
+            $warnings = @($warnVar)
+            $warnings.Count | Should -BeGreaterOrEqual 1
+            $warnings[0] | Should -BeLike '*10/12*'
+        }
+    }
+
     Context 'Supports -WhatIf' {
 
         It 'Does not invoke the API when -WhatIf is used' {

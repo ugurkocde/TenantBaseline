@@ -126,6 +126,53 @@ Describe 'Compare-TBSnapshot' {
         }
     }
 
+    Context 'Exports comparison to file with -OutputPath' {
+
+        It 'Writes JSON output to the specified file' {
+            $refSnap = [PSCustomObject]@{
+                Id = 'ref-001'; Status = 'succeeded'; ResourceLocation = 'https://example.com/ref'
+                DisplayName = 'Ref'; Resources = @()
+            }
+            $diffSnap = [PSCustomObject]@{
+                Id = 'diff-001'; Status = 'succeeded'; ResourceLocation = 'https://example.com/diff'
+                DisplayName = 'Diff'; Resources = @()
+            }
+            Mock -ModuleName TenantBaseline Get-TBSnapshot {
+                if ($SnapshotId -eq 'ref-001') { return $refSnap }
+                return $diffSnap
+            }
+
+            Mock -ModuleName TenantBaseline Invoke-TBGraphRequest {
+                if ($Uri -match 'ref$') {
+                    return @(
+                        [PSCustomObject]@{
+                            resourceType = 'microsoft.entra.conditionalaccesspolicy'
+                            displayName  = 'MFA Policy'
+                            properties   = [PSCustomObject]@{ State = 'enabled' }
+                        }
+                    )
+                }
+                return @(
+                    [PSCustomObject]@{
+                        resourceType = 'microsoft.entra.conditionalaccesspolicy'
+                        displayName  = 'MFA Policy'
+                        properties   = [PSCustomObject]@{ State = 'disabled' }
+                    }
+                )
+            }
+
+            $outFile = Join-Path $TestDrive 'comparison.json'
+            $result = Compare-TBSnapshot -ReferenceSnapshotId 'ref-001' -DifferenceSnapshotId 'diff-001' -OutputPath $outFile
+
+            $result | Should -Not -BeNullOrEmpty
+            Test-Path $outFile | Should -BeTrue
+            $exported = Get-Content $outFile -Raw | ConvertFrom-Json
+            $exported.DiffCount | Should -BeGreaterThan 0
+            $exported.ReferenceSnapshotId | Should -Be 'ref-001'
+            $exported.DifferenceSnapshotId | Should -Be 'diff-001'
+        }
+    }
+
     Context 'Handles non-succeeded snapshots' {
 
         It 'Returns nothing for running snapshots' {
