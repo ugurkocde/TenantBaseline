@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.1] - 2026-03-10
 
 ### Fixed
-- `Get-TBSnapshot` now includes `$select` with `errorDetails` in API requests so error information is populated on failed/partial snapshots (#3)
+- `Get-TBSnapshot` and `Get-TBMonitorResult` now include `$select` with `errorDetails` in API requests so error information is populated on failed/partial results (#3)
 - `New-TBSnapshot` adds `-SkipQuotaCheck` switch to bypass the pre-flight quota check when callers manage quota externally (#5)
 
 ## [0.3.0] - 2026-02-25

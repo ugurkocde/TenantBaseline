@@ -77,6 +77,19 @@ Describe 'Get-TBMonitorResult' {
         }
     }
 
+    Context 'Includes errorDetails via $select' {
+
+        It 'Passes $select with errorDetails in the URI' {
+            Mock -ModuleName TenantBaseline Invoke-TBGraphPagedRequest { return @() }
+
+            @(Get-TBMonitorResult) | Out-Null
+
+            Should -Invoke -CommandName Invoke-TBGraphPagedRequest -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $Uri -match '\$select=' -and $Uri -match 'errorDetails'
+            }
+        }
+    }
+
     Context 'Handles empty response' {
 
         It 'Returns nothing when API returns empty value array' {
