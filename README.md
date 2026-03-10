@@ -5,7 +5,7 @@
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/TenantBaseline?label=PSGallery&color=blue)](https://www.powershellgallery.com/packages/TenantBaseline)
 [![Downloads](https://img.shields.io/powershellgallery/dt/TenantBaseline?label=Downloads&color=blue)](https://www.powershellgallery.com/packages/TenantBaseline)
 [![PowerShell 7.2+](https://img.shields.io/badge/PowerShell-7.2%2B-blue)](https://github.com/PowerShell/PowerShell)
-[![Tests](https://img.shields.io/badge/tests-331%20passing-brightgreen)](tests/)
+[![Tests](https://img.shields.io/badge/tests-346%20passing-brightgreen)](tests/)
 [![CI](https://github.com/ugurkocde/TenantBaseline/actions/workflows/ci.yml/badge.svg)](https://github.com/ugurkocde/TenantBaseline/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -41,14 +41,24 @@ TenantBaseline wraps the Microsoft Graph Unified Tenant Configuration Management
 
 The module covers 249 resource types across M365 workloads including Entra ID, Exchange Online, Microsoft Intune, Microsoft Teams, and Microsoft Defender / Purview. Whether you are an IT administrator tracking Conditional Access policy changes or a compliance team auditing Intune device configurations, TenantBaseline provides the tooling to monitor and document tenant state.
 
+## Start Here
+
+If you are new to the repository, use this order:
+
+1. Install the module from PowerShell Gallery.
+2. Follow the setup flow in [Getting Started](docs/Getting-Started.md) to provision UTCM and create your first monitor.
+3. Read [Authentication](docs/Authentication.md) if you need delegated or unattended sign-in details.
+4. Read [Automation](docs/Automation.md) if you want Azure Automation, schedules, webhooks, managed identity, or the sample runbook file.
+
 ---
 
 ## Features
 
-- **Connection Management** - Connect to Microsoft Graph with scenario-based scoping that requests only the permissions you need.
+- **Connection Management** - Connect to Microsoft Graph with scenario-based delegated scopes for admins and unattended authentication modes for automation runners.
 - **Automated Setup** - Provision and configure the UTCM service principal with guided permission granting, including manual remediation steps for provider-specific permissions.
 - **Monitor Management** - Create, update, and remove configuration monitors that track resources against a known-good baseline.
 - **Drift Detection** - Detect configuration drift with filtering by monitor or resource type, and get aggregated summaries grouped by status and workload.
+- **Drift Notifications** - Send webhook notifications for newly detected drift from scheduled jobs or runbooks with duplicate suppression.
 - **Baseline Export/Import** - Export baselines to JSON for version control or migration, and import them to seed new monitors.
 - **Configuration Snapshots** - Capture point-in-time tenant configuration snapshots, wait for completion, export data before the 7-day expiry, and compare snapshots to detect property-level changes.
 - **Monitor Operations** - Clone monitors, export/import portable JSON backups, and track UTCM quota usage across monitors, resource-days, and snapshot jobs.
@@ -136,7 +146,7 @@ New-TBDriftReport -OutputPath ./drift-report.html
 
 ## Authentication
 
-TenantBaseline uses interactive/delegated authentication via `Connect-MgGraph`. No custom app registration is required. The module requests the minimum scopes needed for each scenario.
+TenantBaseline supports both delegated interactive sign-in and unattended automation through `Connect-MgGraph`.
 
 | Scenario | Scopes | Use case |
 |---|---|---|
@@ -144,7 +154,7 @@ TenantBaseline uses interactive/delegated authentication via `Connect-MgGraph`. 
 | `Manage` | `ConfigurationMonitoring.ReadWrite.All` | Create/update monitors, snapshots, and reports |
 | `Setup` | `ConfigurationMonitoring.ReadWrite.All`, `Application.ReadWrite.All`, `AppRoleAssignment.ReadWrite.All` | One-time UTCM service principal provisioning |
 
-For details, see [docs/Authentication.md](docs/Authentication.md).
+Unattended automation is available via managed identity, app certificate, client secret, or pre-acquired access token. For details, see [docs/Authentication.md](docs/Authentication.md) and [docs/Automation.md](docs/Automation.md).
 
 ---
 
@@ -186,6 +196,7 @@ For details, see [docs/Authentication.md](docs/Authentication.md).
 |---|---|
 | `Get-TBDrift` | Lists detected configuration drifts, filterable by drift ID or monitor |
 | `Get-TBDriftSummary` | Aggregates drifts by resource type, monitor, and status |
+| `Send-TBDriftNotification` | Sends webhook notifications for newly detected drift with duplicate suppression |
 
 ### Baseline
 
@@ -240,6 +251,19 @@ Connect-TBTenant -Scenario Manage
 Get-TBDriftSummary
 New-TBDriftReport -OutputPath ./daily-drift.html
 ```
+
+### Automated Drift Notifications
+
+```powershell
+# Example: run from Azure Automation, GitHub Actions, or another scheduler
+Connect-TBTenant -Identity
+
+Send-TBDriftNotification `
+    -WebhookUrl $env:TB_WEBHOOK_URL `
+    -StatePath $env:TB_NOTIFICATION_STATE_PATH
+```
+
+`TB_NOTIFICATION_STATE_PATH` should point to durable storage that survives between scheduled runs.
 
 ### Baseline Export and Import
 
@@ -308,7 +332,7 @@ tenantbaseline/
   build/               Build and packaging scripts
   docs/                Documentation (Getting Started, Auth, API Limits, Migration)
   src/TenantBaseline/  Module source
-    Public/            31 exported cmdlets organized by functional area
+    Public/            32 exported cmdlets organized by functional area
     Private/           Internal helpers (API wrapper, interactive menu system)
     Data/              Resource type registry and workload metadata
     en-US/             Help content
@@ -325,7 +349,8 @@ tenantbaseline/
 | Guide | Description |
 |---|---|
 | [Getting Started](docs/Getting-Started.md) | Installation, prerequisites, and first steps |
-| [Authentication](docs/Authentication.md) | Auth scenarios, scopes, and delegated sign-in flow |
+| [Authentication](docs/Authentication.md) | Delegated and unattended authentication flows |
+| [Automation](docs/Automation.md) | Azure Automation runbooks, schedules, managed identity, hosted notification patterns, and a sample runbook file |
 | [API Limits](docs/API-Limits.md) | UTCM quota and throttling reference |
 | [Migration Guide](docs/Migration-Guide.md) | Upgrade notes and PowerShell 7.2+ compatibility |
 

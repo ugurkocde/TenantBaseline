@@ -1,26 +1,24 @@
 # Authentication
 
-TenantBaseline uses interactive/delegated authentication via Microsoft's `Connect-MgGraph` cmdlet. No custom app registration is needed.
+TenantBaseline supports both delegated interactive sign-in and unattended automation through Microsoft's `Connect-MgGraph` cmdlet.
 
-## How It Works
+## Delegated Authentication
 
-When you run `Connect-TBTenant`, the module:
+Delegated auth is the default mode for local admin usage. When you run `Connect-TBTenant` without an unattended parameter set, the module:
 
 1. Calls `Connect-MgGraph` with the required scopes
-2. Opens a browser window for interactive authentication
+2. Opens a browser window or device code prompt for authentication
 3. Stores the session context for subsequent API calls
 
-## Required Scopes
-
-`Connect-TBTenant` supports scenario-based scope profiles:
+### Delegated scope profiles
 
 | Scenario | Scopes | Purpose |
 |----------|--------|---------|
 | `ReadOnly` | `ConfigurationMonitoring.Read.All` | Read monitors, drifts, and snapshots |
 | `Manage` | `ConfigurationMonitoring.ReadWrite.All` | Create/update monitors and snapshots |
-| `Setup` | `ConfigurationMonitoring.ReadWrite.All`, `Application.ReadWrite.All` | Provision/grant UTCM service principal permissions |
+| `Setup` | `ConfigurationMonitoring.ReadWrite.All`, `Application.ReadWrite.All`, `AppRoleAssignment.ReadWrite.All` | Provision/grant UTCM service principal permissions |
 
-## Connection Examples
+### Delegated examples
 
 ```powershell
 # Default connection profile (Manage)
@@ -37,7 +35,51 @@ Connect-TBTenant -TenantId 'contoso.onmicrosoft.com'
 
 # Add extra scopes if needed
 Connect-TBTenant -Scopes @('DeviceManagementConfiguration.Read.All')
+
+# Use device code instead of browser sign-in
+Connect-TBTenant -UseDeviceCode
 ```
+
+## Unattended Authentication
+
+Use unattended authentication when TenantBaseline runs from Azure Automation, GitHub Actions, containers, or other schedulers.
+
+### Managed identity
+
+```powershell
+# System-assigned managed identity
+Connect-TBTenant -Identity
+
+# User-assigned managed identity
+Connect-TBTenant -Identity -ClientId '11111111-1111-1111-1111-111111111111'
+```
+
+### App certificate
+
+```powershell
+Connect-TBTenant `
+    -ClientId '11111111-1111-1111-1111-111111111111' `
+    -TenantId 'contoso.onmicrosoft.com' `
+    -CertificateThumbprint 'ABC123DEF456'
+```
+
+### Client secret
+
+```powershell
+$secret = ConvertTo-SecureString $env:TB_CLIENT_SECRET -AsPlainText -Force
+$credential = [pscredential]::new('11111111-1111-1111-1111-111111111111', $secret)
+
+Connect-TBTenant -ClientSecretCredential $credential -TenantId 'contoso.onmicrosoft.com'
+```
+
+### Pre-acquired access token
+
+```powershell
+$token = ConvertTo-SecureString $env:TB_GRAPH_ACCESS_TOKEN -AsPlainText -Force
+Connect-TBTenant -AccessToken $token
+```
+
+`Get-TBConnectionStatus` now includes an `AuthType` field so scripts can confirm whether they are running delegated or unattended.
 
 ## UTCM Service Principal
 
@@ -75,3 +117,10 @@ Get-TBConnectionStatus
 # Disconnect
 Disconnect-TBTenant
 ```
+
+## Notes
+
+- Delegated modes use `Scenario`, `Scopes`, and `IncludeDirectoryMetadata`.
+- Unattended modes rely on the token or application identity you supply; `Scenario` scopes are not applied in those parameter sets.
+- UTCM still requires the Microsoft first-party UTCM service principal to be provisioned and granted the right workload permissions in the tenant.
+- Some tenants may require additional permission validation for app-only access depending on how the UTCM backend enforces authorization. Validate unattended auth in your target environment before relying on it in production.

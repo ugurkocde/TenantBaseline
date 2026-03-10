@@ -53,6 +53,7 @@ Describe 'Connect-TBTenant' {
             $status.TenantId | Should -Be '96bf81b4-2694-42bb-9204-70081135ca61'
             $status.Account | Should -Be 'admin@contoso.onmicrosoft.com'
             $status.DirectoryMetadataEnabled | Should -BeFalse
+            $status.AuthType | Should -Be 'Delegated'
         }
     }
 
@@ -148,6 +149,68 @@ Describe 'Connect-TBTenant' {
             Mock -ModuleName TenantBaseline Connect-MgGraph { throw 'Auth failed' }
 
             { Connect-TBTenant } | Should -Throw
+        }
+    }
+
+    Context 'Unattended authentication modes' {
+
+        It 'Passes managed identity parameters to Connect-MgGraph' {
+            Connect-TBTenant -Identity -ClientId '11111111-1111-1111-1111-111111111111'
+
+            Should -Invoke -CommandName Connect-MgGraph -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $Identity -and
+                $ClientId -eq '11111111-1111-1111-1111-111111111111' -and
+                $Environment -eq 'Global'
+            }
+
+            $status = InModuleScope TenantBaseline { $script:TBConnection }
+            $status.AuthType | Should -Be 'ManagedIdentity'
+            $status.ClientId | Should -Be '11111111-1111-1111-1111-111111111111'
+        }
+
+        It 'Passes app certificate parameters to Connect-MgGraph' {
+            Connect-TBTenant -ClientId '11111111-1111-1111-1111-111111111111' -TenantId 'contoso.onmicrosoft.com' -CertificateThumbprint 'ABC123'
+
+            Should -Invoke -CommandName Connect-MgGraph -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $ClientId -eq '11111111-1111-1111-1111-111111111111' -and
+                $TenantId -eq 'contoso.onmicrosoft.com' -and
+                $CertificateThumbprint -eq 'ABC123'
+            }
+
+            $status = InModuleScope TenantBaseline { $script:TBConnection }
+            $status.AuthType | Should -Be 'AppCertificate'
+        }
+
+        It 'Throws when app certificate auth has no certificate material' {
+            { Connect-TBTenant -ClientId '11111111-1111-1111-1111-111111111111' } | Should -Throw
+        }
+
+        It 'Passes client secret credential to Connect-MgGraph' {
+            $secret = ConvertTo-SecureString 'super-secret' -AsPlainText -Force
+            $credential = [pscredential]::new('11111111-1111-1111-1111-111111111111', $secret)
+
+            Connect-TBTenant -ClientSecretCredential $credential -TenantId 'contoso.onmicrosoft.com'
+
+            Should -Invoke -CommandName Connect-MgGraph -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $ClientSecretCredential.UserName -eq '11111111-1111-1111-1111-111111111111' -and
+                $TenantId -eq 'contoso.onmicrosoft.com'
+            }
+
+            $status = InModuleScope TenantBaseline { $script:TBConnection }
+            $status.AuthType | Should -Be 'ClientSecret'
+        }
+
+        It 'Passes access token to Connect-MgGraph' {
+            $token = ConvertTo-SecureString 'token-value' -AsPlainText -Force
+
+            Connect-TBTenant -AccessToken $token
+
+            Should -Invoke -CommandName Connect-MgGraph -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $null -ne $AccessToken
+            }
+
+            $status = InModuleScope TenantBaseline { $script:TBConnection }
+            $status.AuthType | Should -Be 'AccessToken'
         }
     }
 

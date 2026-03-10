@@ -36,7 +36,7 @@ Grant cmdlets now return manual remediation steps for workloads that require pro
 
 - `ReadOnly`: `ConfigurationMonitoring.Read.All`
 - `Manage` (default): `ConfigurationMonitoring.ReadWrite.All`
-- `Setup`: `ConfigurationMonitoring.ReadWrite.All` + `Application.ReadWrite.All`
+- `Setup`: `ConfigurationMonitoring.ReadWrite.All` + `Application.ReadWrite.All` + `AppRoleAssignment.ReadWrite.All`
 
 If you run setup commands (`Install-TBServicePrincipal` / `Grant-TBServicePrincipalPermission`), reconnect with:
 

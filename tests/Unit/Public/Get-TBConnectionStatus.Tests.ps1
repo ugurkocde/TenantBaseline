@@ -44,6 +44,7 @@ Describe 'Get-TBConnectionStatus' {
             $result.IdentityLabel | Should -Be 'contoso.onmicrosoft.com'
             $result.DirectoryMetadataEnabled | Should -BeTrue
             $result.Environment | Should -Be 'Global'
+            $result.AuthType | Should -Be 'Delegated'
         }
     }
 
@@ -62,6 +63,7 @@ Describe 'Get-TBConnectionStatus' {
             $result.IdentityLabel | Should -BeNullOrEmpty
             $result.DirectoryMetadataEnabled | Should -BeFalse
             $result.Environment | Should -BeNullOrEmpty
+            $result.AuthType | Should -BeNullOrEmpty
         }
 
         It 'Reports disconnected status when Get-MgContext throws' {
@@ -186,6 +188,29 @@ Describe 'Get-TBConnectionStatus' {
 
             $result = Get-TBConnectionStatus
             $result.Environment | Should -BeNullOrEmpty
+        }
+    }
+
+    Context 'AuthType field' {
+
+        It 'Returns AuthType from TBConnection when present' {
+            Mock -ModuleName TenantBaseline Get-MgContext {
+                return [PSCustomObject]@{
+                    TenantId = '96bf81b4-2694-42bb-9204-70081135ca61'
+                    Account  = $null
+                    Scopes   = @()
+                }
+            }
+            InModuleScope TenantBaseline {
+                $script:TBConnection = [PSCustomObject]@{
+                    ConnectedAt = [datetime]::new(2025, 1, 20, 10, 0, 0)
+                    AuthType    = 'ManagedIdentity'
+                    Environment = 'Global'
+                }
+            }
+
+            $result = Get-TBConnectionStatus
+            $result.AuthType | Should -Be 'ManagedIdentity'
         }
     }
 }

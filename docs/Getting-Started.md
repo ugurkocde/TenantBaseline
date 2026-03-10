@@ -31,6 +31,8 @@ This opens a browser-based interactive login for setup operations. After setup, 
 Connect-TBTenant -Scenario Manage
 ```
 
+For unattended automation after setup, see [Authentication](Authentication.md) and [Automation](Automation.md).
+
 ### 2. Provision the UTCM service principal
 
 This is a one-time step per tenant. The UTCM service principal is a Microsoft first-party application that executes the configuration monitors.
@@ -96,4 +98,5 @@ Export-TBSnapshot -SnapshotId $snapshot.Id -OutputPath './snapshot.json'
 ## Next Steps
 
 - Read about [Authentication](Authentication.md) options
+- Read [Automation](Automation.md) if you want Azure Automation runbooks, schedules, managed identity, or hosted notifications
 - Check [API Limits](API-Limits.md) for service constraints

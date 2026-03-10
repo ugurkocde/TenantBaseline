@@ -31,6 +31,7 @@ function Get-TBConnectionStatus {
             IdentityLabel             = $null
             DirectoryMetadataEnabled  = $false
             Environment               = $null
+            AuthType                  = $null
         }
     }
 
@@ -88,6 +89,14 @@ function Get-TBConnectionStatus {
         $environment = $connectionState.Environment
     }
 
+    $authType = $null
+    if ($connectionState -and $connectionState.PSObject.Properties['AuthType']) {
+        $authType = $connectionState.AuthType
+    }
+    elseif ($context.Account) {
+        $authType = 'Delegated'
+    }
+
     return [PSCustomObject]@{
         Connected                = $true
         TenantId                 = $context.TenantId
@@ -99,5 +108,6 @@ function Get-TBConnectionStatus {
         IdentityLabel            = $identityLabel
         DirectoryMetadataEnabled = $directoryMetadataEnabled
         Environment              = $environment
+        AuthType                 = $authType
     }
 }

@@ -1,6 +1,6 @@
 @{
     RootModule        = 'TenantBaseline.psm1'
-    ModuleVersion     = '0.3.2'
+    ModuleVersion     = '0.4.0'
     GUID              = 'edee0e7b-afeb-4cc1-b30c-ef8486d7c9a6'
     Author            = 'TenantBaseline Contributors'
     CompanyName       = 'Community'
@@ -39,6 +39,7 @@
         # Drift
         'Get-TBDrift'
         'Get-TBDriftSummary'
+        'Send-TBDriftNotification'
 
         # Baseline
         'Get-TBBaseline'
@@ -72,7 +73,7 @@
             Tags         = @('Microsoft365', 'Graph', 'UTCM', 'Baseline', 'Drift', 'Security', 'Compliance', 'Intune', 'ConditionalAccess', 'EntraID')
             LicenseUri   = 'https://github.com/ugurkocde/TenantBaseline/blob/main/LICENSE'
             ProjectUri   = 'https://github.com/ugurkocde/TenantBaseline'
-            ReleaseNotes = 'v0.3.2: Fix errorDetails not populated in Get-TBSnapshot and Get-TBMonitorResult (#3), add -SkipQuotaCheck to New-TBSnapshot (#5).'
+            ReleaseNotes = 'v0.4.0: Add unattended authentication modes to Connect-TBTenant and webhook-based drift notifications with duplicate suppression.'
         }
     }
 }

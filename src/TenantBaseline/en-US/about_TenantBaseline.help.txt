@@ -44,14 +44,25 @@ GETTING STARTED
     5. Check for drift:
        Get-TBDrift
 
+    6. Automate notifications from a scheduled runner:
+       Connect-TBTenant -Identity
+       Send-TBDriftNotification -WebhookUrl $env:TB_WEBHOOK_URL
+
 AUTHENTICATION
-    TenantBaseline uses interactive/delegated authentication via
-    Connect-MgGraph. No custom app registration is required.
+    TenantBaseline supports both interactive/delegated and unattended
+    authentication via Connect-MgGraph.
 
     Scenario-based scopes:
     - ReadOnly: ConfigurationMonitoring.Read.All
     - Manage: ConfigurationMonitoring.ReadWrite.All
-    - Setup: ConfigurationMonitoring.ReadWrite.All, Application.ReadWrite.All
+    - Setup: ConfigurationMonitoring.ReadWrite.All, Application.ReadWrite.All,
+      AppRoleAssignment.ReadWrite.All
+
+    Unattended modes:
+    - Managed identity: Connect-TBTenant -Identity
+    - App certificate: Connect-TBTenant -ClientId ... -CertificateThumbprint ...
+    - Client secret: Connect-TBTenant -ClientSecretCredential ...
+    - Access token: Connect-TBTenant -AccessToken ...
 
     The UTCM service principal (AppId: 03b07b79-c5bc-4b5e-9bfa-13acf4a99998)
     must be provisioned once per tenant using Install-TBServicePrincipal.
@@ -84,6 +95,7 @@ CMDLETS
     Drift:
         Get-TBDrift                - List detected drifts
         Get-TBDriftSummary         - Aggregated drift overview
+        Send-TBDriftNotification   - Send webhook notifications for new drift
 
     Baseline:
         Get-TBBaseline             - Get monitor baseline

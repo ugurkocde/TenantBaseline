@@ -5,6 +5,21 @@ All notable changes to the TenantBaseline module will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-03-10
+
+### Added
+- Unattended authentication modes in `Connect-TBTenant` for managed identity, app certificate, client secret, and pre-acquired access token flows
+- `Send-TBDriftNotification` for webhook-based drift alerts with active-drift deduplication, webhook retry handling, and state-file tracking
+- `AuthType` field on `Get-TBConnectionStatus` output to distinguish delegated and unattended sessions
+- Azure Automation documentation covering runtime environments, runbooks, schedules, automation variables, managed identity, and webhook configuration
+- Sample Azure Automation runbook at `docs/examples/AzureAutomation/Send-TBDriftNotification.Runbook.ps1`
+
+### Changed
+- README now includes a `Start Here` entry path for local setup, authentication, and automation scenarios
+- Authentication guidance now separates delegated interactive sign-in from unattended automation scenarios
+- Automation documentation now highlights durable state requirements for hosted runners and shows a sample notification payload
+- Release and CI workflows now validate the updated public function count
+
 ## [0.3.2] - 2026-03-10
 
 ### Fixed
