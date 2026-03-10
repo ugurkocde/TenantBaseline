@@ -331,14 +331,6 @@ tenantbaseline/
 
 ---
 
-## Contributors
-
-| Contributor | Contributions |
-|---|---|
-| [@ricmestre](https://github.com/ricmestre) | Bug reports and PRs for errorDetails population (#3, #4) and snapshot quota check (#5, #6) |
-
----
-
 ## Contributing
 
 1. Fork the repository
