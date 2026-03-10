@@ -70,6 +70,47 @@ Describe 'Get-TBSnapshot' {
         }
     }
 
+    Context 'Includes errorDetails via $select' {
+
+        It 'Passes $select with errorDetails in the URI for single snapshot' {
+            $fixtureData = Get-Content -Path (Join-Path $fixturesPath 'SnapshotSingle.json') -Raw | ConvertFrom-Json
+            Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { return $fixtureData }
+
+            $result = Get-TBSnapshot -SnapshotId 'e7a2c4d6-8f10-4b3e-9d5a-1c7f2e8b0a34'
+
+            Should -Invoke -CommandName Invoke-TBGraphRequest -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $Uri -match '\$select=' -and $Uri -match 'errorDetails'
+            }
+        }
+
+        It 'Passes $select with errorDetails in the URI for list' {
+            Mock -ModuleName TenantBaseline Invoke-TBGraphPagedRequest { return @() }
+
+            @(Get-TBSnapshot) | Out-Null
+
+            Should -Invoke -CommandName Invoke-TBGraphPagedRequest -ModuleName TenantBaseline -Times 1 -Exactly -ParameterFilter {
+                $Uri -match '\$select=' -and $Uri -match 'errorDetails'
+            }
+        }
+
+        It 'Returns errorDetails from the response' {
+            $mockData = [PSCustomObject]@{
+                id               = 'err-snap-1'
+                displayName      = 'Failed Snapshot'
+                status           = 'failed'
+                errorDetails     = @(
+                    [PSCustomObject]@{ code = 'ResourceNotFound'; message = 'Resource type not supported' }
+                )
+            }
+            Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { return $mockData }
+
+            $result = Get-TBSnapshot -SnapshotId 'err-snap-1'
+
+            $result.ErrorDetails | Should -HaveCount 1
+            $result.ErrorDetails[0].code | Should -Be 'ResourceNotFound'
+        }
+    }
+
     Context 'Handles empty response' {
 
         It 'Returns nothing when API returns empty value array' {

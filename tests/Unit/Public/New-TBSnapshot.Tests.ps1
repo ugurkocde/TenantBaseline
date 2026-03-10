@@ -63,11 +63,23 @@ Describe 'New-TBSnapshot' {
 
             $result = New-TBSnapshot -DisplayName 'Quota Test' `
                 -Resources @('microsoft.exchange.accepteddomain') `
-                -Confirm:$false -WarningVariable warnVar 3>&1
+                -Confirm:$false -WarningVariable warnVar
 
             $warnings = @($warnVar)
             $warnings.Count | Should -BeGreaterOrEqual 1
             $warnings[0] | Should -BeLike '*10/12*'
+        }
+
+        It 'Skips quota check when -SkipQuotaCheck is used' {
+            $fixtureData = Get-Content -Path (Join-Path $fixturesPath 'SnapshotSingle.json') -Raw | ConvertFrom-Json
+            Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { return $fixtureData }
+
+            $result = New-TBSnapshot -DisplayName 'Skip Quota Test' `
+                -Resources @('microsoft.exchange.accepteddomain') `
+                -SkipQuotaCheck -Confirm:$false
+
+            $result | Should -Not -BeNullOrEmpty
+            Should -Invoke -CommandName Get-TBSnapshot -ModuleName TenantBaseline -Times 0 -Exactly
         }
     }
 

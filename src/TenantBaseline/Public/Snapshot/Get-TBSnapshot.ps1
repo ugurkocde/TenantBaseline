@@ -24,14 +24,16 @@ function Get-TBSnapshot {
     process {
         $baseUri = Get-TBApiBaseUri
 
+        $selectFields = 'id,displayName,description,status,tenantId,createdDateTime,completedDateTime,createdBy,resources,resourceLocation,errorDetails'
+
         if ($SnapshotId) {
-            $uri = '{0}/configurationSnapshotJobs/{1}' -f $baseUri, $SnapshotId
+            $uri = '{0}/configurationSnapshotJobs/{1}?$select={2}' -f $baseUri, $SnapshotId, $selectFields
             Write-TBLog -Message ('Getting snapshot: {0}' -f $SnapshotId)
             $response = Invoke-TBGraphRequest -Uri $uri -Method 'GET'
             return ConvertFrom-TBSnapshotResponse -Response $response
         }
         else {
-            $uri = '{0}/configurationSnapshotJobs' -f $baseUri
+            $uri = '{0}/configurationSnapshotJobs?$select={1}' -f $baseUri, $selectFields
             Write-TBLog -Message 'Listing all snapshots'
             $items = Invoke-TBGraphPagedRequest -Uri $uri
 
