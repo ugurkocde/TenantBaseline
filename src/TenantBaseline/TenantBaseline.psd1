@@ -1,6 +1,6 @@
 @{
     RootModule        = 'TenantBaseline.psm1'
-    ModuleVersion     = '0.4.0'
+    ModuleVersion     = '0.4.1'
     GUID              = 'edee0e7b-afeb-4cc1-b30c-ef8486d7c9a6'
     Author            = 'TenantBaseline Contributors'
     CompanyName       = 'Community'
@@ -73,7 +73,7 @@
             Tags         = @('Microsoft365', 'Graph', 'UTCM', 'Baseline', 'Drift', 'Security', 'Compliance', 'Intune', 'ConditionalAccess', 'EntraID')
             LicenseUri   = 'https://github.com/ugurkocde/TenantBaseline/blob/main/LICENSE'
             ProjectUri   = 'https://github.com/ugurkocde/TenantBaseline'
-            ReleaseNotes = 'v0.4.0: Add unattended authentication modes to Connect-TBTenant and webhook-based drift notifications with duplicate suppression.'
+            ReleaseNotes = 'v0.4.1: Add -SkipQuotaCheck switch to New-TBMonitor for callers that manage quota externally (#7).'
         }
     }
 }

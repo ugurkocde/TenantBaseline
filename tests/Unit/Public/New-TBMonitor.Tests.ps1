@@ -89,6 +89,20 @@ Describe 'New-TBMonitor' {
         }
     }
 
+    Context 'SkipQuotaCheck parameter' {
+
+        It 'Skips quota check when -SkipQuotaCheck is used' {
+            $fixtureData = Get-Content -Path (Join-Path $fixturesPath 'MonitorSingle.json') -Raw | ConvertFrom-Json
+            Mock -ModuleName TenantBaseline Invoke-TBGraphRequest { return $fixtureData }
+
+            $result = New-TBMonitor -DisplayName 'Skip Quota Test' `
+                -SkipQuotaCheck -Confirm:$false
+
+            $result | Should -Not -BeNullOrEmpty
+            Should -Invoke -CommandName Get-TBMonitor -ModuleName TenantBaseline -Times 0 -Exactly
+        }
+    }
+
     Context 'Accepts pipeline input for Resources' {
 
         It 'Collects resources from pipeline and sends them in the body' {

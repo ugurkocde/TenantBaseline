@@ -17,8 +17,13 @@ function New-TBMonitor {
         Array of baseline resource objects to monitor.
     .PARAMETER Parameters
         Optional hashtable of key-value pairs for baseline parameter values.
+    .PARAMETER SkipQuotaCheck
+        Skips the pre-flight monitor quota check. Useful when you have already
+        verified quota externally or use custom limits.
     .EXAMPLE
         New-TBMonitor -DisplayName 'MFA Monitor' -Resources $resources
+    .EXAMPLE
+        New-TBMonitor -DisplayName 'MFA Monitor' -Resources $resources -SkipQuotaCheck
     #>
     [CmdletBinding(SupportsShouldProcess = $true)]
     [OutputType([PSCustomObject])]
@@ -39,7 +44,10 @@ function New-TBMonitor {
         [object[]]$Resources,
 
         [Parameter()]
-        [hashtable]$Parameters
+        [hashtable]$Parameters,
+
+        [Parameter()]
+        [switch]$SkipQuotaCheck
     )
 
     begin {
@@ -89,14 +97,16 @@ function New-TBMonitor {
 
         if ($PSCmdlet.ShouldProcess($DisplayName, 'Create configuration monitor')) {
             # Pre-flight quota check
-            try {
-                $existingMonitors = @(Get-TBMonitor)
-                if ($existingMonitors.Count -ge 28) {
-                    Write-Warning ('Monitor quota: {0}/30 monitors in use. Approaching the 30-monitor limit.' -f $existingMonitors.Count)
+            if (-not $SkipQuotaCheck) {
+                try {
+                    $existingMonitors = @(Get-TBMonitor)
+                    if ($existingMonitors.Count -ge 28) {
+                        Write-Warning ('Monitor quota: {0}/30 monitors in use. Approaching the 30-monitor limit.' -f $existingMonitors.Count)
+                    }
                 }
-            }
-            catch {
-                Write-TBLog -Message ('Quota pre-flight check skipped: {0}' -f $_.Exception.Message) -Level 'Warning'
+                catch {
+                    Write-TBLog -Message ('Quota pre-flight check skipped: {0}' -f $_.Exception.Message) -Level 'Warning'
+                }
             }
 
             Write-TBLog -Message ('Creating monitor: {0}' -f $DisplayName)
