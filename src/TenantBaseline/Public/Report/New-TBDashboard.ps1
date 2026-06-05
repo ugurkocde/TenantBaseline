@@ -734,30 +734,32 @@ $styleTokens
                 // Baseline resources
                 for (var j = 0; j < baselines.length; j++) {
                     var bl = baselines[j];
-                    var resources = prop(bl, 'Resources') || prop(bl, 'resources') || [];
-                    if (resources.length > 0) {
-                        var expHeader = textEl('div', 'Baseline Resources (' + resources.length + ')', 'expandable-header');
-                        expHeader.addEventListener('click', function() {
-                            this.classList.toggle('expanded');
-                            var content = this.nextElementSibling;
-                            if (content) content.classList.toggle('expanded');
-                        });
-                        card.appendChild(expHeader);
+                    if (bl.MonitorId === mId){
+                        var resources = prop(bl, 'Resources') || prop(bl, 'resources') || [];
+                        if (resources.length > 0) {
+                            var expHeader = textEl('div', 'Baseline Resources (' + resources.length + ')', 'expandable-header');
+                            expHeader.addEventListener('click', function() {
+                                this.classList.toggle('expanded');
+                                var content = this.nextElementSibling;
+                                if (content) content.classList.toggle('expanded');
+                            });
+                            card.appendChild(expHeader);
 
-                        var expContent = el('div', { className: 'expandable-content' });
-                        var ul = document.createElement('ul');
-                        ul.className = 'resource-list';
-                        for (var k = 0; k < resources.length; k++) {
-                            var resName = prop(resources[k], 'displayName') || prop(resources[k], 'DisplayName') || '';
-                            var resType = prop(resources[k], 'resourceType') || prop(resources[k], 'ResourceType') || '';
-                            var li = document.createElement('li');
-                            li.appendChild(textEl('strong', resName));
-                            li.appendChild(document.createTextNode(' (' + resType + ')'));
-                            ul.appendChild(li);
+                            var expContent = el('div', { className: 'expandable-content' });
+                            var ul = document.createElement('ul');
+                            ul.className = 'resource-list';
+                            for (var k = 0; k < resources.length; k++) {
+                                var resName = prop(resources[k], 'displayName') || prop(resources[k], 'DisplayName') || '';
+                                var resType = prop(resources[k], 'resourceType') || prop(resources[k], 'ResourceType') || '';
+                                var li = document.createElement('li');
+                                li.appendChild(textEl('strong', resName));
+                                li.appendChild(document.createTextNode(' (' + resType + ')'));
+                                ul.appendChild(li);
+                            }
+                            expContent.appendChild(ul);
+                            card.appendChild(expContent);
+                            break;
                         }
-                        expContent.appendChild(ul);
-                        card.appendChild(expContent);
-                        break;
                     }
                 }
 
